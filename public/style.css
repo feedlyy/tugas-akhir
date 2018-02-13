@@ -1,0 +1,26 @@
+/*ini buat codingan table nya*/
+table caption {
+    padding: .5em 0;
+}
+
+table.dataTable th,
+table.dataTable td {
+    white-space: nowrap;
+}
+
+.p {
+    text-align: center;
+    padding-top: 140px;
+    font-size: 14px;
+}
+/*end of codingan table*/
+
+/*bikin class buat background putih*/
+.putih{
+    background: #FFFFFF;
+}
+
+/*id table yang ada di blade Gedung*/
+#table{
+    width: 70%;
+}
