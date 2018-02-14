@@ -39,12 +39,14 @@ Route::prefix('fakultas')->group(function (){
     Route::middleware(['auth', 'fakultas'])->group(function (){
         Route::get('', 'AdminViewHandleController@fakultas')->name('fakultas');
         Route::get('kalender', 'KalenderController@kalender')->name('kalenderFakultas');
-        Route::resource('gedung', 'GedungController', ['names' => [
-            'index' => 'Gedung1'
-        ]]);
-        Route::resource('tambahgedung', 'GedungController', ['names' => [
-            'index' => 'tambahGedung1'
-        ]]);
+        Route::prefix('gedung')->group(function (){
+            Route::resource('', 'GedungController', ['names' => [
+                'index' => 'Gedung1'
+            ]]);
+            Route::resource('tambahgedung', 'GedungController', ['names' => [
+                'index' => 'tambahGedung1'
+            ]]);
+        });
         Route::resource('tambahruangan', 'RuanganController', ['names' => [
             'index' => 'tambahRuangan1'
         ]]);
@@ -57,12 +59,14 @@ Route::prefix('departemen')->group(function (){
     Route::middleware(['auth', 'departemen'])->group(function (){
         Route::get('', 'AdminViewHandleController@departemen')->name('departemen');
         Route::get('kalender', 'KalenderController@kalender')->name('kalenderDepartemen');
-        Route::resource('gedung', 'GedungController', ['names' => [
-            'index' => 'Gedung2'
-        ]]);
-        Route::resource('tambahgedung', 'GedungController', ['names' => [
-            'index' => 'tambahGedung2'
-        ]]);
+        Route::prefix('gedung')->group(function (){
+            Route::resource('', 'GedungController', ['names' => [
+                'index' => 'Gedung2'
+            ]]);
+            Route::resource('tambahgedung', 'GedungController', ['names' => [
+                'index' => 'tambahGedung2'
+            ]]);
+        });
         Route::resource('tambahruangan', 'RuanganController', ['names' => [
             'index' => 'tambahRuangan2'
         ]]);
@@ -75,12 +79,14 @@ Route::prefix('prodi')->group(function (){
     Route::middleware(['auth', 'prodi'])->group(function (){
         Route::get('', 'AdminViewHandleController@prodi')->name('prodi');
         Route::get('kalender', 'KalenderController@kalender')->name('kalenderProdi');
-        Route::resource('gedung', 'GedungController', ['names' => [
-            'index' => 'Gedung3'
-        ]]);
-        Route::resource('tambahgedung', 'GedungController', ['names' => [
-            'index' => 'tambahGedung3'
-        ]]);
+        Route::prefix('gedung')->group(function (){
+            Route::resource('', 'GedungController', ['names' => [
+                'index' => 'Gedung3'
+            ]]);
+            Route::resource('tambahgedung', 'GedungController', ['names' => [
+                'index' => 'tambahGedung3'
+            ]]);
+        });
         Route::resource('tambahruangan', 'RuanganController', ['names' => [
             'index' => 'tambahRuangan3'
         ]]);

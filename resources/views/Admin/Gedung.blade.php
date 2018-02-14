@@ -10,13 +10,9 @@
     <div class="container putih">
         <h2 style="">List Gedung</h2>
         @auth
-        @if(Auth::user()->id_status == 1)
-            <a href="{{ route('tambahGedung1') }}"><button class="button btn-primary fa fa-plus">Tambah Gedung</button></a>
-        @elseif(\Illuminate\Support\Facades\Auth::check() == true && Auth::user()->id_status == 2)
-            <a href="{{ route('tambahGedung2') }}"><button class="button btn-primary fa fa-plus">Tambah Gedung</button></a>
-        @else
-            <a href="{{ route('tambahGedung3') }}"><button class="button btn-primary fa fa-plus">Tambah Gedung</button></a>
-        @endif
+            @if(Auth::user()->id_status == 1)
+                <a href="{{ route('tambahGedung1') }}"><button class="button btn-success fa fa-plus-circle">Tambah Gedung</button></a>
+            @endif
         @endauth
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">

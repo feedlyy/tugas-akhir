@@ -22,7 +22,14 @@ class GedungController extends Controller
     public function index()
     {
         //
-        return view('Admin.Gedung');
+        if (\route('Gedung1') == true)
+        {
+            return view('Admin.Gedung');
+        } elseif (\route('tambahGedung1') == true)
+        {
+            return view('Admin.TambahGedung');
+        }
+
     }
 
 //    public function index2()
@@ -38,7 +45,7 @@ class GedungController extends Controller
     public function create()
     {
         //
-        return view('Admin.TambahGedung');
+//        return view('Admin.TambahGedung');
     }
 
     /**
