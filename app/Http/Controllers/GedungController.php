@@ -22,13 +22,7 @@ class GedungController extends Controller
     public function index()
     {
         //
-        if (\route('Gedung1') == true)
-        {
-            return view('Admin.Gedung');
-        } elseif (\route('tambahGedung1') == true)
-        {
-            return view('Admin.TambahGedung');
-        }
+        return view('Admin.Gedung');
 
     }
 

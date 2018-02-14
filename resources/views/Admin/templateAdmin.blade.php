@@ -57,17 +57,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        @Auth
-            @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
-                <a href="{{ route('fakultas') }}" class="logo">
-                @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
-                        <a href="{{ route('departemen') }}" class="logo">
-                            @else
-                                <a href="{{ route('prodi') }}" class="logo">
-                            @endif
-                {{--<a href="{{ url('admin') }}" class="logo"></a>--}}
-        @endauth
-
+        <a href="{{ route('tampilan') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>S</b>V</span>
             <!-- logo for regular state and mobile devices -->
@@ -151,17 +141,17 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('Gedung1') }}">
+                            <a href="{{ route('gedung') }}">
                                 <i class="fa fa-building-o"></i> <span>Gedung</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('tambahRuangan1') }}">
+                            <a href="{{ route('ruangan') }}">
                                 <i class="fa fa-building-o"></i> <span>Ruangan</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('kalenderFakultas') }}">
+                            <a href="{{ route('kalender') }}">
                                 <i class="fa fa-calendar"></i> <span>Kalender Vokasi</span>
                             </a>
                         </li>
@@ -182,17 +172,17 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('Gedung2') }}">
+                            <a href="{{ route('gedung') }}">
                                 <i class="fa fa-building-o"></i> <span>Gedung</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('tambahRuangan2') }}">
+                            <a href="{{ route('ruangan') }}">
                                 <i class="fa fa-building-o"></i> <span>Ruangan</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('kalenderDepartemen') }}">
+                            <a href="{{ route('kalender') }}">
                                 <i class="fa fa-calendar"></i> <span>Kalender Vokasi</span>
                             </a>
                         </li>
@@ -208,17 +198,17 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('Gedung3') }}">
+                            <a href="{{ route('gedung') }}">
                                 <i class="fa fa-building-o"></i> <span>Gedung</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('tambahRuangan3') }}">
+                            <a href="{{ route('ruangan') }}">
                                 <i class="fa fa-building-o"></i> <span>Ruangan</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('kalenderProdi') }}">
+                            <a href="{{ route('kalender') }}">
                                 <i class="fa fa-calendar"></i> <span>Kalender Vokasi</span>
                             </a>
                         </li>

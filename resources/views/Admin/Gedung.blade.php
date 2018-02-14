@@ -9,11 +9,6 @@
 
     <div class="container putih">
         <h2 style="">List Gedung</h2>
-        @auth
-            @if(Auth::user()->id_status == 1)
-                <a href="{{ route('tambahGedung1') }}"><button class="button btn-success fa fa-plus-circle">Tambah Gedung</button></a>
-            @endif
-        @endauth
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
                 <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">

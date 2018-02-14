@@ -8,10 +8,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="post" @if(Auth::user()->id_status==1) action="{{ route('tambahRuangan1') }}"
-              @elseif(Auth::user()->id_status==2) action="{{ route('tambahRuangan2') }}"
-              @else action="{{ route('tambahRuangan3') }}"
-                @endif>
+        <form role="form" method="post" action="{{ route('ruangan') }}">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
