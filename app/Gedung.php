@@ -3,12 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Gedung extends Model
 {
     //
     protected $table = 'gedungs';
     protected $primaryKey = 'id_gedung';
+
 
     /**
      * The attributes that are mass assignable.
@@ -18,5 +20,10 @@ class Gedung extends Model
     protected $fillable = [
         'nama_gedung',
     ];
+
+    public function getIdGedung($value)
+    {
+        return $value;
+    }
 
 }

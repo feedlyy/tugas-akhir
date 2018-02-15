@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Gedung;
 use App\Rules\Uppercase;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\RouteAction;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\MessageBag;
