@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{ url('style.css') }}">
     <link rel="stylesheet" href="{{ url('dataTables/css/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url('dataTables/css/dataTables.responsive.css') }}">
+    {{--select2--}}
+    <link rel="stylesheet" href="{{ url('Select2/select2.min.css') }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,6 +49,7 @@
     {{--Custom JS--}}
     <script src="{{ url('script.js') }}"></script>
 
+    {{--ini buat table view nya di gedung maupun ruangan--}}
     <script src="{{ url('dataTables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url('dataTables/js/dataTables.bootstrap.js') }}"></script>
     <script src="{{ url('dataTables/js/dataTables.responsive.js') }}"></script>
@@ -285,5 +288,9 @@
     $('ul.sidebar-menu a').filter(function () {
         return this.href == url;
     }).parent().addClass('active');
+
+    $(function () {
+        $('.select2').select2();
+    })
 </script>
 </html>

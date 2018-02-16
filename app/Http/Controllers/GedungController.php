@@ -61,13 +61,9 @@ class GedungController extends Controller
             harus diawali dengan huruf kapital*/
         ]);
 
-
-
         //ini store data ke db gedungs nya
         $gedung = new Gedung;
-
         $gedung->nama_gedung = $request->gedung;
-
         $gedung->save();
         $request->session()->flash('status', 'Data Berhasil Di Input');
 

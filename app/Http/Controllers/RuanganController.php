@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Ruangan;
+use App\Gedung;
+use App\Rules\Uppercase;
 use Illuminate\Http\Request;
+
 
 class RuanganController extends Controller
 {
@@ -16,7 +19,8 @@ class RuanganController extends Controller
     {
         //
         $ruangan = Ruangan::all();
-        return view('Admin.Ruangan', compact('ruangan'));
+        $gedung = Gedung::all();
+        return view('Admin.Ruangan', compact('ruangan', 'gedung'));
     }
 
     /**
@@ -27,6 +31,8 @@ class RuanganController extends Controller
     public function create()
     {
         //
+        $ruangan = Gedung::all();
+        return view('Admin.TambahRuangan', compact('ruangan'));
     }
 
     /**
@@ -38,6 +44,20 @@ class RuanganController extends Controller
     public function store(Request $request)
     {
         //
+//        bikin validasi
+            $validasi = $request->validate([
+               'ruangan' => ['required', 'max:255', new Uppercase]
+            ]);
+
+        $ruangan = new Ruangan;
+        $ruangan->nama_ruangan = $request->ruangan;
+        $ruangan->id_gedung = $request->selectgedung;
+        $ruangan->save();
+
+        $request->session()->flash('status', 'Data Berhasil Di Input');
+
+        return redirect('admin/ruangan');
+
     }
 
     /**

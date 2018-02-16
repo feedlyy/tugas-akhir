@@ -1,6 +1,7 @@
 @extends('Admin.templateAdmin')
 
 @section('isi')
+
     <!-- general form elements -->
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -12,6 +13,19 @@
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
+                    <div class="form-group">
+                        <label>ID Gedung</label>
+
+                            <select class="form-control select2" style="width: 100%;" name="selectgedung">
+                                @foreach($ruangan as $ruang)
+                                <option selected="selected">{{ $ruang->id_gedung }}</option>
+                                @endforeach
+                            </select>
+
+
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="exampleInputEmail1">Nama Ruangan</label>
                     <input type="text" name="ruangan" class="form-control" id="" placeholder="">
                 </div>
@@ -22,4 +36,7 @@
             </div>
         </form>
     </div>
+
 @endsection
+
+
