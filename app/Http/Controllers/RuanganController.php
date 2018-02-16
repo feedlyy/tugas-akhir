@@ -31,6 +31,7 @@ class RuanganController extends Controller
     public function create()
     {
         //
+        /*ini make model nya gedung karena buat get seluruh id yang ada di gedung*/
         $ruangan = Gedung::all();
         return view('Admin.TambahRuangan', compact('ruangan'));
     }

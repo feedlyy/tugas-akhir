@@ -2,7 +2,7 @@
 
 @section('isi')
 
-    {{--<link rel="stylesheet" href="{{ url('fonts/glyphicons-halflings-regular.woff') }}">--}}
+
     @if(session()->has('status'))
         <div class="alert alert-success">
             {{ session()->get('status') }}
