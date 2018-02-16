@@ -24,10 +24,8 @@ class GedungController extends Controller
     public function index()
     {
         //
-
-        return view('Admin.Gedung')
-            ->with('gedung', Gedung::all());
-
+        $gedung = Gedung::all();
+        return view('Admin.Gedung', compact('gedung'));
 
 
     }
@@ -45,7 +43,7 @@ class GedungController extends Controller
     public function create()
     {
         //
-//        return view('Admin.TambahGedung');
+        return view('Admin.TambahGedung');
     }
 
     /**
@@ -72,6 +70,8 @@ class GedungController extends Controller
 
         $gedung->save();
         $request->session()->flash('status', 'Data Berhasil Di Input');
+
+        return redirect('admin/gedung');
 
 
     }

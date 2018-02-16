@@ -11,13 +11,6 @@
             </ul>
         </div>
     @endif
-
-    @if(session()->has('status'))
-        <div class="alert alert-success">
-            {{ session()->get('status') }}
-        </div>
-    @endif
-
     <!-- general form elements -->
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -25,10 +18,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="post" @if(Auth::user()->id_status==1) action="{{ route('tambahGedung1') }}"
-        @elseif(Auth::user()->id_status==2) action="{{ route('tambahGedung2') }}"
-              @else action="{{ route('tambahGedung3') }}"
-              @endif>
+        <form role="form" method="post" action="{{ url('admin/gedung') }}">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">

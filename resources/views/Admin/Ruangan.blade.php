@@ -3,43 +3,41 @@
 @section('isi')
 
     {{--<link rel="stylesheet" href="{{ url('fonts/glyphicons-halflings-regular.woff') }}">--}}
-    @if(session()->has('status'))
-        <div class="alert alert-success">
-            {{ session()->get('status') }}
-        </div>
-    @endif
+
 
 
 
     <div class="container putih">
-        <h2 style="">List Gedung</h2>
-        <a href="{{ url('admin/gedung/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Gedung</button></a>
+        <h2 style="">List Ruangan</h2>
+        <button class="fa fa-plus btn btn-primary">Tambah Ruangan</button>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
                 <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
                     <thead>
                     <tr>
+                        <th>ID Ruangan</th>
                         <th>ID Gedung</th>
-                        <th>Nama Gedung</th>
+                        <th>Nama Ruangan</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @if(count($gedung) > 0)
-                        @foreach($gedung as $data)
+                    @if(count($ruangan) > 0)
+                        @foreach($ruangan as $data)
                             <tr>
+                                <td>{{ $data->id_ruangan }}</td>
                                 <td>{{ $data->id_gedung }}</td>
-                                <td>{{ $data->nama_gedung }}</td>
-                                <form method="post" action="{{ url('admin/gedung') }}">
+                                <td>{{ $data->nama_ruangan }}</td>
+                                <form method="post" action="{{ url('admin/ruangan') }}">
                                     {{ csrf_field() }}
 
                                     <td><a class="glyphicon glyphicon-pencil jarak"></a><a class="glyphicon glyphicon-trash"></a></td>
                                 </form>
                             </tr>
                         @endforeach
-                            @else
+                    @else
                         <p>Tidak ada data</p>
-                            @endif
+                    @endif
                     </tbody>
                 </table>
             </div>
