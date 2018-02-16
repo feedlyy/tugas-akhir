@@ -24,7 +24,11 @@ class GedungController extends Controller
     public function index()
     {
         //
-        return view('Admin.Gedung');
+
+        return view('Admin.Gedung')
+            ->with('gedung', Gedung::all());
+
+
 
     }
 
@@ -70,17 +74,6 @@ class GedungController extends Controller
         $request->session()->flash('status', 'Data Berhasil Di Input');
 
 
-
-        if (Auth::check() == true && Auth::user()->id_status == 1)
-        {
-            return redirect()->route('tambahGedung1');
-        } elseif (Auth::check() == true && Auth::user()->id_status == 2)
-        {
-            return redirect()->route('tambahGedung2');
-        } else
-        {
-            return redirect()->route('tambahGedung3');
-        }
     }
 
     /**
@@ -132,5 +125,6 @@ class GedungController extends Controller
     public function destroy(Gedung $gedung)
     {
         //
+
     }
 }

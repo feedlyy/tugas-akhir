@@ -24,3 +24,8 @@ table.dataTable td {
 #table{
     width: 70%;
 }
+
+/*buat margin icon di gedung & ruangan*/
+.jarak{
+    margin-right: 6%;
+}

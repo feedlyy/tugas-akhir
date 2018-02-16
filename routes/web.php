@@ -37,12 +37,8 @@ Route::get('/home2', 'AdminViewHandleController@tes')->name('home2');
 Route::prefix('admin')->group(function (){
    Route::middleware('auth')->group(function (){
     Route::get('', 'AdminViewHandleController@tampilan')->name('tampilan');
-    Route::resource('gedung', 'GedungController', ['names' => [
-        'index' => 'gedung'
-    ]]);
-    Route::resource('ruangan', 'RuanganController', ['names' => [
-        'index' => 'ruangan'
-    ]]);
+    Route::resource('gedung', 'GedungController');
+    Route::resource('ruangan', 'RuanganController');
     Route::get('kalender', 'KalenderController@kalender')->name('kalender');
    });
 });

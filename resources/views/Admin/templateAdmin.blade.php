@@ -141,12 +141,12 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('gedung') }}">
+                            <a href="{{ url('admin/gedung') }}">
                                 <i class="fa fa-building-o"></i> <span>Gedung</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('ruangan') }}">
+                            <a href="{{ url('admin/ruangan') }}">
                                 <i class="fa fa-building-o"></i> <span>Ruangan</span>
                             </a>
                         </li>
@@ -172,12 +172,12 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('gedung') }}">
+                            <a href="{{ url('admin/gedung') }}">
                                 <i class="fa fa-building-o"></i> <span>Gedung</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('ruangan') }}">
+                            <a href="{{ url('admin/ruangan') }}">
                                 <i class="fa fa-building-o"></i> <span>Ruangan</span>
                             </a>
                         </li>
@@ -198,12 +198,12 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('gedung') }}">
+                            <a href="{{ url('admin/gedung') }}">
                                 <i class="fa fa-building-o"></i> <span>Gedung</span>
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ route('ruangan') }}">
+                            <a href="{{ url('admin/ruangan') }}">
                                 <i class="fa fa-building-o"></i> <span>Ruangan</span>
                             </a>
                         </li>

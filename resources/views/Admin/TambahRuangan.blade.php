@@ -8,7 +8,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="post" action="{{ route('ruangan') }}">
+        <form role="form" method="post" action="{{ url('admin/ruangan') }}">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">

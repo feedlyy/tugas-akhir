@@ -21,9 +21,5 @@ class Gedung extends Model
         'nama_gedung',
     ];
 
-    public function getIdGedung($value)
-    {
-        return $value;
-    }
 
 }
