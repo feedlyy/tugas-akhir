@@ -25,7 +25,7 @@ class GedungController extends Controller
     {
         //
         $gedung = Gedung::all();
-        return view('Admin.Gedung', compact('gedung'));
+        return view('Admin.Gedung')->with('gedung', $gedung);
 
 
     }
@@ -86,7 +86,7 @@ class GedungController extends Controller
      */
     public function show(Gedung $gedung)
     {
-        //
+
     }
 
     /**
@@ -95,9 +95,12 @@ class GedungController extends Controller
      * @param  \App\Gedung  $gedung
      * @return \Illuminate\Http\Response
      */
-    public function edit(Gedung $gedung)
+    public function edit($id)
     {
         //
+        $gedung = Gedung::find($id);
+
+        return view('Admin.EditGedung')->with('gedung', $gedung);
     }
 
     /**
@@ -107,9 +110,22 @@ class GedungController extends Controller
      * @param  \App\Gedung  $gedung
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Gedung $gedung)
+    public function update(Request $request, $id)
     {
         //
+        $validasi = $request->validate([
+            'gedung' => ['required', 'max:255', new Uppercase]
+            /*uppercase itu fungsi validasi custom dimana setiap inputan kalimat dari gedung
+            harus diawali dengan huruf kapital*/
+        ]);
+
+        $gedung = Gedung::find($id);
+        $gedung->nama_gedung = $request->gedung;
+
+        $gedung->save();
+        $request->session()->flash('update', 'Data Berhasil Di Update');
+
+        return redirect('admin/gedung');
     }
 
     /**
@@ -118,9 +134,13 @@ class GedungController extends Controller
      * @param  \App\Gedung  $gedung
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Gedung $gedung)
+    public function destroy($id)
     {
         //
+
+//        $hapus = Gedung::findOrFail($gedung);
+//
+//        $hapus->delete();
 
     }
 }

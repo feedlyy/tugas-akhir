@@ -6,6 +6,7 @@ use App\Ruangan;
 use App\Gedung;
 use App\Rules\Uppercase;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 
 class RuanganController extends Controller
@@ -20,7 +21,9 @@ class RuanganController extends Controller
         //
         $ruangan = Ruangan::all();
         $gedung = Gedung::all();
-        return view('Admin.Ruangan', compact('ruangan', 'gedung'));
+        return view('Admin.Ruangan')
+            ->with('ruangan', $ruangan)
+            ->with('gedung', $gedung);
     }
 
     /**
@@ -33,7 +36,7 @@ class RuanganController extends Controller
         //
         /*ini make model nya gedung karena buat get seluruh id yang ada di gedung*/
         $ruangan = Gedung::all();
-        return view('Admin.TambahRuangan', compact('ruangan'));
+        return view('Admin.TambahRuangan')->with('ruangan', $ruangan);
     }
 
     /**
@@ -67,9 +70,10 @@ class RuanganController extends Controller
      * @param  \App\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function show(Ruangan $ruangan)
+    public function show($id)
     {
         //
+
     }
 
     /**
@@ -78,9 +82,14 @@ class RuanganController extends Controller
      * @param  \App\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ruangan $ruangan)
+    public function edit($id)
     {
         //
+        $ruangan = Ruangan::find($id);
+        $gedungs = Gedung::all();
+        return View('Admin.EditRuangan')
+            ->with('ruangan', $ruangan)
+            ->with('gedung', $gedungs);
     }
 
     /**
@@ -90,9 +99,23 @@ class RuanganController extends Controller
      * @param  \App\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ruangan $ruangan)
+    public function update(Request $request, $id)
     {
         //
+//        bikin validasi
+            $validasi = $request->validate([
+                'ruangan' => ['required', 'max:255', new Uppercase]
+            ]);
+
+            $ruangan = Ruangan::find($id);
+            $ruangan->nama_ruangan = $request->ruangan;
+//            $ruangan->id_gedung = $request->selectgedung;
+
+            $ruangan->save();
+
+            $request->session()->flash('update', 'Data Berhasil Di Update');
+
+            return redirect('admin/ruangan');
     }
 
     /**
@@ -101,7 +124,7 @@ class RuanganController extends Controller
      * @param  \App\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ruangan $ruangan)
+    public function destroy($id)
     {
         //
     }

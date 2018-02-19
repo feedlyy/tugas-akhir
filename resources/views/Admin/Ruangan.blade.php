@@ -5,6 +5,10 @@
         <div class="alert alert-success">
             {{ session()->get('status') }}
         </div>
+        @elseif(session()->has('update'))
+        <div class="alert alert-success">
+            {{ session()->get('update') }}
+        </div>
     @endif
 
     <div class="container putih">
@@ -31,7 +35,7 @@
                                 <form method="post" action="{{ url('admin/ruangan') }}">
                                     {{ csrf_field() }}
 
-                                    <td><a class="glyphicon glyphicon-pencil jarak"></a><a class="glyphicon glyphicon-trash"></a></td>
+                                    <td><a class="glyphicon glyphicon-pencil jarak" href="{{ route('ruangan.edit', $data->id_ruangan) }}"></a><a class="glyphicon glyphicon-trash"></a></td>
                                 </form>
                             </tr>
                         @endforeach

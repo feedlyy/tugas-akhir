@@ -7,6 +7,10 @@
         <div class="alert alert-success">
             {{ session()->get('status') }}
         </div>
+        @elseif(session()->has('update'))
+        <div class="alert alert-success">
+            {{ session()->get('update') }}
+        </div>
     @endif
 
 
@@ -28,12 +32,14 @@
                         @if(count($gedung) > 0)
                         @foreach($gedung as $data)
                             <tr>
+                                {{--ini cara kalau mau liat detail per id nya--}}
+                                {{--<td><a href="{{ route('gedung.show', $data->id_gedung) }}">{{ $data->id_gedung }}</td></a>--}}
                                 <td>{{ $data->id_gedung }}</td>
                                 <td>{{ $data->nama_gedung }}</td>
                                 <form method="post" action="{{ url('admin/gedung') }}">
                                     {{ csrf_field() }}
 
-                                    <td><a class="glyphicon glyphicon-pencil jarak"></a><a class="glyphicon glyphicon-trash"></a></td>
+                                    <td><a class="glyphicon glyphicon-pencil jarak" href="{{ route('gedung.edit', $data->id_gedung) }}"></a><a class="glyphicon glyphicon-trash"></a></td>
                                 </form>
                             </tr>
                         @endforeach
