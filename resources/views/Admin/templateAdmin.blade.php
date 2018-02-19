@@ -48,6 +48,8 @@
     <script src="{{ url('dist/js/demo.js') }}"></script>
     {{--Custom JS--}}
     <script src="{{ url('script.js') }}"></script>
+    {{--sweet alert js--}}
+    <script src="{{ url('sweetalert/sweetalert.min.js') }}"></script>
 
     {{--ini buat table view nya di gedung maupun ruangan--}}
     <script src="{{ url('dataTables/js/jquery.dataTables.min.js') }}"></script>

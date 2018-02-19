@@ -3,13 +3,20 @@
 @section('isi')
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    {{--<li>{{ $error }}</li>--}}
+                    <script>
+                        var error = "{{ $error }}";
+                        $().ready(function (e) {
+                            swal({
+                                title: "Warning!",
+                                text: error,
+                                icon: "warning",
+                                button: "OK",
+                            });
+                        })
+                    </script>
                 @endforeach
-            </ul>
-        </div>
     @endif
     <!-- general form elements -->
     <div class="box box-primary">

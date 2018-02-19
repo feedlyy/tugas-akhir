@@ -4,13 +4,30 @@
 
 
     @if(session()->has('status'))
-        <div class="alert alert-success">
-            {{ session()->get('status') }}
-        </div>
+        {{--<div class="alert alert-success">--}}
+            {{--{{ session()->get('status') }}--}}
+        {{--</div>--}}
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Success!",
+                    text: "Gedung Telah Di Tambahkan!",
+                    icon: "success",
+                    button: "Done!",
+                });
+            })
+        </script>
         @elseif(session()->has('update'))
-        <div class="alert alert-success">
-            {{ session()->get('update') }}
-        </div>
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Success!",
+                    text: "Gedung Telah Di Update!",
+                    icon: "success",
+                    button: "Done!",
+                });
+            })
+        </script>
     @endif
 
 
