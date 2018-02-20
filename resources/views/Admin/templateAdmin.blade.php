@@ -50,6 +50,8 @@
     <script src="{{ url('script.js') }}"></script>
     {{--sweet alert js--}}
     <script src="{{ url('sweetalert/sweetalert.min.js') }}"></script>
+    {{--promise js--}}
+    <script src="{{ url('promise/promise.min.js') }}"></script>
 
     {{--ini buat table view nya di gedung maupun ruangan--}}
     <script src="{{ url('dataTables/js/jquery.dataTables.min.js') }}"></script>

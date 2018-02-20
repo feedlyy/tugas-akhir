@@ -127,5 +127,9 @@ class RuanganController extends Controller
     public function destroy($id)
     {
         //
+        $ruangan = Ruangan::find($id);
+        $ruangan->delete();
+
+        return redirect('admin/ruangan')->with(session()->flash('hapus', 'Data Berhasil Di Hapus'));
     }
 }

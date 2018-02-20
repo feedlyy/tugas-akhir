@@ -23,6 +23,17 @@
                 });
             })
         </script>
+        @elseif(session()->has('hapus'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Success!",
+                    text: "Gedung Telah Di Hapus!",
+                    icon: "success",
+                    button: "Done!",
+                });
+            })
+        </script>
     @endif
 
     <div class="container putih">
@@ -46,10 +57,15 @@
                                 <td>{{ $data->id_ruangan }}</td>
                                 <td>{{ $data->id_gedung }} - {{ \App\Gedung::find($data->id_gedung)->nama_gedung }}</td>
                                 <td>{{ $data->nama_ruangan }}</td>
-                                <form method="post" action="{{ url('admin/ruangan') }}">
+                                <form method="post" action="{{ route('ruangan.destroy', $data->id_ruangan) }}">
+                                    <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
-
-                                    <td><a class="glyphicon glyphicon-pencil jarak" href="{{ route('ruangan.edit', $data->id_ruangan) }}"></a><a class="glyphicon glyphicon-trash"></a></td>
+                                    <td>
+                                        <a href="{{ route('ruangan.edit', $data->id_ruangan) }}">
+                                           <input type="button" class="btn btn-warning" value="Edit">
+                                        </a>
+                                        <input type="submit" value="Hapus" class="btn btn-danger">
+                                    </td>
                                 </form>
                             </tr>
                         @endforeach

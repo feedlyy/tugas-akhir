@@ -28,7 +28,44 @@
                 });
             })
         </script>
+        @elseif(session()->has('hapus'))
+        {{--ini script buat delete confirmation--}}
+        <script>
+
+            /*$().ready(function (e) {
+                swal({
+                    title: "Success!",
+                    text: "Gedung Telah Di Hapus!",
+                    icon: "success",
+                    button: "Done!",
+                });
+            })*/
+
+        </script>
     @endif
+    {{--<script>
+        function confirm() {
+            $().ready(function (e) {
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! Your imaginary file has been deleted!", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("Your imaginary file is safe!");
+            }
+            });
+            })
+
+        }
+    </script>--}}
 
 
 
@@ -53,10 +90,22 @@
                                 {{--<td><a href="{{ route('gedung.show', $data->id_gedung) }}">{{ $data->id_gedung }}</td></a>--}}
                                 <td>{{ $data->id_gedung }}</td>
                                 <td>{{ $data->nama_gedung }}</td>
-                                <form method="post" action="{{ url('admin/gedung') }}">
+                                <form method="post" action="{{ route('gedung.destroy', $data->id_gedung ) }}">
+                                    {{--disini kenapa route nya ke hapus/destroy? karna
+                                    tombol hapus yang format nya input dan type nya submit buat langsung memproses delete nya
+                                    kalau pake href nanti cuma nge-link aja ga bakal nge hapus
+                                    dan bisa di liat di php artisan route:list
+                                    disitu tertulis kalau mau hapus pake method delete
+                                    makanya disini dikasih input type hidden dengan nama method dan value DELETE--}}
+                                    <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
-
-                                    <td><a class="glyphicon glyphicon-pencil jarak" href="{{ route('gedung.edit', $data->id_gedung) }}"></a><a class="glyphicon glyphicon-trash"></a></td>
+                                    <td>
+                                        <a href="{{ route('gedung.edit', $data->id_gedung) }}">
+                                            <input type="button" class="btn btn-warning" value="Edit">
+                                        </a>
+                                        {{--<a class="glyphicon glyphicon-trash" id="hapus"></a>--}}
+                                        <a id="hapus" onclick="confirm(hapus)"><input class="btn btn-danger" type="submit" value="Hapus"></a>
+                                    </td>
                                 </form>
                             </tr>
                         @endforeach
