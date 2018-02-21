@@ -22,17 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home2', 'AdminViewHandleController@tes')->name('home2');
 
 
-//Route::prefix('admin')->group(function (){
-//    Route::middleware(['auth', 'fakultas'])->group(function (){
-//        Route::get('', 'AdminViewHandleController@tampilan');
-//    });
-//    Route::middleware(['auth', 'departemen'])->group(function (){
-//        Route::get('', 'AdminViewHandleController@tampilan');
-//    });
-//    Route::middleware(['auth', 'prodi'])->group(function (){
-//        Route::get('', 'AdminViewHandleController@tampilan');
-//    });
-//});
 
 Route::prefix('admin')->group(function (){
    Route::middleware('auth')->group(function (){

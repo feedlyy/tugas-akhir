@@ -13,7 +13,8 @@
                     title: "Success!",
                     text: "Gedung Telah Di Tambahkan!",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
         </script>
@@ -24,50 +25,46 @@
                     title: "Success!",
                     text: "Gedung Telah Di Update!",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
         </script>
         @elseif(session()->has('hapus'))
-        {{--ini script buat delete confirmation--}}
         <script>
-
             $().ready(function (e) {
                 swal({
                     title: "Success!",
-                    text: "Gedung Telah Di Hapus!",
+                    text: "Gedung Telah Di Delete",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
-
         </script>
     @endif
-    {{--<script>
-        function confirm() {
-            $().ready(function (e) {
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                    .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Poof! Your imaginary file has been deleted!", {
-                            icon: "success",
-                        });
-                    } else {
-                        swal("Your imaginary file is safe!");
-            }
+
+    <script type="text/javascript">
+        /*ini javascript buat konfirmasi delete*/
+            $(document).ready(function(){
+                $("#hapus").submit(function(event) {
+                    var form = this;
+                    event.preventDefault();
+                    swal({
+                        title: 'Are you sure?',
+                        text: "Please click confirm to delete this item",
+                        icon: 'warning',
+                        buttons: true
+                    }).then(function (isConfirm) {
+                        if (isConfirm){
+                            form.submit();
+                        } else {
+                            swal('Cancelled', '', 'error');
+                        }
+                    })
+                });
             });
-            })
-
-        }
-    </script>--}}
-
-
+    </script>
 
     <div class="container putih">
         <h2 style="">List Gedung</h2>
@@ -91,23 +88,28 @@
                                 <td>{{ $data->id_gedung }}</td>
                                 <td>{{ $data->nama_gedung }}</td>
                                 <td>
+
+                                    {!! Form::open(['route' => ['gedung.destroy', $data->id_gedung], 'method' => 'delete', 'id' => 'hapus']) !!}
                                     <a href="{{ route('gedung.edit', $data->id_gedung) }}">
                                         <input type="button" class="btn btn-warning" value="Edit">
                                     </a>
-                                    {{--<a class="glyphicon glyphicon-trash" id="hapus"></a>--}}
-                                    <a><input class="btn btn-danger" type="submit" value="Hapus"></a>
-                                </td>
-                                <form method="post" action="{{ route('gedung.destroy', $data->id_gedung ) }}">
-                                    {{--disini kenapa route nya ke hapus/destroy? karna
+                                    <input type="submit" class="btn btn-danger" value="Hapus">
+                                    {!! Form::close() !!}
+
+                                {{--<form method="post" action="{{ route('gedung.destroy', $data->id_gedung ) }}">
+                                    --}}{{--disini kenapa route nya ke hapus/destroy? karna
                                     tombol hapus yang format nya input dan type nya submit buat langsung memproses delete nya
-                                    kalau pake href nanti cuma nge-link aja ga bakal nge hapus
+                                    kalau pake href nanti cuma nge-link aja ga bakal nge hapus. html juga ga bisa definisiin method yang dipake
                                     dan bisa di liat di php artisan route:list
                                     disitu tertulis kalau mau hapus pake method delete
-                                    makanya disini dikasih input type hidden dengan nama method dan value DELETE--}}
-                                    <input type="hidden" name="_method" value="DELETE">
+                                    makanya disini dikasih input type hidden dengan nama method dan value DELETE
+                                    atau bisa pake method field--}}{{--
+                                    --}}{{--<input type="hidden" name="_method" value="DELETE">--}}{{--
+                                    {{ method_field('DELETE') }}
                                     {{ csrf_field() }}
-
-                                </form>
+                                    <input class="btn btn-danger" type="submit" value="Hapus"></a>
+                                </form>--}}
+                                </td>
                             </tr>
                         @endforeach
                             @else
@@ -119,7 +121,7 @@
         </div>
     </div>
 
-    {{--<script src="{{ url('dataTables/js/jquery.min.js') }}"></script>--}}
+
 
 
     <script>
