@@ -140,7 +140,7 @@ class GedungController extends Controller
         $gedung = Gedung::find($id);
         $gedung->delete();
 
-        return redirect('admin/gedung');/*->with(session()->flash('hapus', 'Data Berhasil Di Hapus'));*/
+        return redirect('admin/gedung')->with(session()->flash('hapus', 'Data Berhasil Di Hapus'));
 
     }
 }

@@ -32,14 +32,14 @@
         {{--ini script buat delete confirmation--}}
         <script>
 
-            /*$().ready(function (e) {
+            $().ready(function (e) {
                 swal({
                     title: "Success!",
                     text: "Gedung Telah Di Hapus!",
                     icon: "success",
                     button: "Done!",
                 });
-            })*/
+            })
 
         </script>
     @endif
@@ -90,6 +90,13 @@
                                 {{--<td><a href="{{ route('gedung.show', $data->id_gedung) }}">{{ $data->id_gedung }}</td></a>--}}
                                 <td>{{ $data->id_gedung }}</td>
                                 <td>{{ $data->nama_gedung }}</td>
+                                <td>
+                                    <a href="{{ route('gedung.edit', $data->id_gedung) }}">
+                                        <input type="button" class="btn btn-warning" value="Edit">
+                                    </a>
+                                    {{--<a class="glyphicon glyphicon-trash" id="hapus"></a>--}}
+                                    <a><input class="btn btn-danger" type="submit" value="Hapus"></a>
+                                </td>
                                 <form method="post" action="{{ route('gedung.destroy', $data->id_gedung ) }}">
                                     {{--disini kenapa route nya ke hapus/destroy? karna
                                     tombol hapus yang format nya input dan type nya submit buat langsung memproses delete nya
@@ -99,13 +106,7 @@
                                     makanya disini dikasih input type hidden dengan nama method dan value DELETE--}}
                                     <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
-                                    <td>
-                                        <a href="{{ route('gedung.edit', $data->id_gedung) }}">
-                                            <input type="button" class="btn btn-warning" value="Edit">
-                                        </a>
-                                        {{--<a class="glyphicon glyphicon-trash" id="hapus"></a>--}}
-                                        <a id="hapus" onclick="confirm(hapus)"><input class="btn btn-danger" type="submit" value="Hapus"></a>
-                                    </td>
+
                                 </form>
                             </tr>
                         @endforeach
