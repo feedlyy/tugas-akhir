@@ -50,10 +50,12 @@ class RuanganController extends Controller
         //
 //        bikin validasi
             $validasi = $request->validate([
-               'ruangan' => ['required', 'max:255', new Uppercase]
+                'id_ruangan' => ['required', 'unique:ruangans', 'max:255'],
+                'ruangan' => ['required', 'max:255', new Uppercase]
             ]);
 
         $ruangan = new Ruangan;
+        $ruangan->id_ruangan = $request->id_ruangan;
         $ruangan->nama_ruangan = $request->ruangan;
         $ruangan->id_gedung = $request->selectgedung;
         $ruangan->save();

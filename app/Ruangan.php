@@ -9,6 +9,7 @@ class Ruangan extends Model
     //
     protected $table = 'ruangans';
     protected $primaryKey = 'id_ruangan';
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -16,6 +17,6 @@ class Ruangan extends Model
      * @var array
      */
     protected $fillable = [
-        'nama_ruangan', 'id_gedung',
+        'id_ruangan', 'nama_ruangan', 'id_gedung',
     ];
 }

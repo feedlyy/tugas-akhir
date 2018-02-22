@@ -11,6 +11,12 @@ class Gedung extends Model
     protected $table = 'gedungs';
     protected $primaryKey = 'id_gedung';
 
+    /*fungsi incrementing ini berguna kalau primary key nya bukan integer
+    misalkan string, jadi nanti dengan setting incrementing = false maka return nya ga akan 0, melainkan
+    value string tersebut*/
+    public $incrementing = false;
+
+
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +24,7 @@ class Gedung extends Model
      * @var array
      */
     protected $fillable = [
-        'nama_gedung',
+        'id_gedung', 'nama_gedung',
     ];
 
 

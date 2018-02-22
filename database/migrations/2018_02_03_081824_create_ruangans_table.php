@@ -14,8 +14,10 @@ class CreateRuangansTable extends Migration
     public function up()
     {
         Schema::create('ruangans', function (Blueprint $table) {
-            $table->increments('id_ruangan');
-            $table->integer('id_gedung')->unsigned();
+            $table->string('id_ruangan');
+            $table->primary('id_ruangan');
+
+            $table->string('id_gedung');
             $table->string('nama_ruangan');
 
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');

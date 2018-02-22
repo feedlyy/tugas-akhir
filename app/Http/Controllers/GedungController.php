@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Gedung;
+use App\Rules\Kapital;
 use App\Rules\Uppercase;
 use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
@@ -56,13 +57,18 @@ class GedungController extends Controller
     {
         //bikin validasi nya
         $validasi = $request->validate([
-            'gedung' => ['required', 'max:255', new Uppercase]
+            'gedung' => ['required', 'unique:gedungs,nama_gedung','max:255', new Uppercase],
+            'id_gedung' => ['required', 'unique:gedungs', 'max:255', new Kapital]
             /*uppercase itu fungsi validasi custom dimana setiap inputan kalimat dari gedung
             harus diawali dengan huruf kapital*/
+
+            /*unique itu sebenernya hanya untuk validasi biar data di database ga boleh dobel untuk primary
+            key, tapi bisa di custom dengan cara: unique:(nama tabel),(nama kolom)*/
         ]);
 
         //ini store data ke db gedungs nya
         $gedung = new Gedung;
+        $gedung->id_gedung = $request->id_gedung;
         $gedung->nama_gedung = $request->gedung;
         $gedung->save();
         $request->session()->flash('status', 'Data Berhasil Di Input');
@@ -114,12 +120,14 @@ class GedungController extends Controller
     {
         //
         $validasi = $request->validate([
-            'gedung' => ['required', 'max:255', new Uppercase]
+            'gedung' => ['required', 'unique:gedungs,nama_gedung','max:255', new Uppercase],
+            'id_gedung' => ['required', 'max:255', new Kapital]
             /*uppercase itu fungsi validasi custom dimana setiap inputan kalimat dari gedung
             harus diawali dengan huruf kapital*/
         ]);
 
         $gedung = Gedung::find($id);
+        $gedung->id_gedung = $request->id_gedung;
         $gedung->nama_gedung = $request->gedung;
 
         $gedung->save();

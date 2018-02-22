@@ -14,7 +14,9 @@ class CreateGedungsTable extends Migration
     public function up()
     {
         Schema::create('gedungs', function (Blueprint $table) {
-            $table->increments('id_gedung');
+            $table->string('id_gedung');
+            $table->primary('id_gedung');
+
             $table->string('nama_gedung');
             $table->timestamps();
         });
