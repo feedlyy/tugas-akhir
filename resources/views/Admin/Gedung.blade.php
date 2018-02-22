@@ -11,7 +11,7 @@
             $().ready(function (e) {
                 swal({
                     title: "Success!",
-                    text: "Gedung Telah Di Tambahkan!",
+                    text: "Gedung Telah Di Tambahkan",
                     icon: "success",
                     button: false,
                     timer: 2000
@@ -23,7 +23,7 @@
             $().ready(function (e) {
                 swal({
                     title: "Success!",
-                    text: "Gedung Telah Di Update!",
+                    text: "Gedung Telah Di Perbarui",
                     icon: "success",
                     button: false,
                     timer: 2000
@@ -35,7 +35,7 @@
             $().ready(function (e) {
                 swal({
                     title: "Success!",
-                    text: "Gedung Telah Di Delete",
+                    text: "Gedung Telah Di Hapus",
                     icon: "success",
                     button: false,
                     timer: 2000
@@ -44,15 +44,15 @@
         </script>
     @endif
 
-    <script type="text/javascript">
-        /*ini javascript buat konfirmasi delete*/
+        <script type="text/javascript">
+            /*ini javascript buat konfirmasi delete*/
             $(document).ready(function(){
-                $("#hapus").submit(function(event) {
+                $(".hapus").submit(function(event) {
                     var form = this;
                     event.preventDefault();
                     swal({
-                        title: 'Are you sure?',
-                        text: "Please click confirm to delete this item",
+                        title: 'Apakah Anda Yakin?',
+                        text: "Data yang hilang tidak akan kembali",
                         icon: 'warning',
                         buttons: true
                     }).then(function (isConfirm) {
@@ -64,7 +64,7 @@
                     })
                 });
             });
-    </script>
+        </script>
 
     <div class="container putih">
         <h2 style="">List Gedung</h2>
@@ -80,7 +80,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @if(count($gedung) > 0)
                         @foreach($gedung as $data)
                             <tr>
                                 {{--ini cara kalau mau liat detail per id nya--}}
@@ -88,14 +87,13 @@
                                 <td>{{ $data->id_gedung }}</td>
                                 <td>{{ $data->nama_gedung }}</td>
                                 <td>
-
-                                    {!! Form::open(['route' => ['gedung.destroy', $data->id_gedung], 'method' => 'delete', 'id' => 'hapus']) !!}
+                                    {!! Form::open(['route' => ['gedung.destroy', $data->id_gedung], 'method' => 'delete', 'class' => 'hapus']) !!}
                                     <a href="{{ route('gedung.edit', $data->id_gedung) }}">
                                         <input type="button" class="btn btn-warning" value="Edit">
                                     </a>
-                                    <input type="submit" class="btn btn-danger" value="Hapus">
+                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
                                     {!! Form::close() !!}
-
+                                </td>
                                 {{--<form method="post" action="{{ route('gedung.destroy', $data->id_gedung ) }}">
                                     --}}{{--disini kenapa route nya ke hapus/destroy? karna
                                     tombol hapus yang format nya input dan type nya submit buat langsung memproses delete nya
@@ -109,12 +107,9 @@
                                     {{ csrf_field() }}
                                     <input class="btn btn-danger" type="submit" value="Hapus"></a>
                                 </form>--}}
-                                </td>
+
                             </tr>
                         @endforeach
-                            @else
-                        <p>Tidak ada data</p>
-                            @endif
                     </tbody>
                 </table>
             </div>
