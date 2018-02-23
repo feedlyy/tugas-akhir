@@ -18,7 +18,7 @@ class CreateRuangansTable extends Migration
             $table->primary('id_ruangan');
 
             $table->string('id_gedung');
-            $table->string('nama_ruangan');
+            $table->string('nama_ruangan')->nullable();
 
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
 

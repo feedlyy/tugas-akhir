@@ -133,7 +133,7 @@
                 @auth
                     @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
                         <li class="treeview">
-                            <a href="#">
+                            <a href="{{ url('admin/admin') }}">
                                 <i class="fa fa-user-plus"></i> <span>Admin</span>
                             </a>
                         </li>
@@ -164,7 +164,7 @@
                         </li>
                     @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
                         <li class="treeview">
-                            <a href="#">
+                            <a href="{{ url('admin/admin') }}">
                                 <i class="fa fa-user-plus"></i> <span>Admin</span>
                             </a>
                         </li>

@@ -28,7 +28,8 @@ Route::prefix('admin')->group(function (){
     Route::get('', 'AdminViewHandleController@tampilan')->name('tampilan');
     Route::resources([
        'gedung' => 'GedungController',
-        'ruangan' => 'RuanganController'
+        'ruangan' => 'RuanganController',
+        'admin' => 'AdminController'
     ]);
     Route::get('kalender', 'KalenderController@kalender')->name('kalender');
    });
