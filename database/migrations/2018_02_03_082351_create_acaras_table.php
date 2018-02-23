@@ -23,7 +23,7 @@ class CreateAcarasTable extends Migration
             $table->string('id_gedung');
             $table->string('id_ruangan');
             $table->string('tamu_undangan');
-            $table->string('id_admin');
+            $table->integer('id_admin')->unsigned();
 
             $table->foreign('id_ruangan')->references('id_ruangan')->on('ruangans')->onDelete('CASCADE');
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');

@@ -84,7 +84,7 @@ return [
     ],
     'string'               => 'The :attribute must be a string.',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'Masukan telah dipakai, mohon gunakan input yang tidak ada dalam data.',
+    'unique'               => 'Masukan :attribute telah dipakai, mohon gunakan input yang tidak ada dalam data.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 

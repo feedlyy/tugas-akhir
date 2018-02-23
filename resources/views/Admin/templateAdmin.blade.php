@@ -116,7 +116,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ url('dist/img/avatar.png') }}" class="img-circle" alt="User Image">
+                    <img src="{{ url('image/ugm.png') }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     @auth
@@ -232,44 +232,29 @@
     <div class="content-wrapper">
         @section('isi')
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        {{--<section class="content-header">
             <h1>
                 @auth
                     Selamat Datang Admin {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin) }}
                 @endauth
             </h1>
-        </section>
+        </section>--}}
 
         <!-- Main content -->
         <section class="content">
 
-            <!-- Default box -->
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Bingung? Ambil jalan pintas di sini !</h3>
+            <!-- Profile Image -->
+            <div class="box" style="width: 50%; height: 140%; margin-left: 25%; margin-top: 4%;">
+                <div class="box-body box-profile">
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                            <i class="fa fa-minus"></i></button>
-                    </div>
+
+                    <h3 class="profile-username text-center">Selamat Datang Admin {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin) }}</h3>
+                    <br>
+                    <img class="profile-user-img img-responsive img-circle" src="{{ url('image/ugm.png') }}" alt="User profile picture">
+                    <br>
+                    <h3 class="text-muted text-center">Sistem Penjadwalan Acara Sekolah Vokasi Integrasi Google Calendar</h3>
                 </div>
-                @auth
-                    @if(\Illuminate\Support\Facades\Auth::user()->nama_admin == 'vokasi')
-                        <div class="box-body" style="background: #76b4ff url() 0 0 no-repeat;">
-                            Tambah Admin
-                            <button class="button btn-primary">Click me</button>
-                        </div>
-                        <div class="box-body" style="background: #ffff00 url() 0 0 no-repeat;">
-                            Tambah Acara
-                            <button class="button btn-warning">Click me</button>
-                        </div>
-                    @else
-                        <div class="box-body">
-                            Tambah Acara
-                            <button class="primary">Click me</button>
-                        </div>
-                        @endif
-                @endauth
+                <!-- /.box-body -->
             </div>
             <!-- /.box -->
 

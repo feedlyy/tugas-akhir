@@ -37,6 +37,6 @@ class Uppercase implements Rule
      */
     public function message()
     {
-        return 'Inputan Kalimat Harus Diawali Dengan Huruf Kapital';
+        return 'Inputan :attribute Harus Diawali Dengan Huruf Kapital';
     }
 }

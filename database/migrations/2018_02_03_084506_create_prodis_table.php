@@ -18,7 +18,7 @@ class CreateProdisTable extends Migration
             $table->string('nama_prodi');
             $table->integer('id_fakultas')->unsigned();
             $table->integer('id_departemen')->unsigned();
-            $table->string('id_admin');
+            $table->integer('id_admin')->unsigned();
 
             $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas')->onDelete('CASCADE');
             $table->foreign('id_departemen')->references('id_departemen')->on('departemens')->onDelete('CASCADE');

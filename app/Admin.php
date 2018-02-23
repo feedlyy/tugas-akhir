@@ -11,13 +11,14 @@ class Admin extends Authenticatable
 
     protected $table = 'admins';
     protected $primaryKey = 'id_admin';
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'nama_admin', 'password', 'id_status',
+        /*'id_admin', */'nama_admin', 'password', 'id_status',
     ];
 
     /**
