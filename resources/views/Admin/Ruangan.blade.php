@@ -36,6 +36,28 @@
         </script>
     @endif
 
+    <script>
+        /*ini javascript buat konfirmasi delete*/
+        $(document).ready(function(){
+            $(".hapus").submit(function(event) {
+                var form = this;
+                event.preventDefault();
+                swal({
+                    title: 'Apakah Anda Yakin?',
+                    text: "Data yang hilang tidak akan kembali",
+                    icon: 'warning',
+                    buttons: true
+                }).then(function (isConfirm) {
+                    if (isConfirm){
+                        form.submit();
+                    } else {
+                        swal('Cancelled', '', 'error');
+                    }
+                })
+            });
+        });
+    </script>
+
     <div class="container putih">
         <h2 style="">List Ruangan</h2>
         <a href="{{ url('admin/ruangan/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Ruangan</button></a>
@@ -56,8 +78,8 @@
                             <tr>
                                 <td>{{ $data->id_ruangan }}</td>
                                 <td>{{ $data->id_gedung }} - {{ \App\Gedung::find($data->id_gedung)->nama_gedung }}</td>
-                                <td>{{ $data->nama_ruangan }}</td>
-                                <form method="post" action="{{ route('ruangan.destroy', $data->id_ruangan) }}">
+                                <td>{{ $data->id_gedung }} - {{ $data->id_ruangan }}</td>
+                                {{--<form method="post" action="{{ route('ruangan.destroy', $data->id_ruangan) }}">
                                     <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
                                     <td>
@@ -66,7 +88,15 @@
                                         </a>
                                         <input type="submit" value="Hapus" class="btn btn-danger">
                                     </td>
-                                </form>
+                                </form>--}}
+                                <td>
+                                    {!! Form::open(['route' => ['ruangan.destroy', $data->id_ruangan], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                    <a href="{{ route('ruangan.edit', $data->id_ruangan) }}">
+                                        <input type="button" class="btn btn-warning" value="Edit">
+                                    </a>
+                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                    {!! Form::close() !!}
+                                </td>
                             </tr>
                         @endforeach
                     @else

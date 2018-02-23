@@ -24,7 +24,7 @@
             <h3 class="box-title">Edit Ruangan</h3>
         </div>
         <div class="box-header">
-            <a href="{{ route('ruangan.index') }}"><button class="arrow arrow-left"></button></a>
+            <a class="fa fa-arrow-left" href="{{ route('ruangan.index') }}"><span style="font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif; font-size: small;">&nbspKembali ke list ruangan</span></a>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -33,8 +33,8 @@
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Ruangan</label>
-                    <input type="text" name="ruangan" class="form-control" id="" placeholder="" value="{{ $ruangan->nama_ruangan }}">
+                    <label for="exampleInputEmail1">ID Ruangan</label>
+                    <input type="text" name="ruangan" class="form-control" id="" placeholder="" value="{{ $ruangan->id_ruangan }}">
                 </div>
             </div>
             <!-- /.box-body -->

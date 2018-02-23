@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Ruangan;
 use App\Gedung;
+use App\Rules\Kapital;
 use App\Rules\Uppercase;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -50,13 +52,14 @@ class RuanganController extends Controller
         //
 //        bikin validasi
             $validasi = $request->validate([
-                'id_ruangan' => ['required', 'unique:ruangans', 'max:255'],
-                'ruangan' => ['required', 'max:255', new Uppercase]
+                'id_ruangan' => ['required', 'max:255', new Kapital/*Rule::unique('ruangans')->ignore(\App\Ruangan::all()->id, 'id_ruangan')*/],/*,
+                'ruangan' => ['required', 'max:255', new Uppercase]*/
+                'nama_ruangan' => ['unique:ruangans,nama_ruangan']
             ]);
 
         $ruangan = new Ruangan;
         $ruangan->id_ruangan = $request->id_ruangan;
-        $ruangan->nama_ruangan = $request->ruangan;
+        $ruangan->nama_ruangan = $request->nama_ruangan;
         $ruangan->id_gedung = $request->selectgedung;
         $ruangan->save();
 
@@ -106,11 +109,11 @@ class RuanganController extends Controller
         //
 //        bikin validasi
             $validasi = $request->validate([
-                'ruangan' => ['required', 'max:255', new Uppercase]
+                'ruangan' => ['required', 'max:255', new Kapital/*Rule::unique('ruangans')->ignore(\App\Ruangan::all()->id, 'id_ruangan'*/]
             ]);
 
             $ruangan = Ruangan::find($id);
-            $ruangan->nama_ruangan = $request->ruangan;
+            $ruangan->id_ruangan = $request->ruangan;
 //            $ruangan->id_gedung = $request->selectgedung;
 
             $ruangan->save();

@@ -22,6 +22,9 @@
         <div class="box-header with-border">
             <h3 class="box-title">Tambah Ruangan</h3>
         </div>
+        <div class="box-header">
+            <a class="fa fa-arrow-left" href="{{ route('ruangan.index') }}"><span style="font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif; font-size: small;">&nbspKembali ke list ruangan</span></a>
+        </div>
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="post" action="{{ route('ruangan.store') }}">
@@ -42,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nama Ruangan</label>
-                    <input type="text" name="ruangan" class="form-control" id="" placeholder="">
+                    <input type="hidden" name="nama_ruangan" class="form-control" id="" placeholder="">
                 </div>
             </div>
             <!-- /.box-body -->
