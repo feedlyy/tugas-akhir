@@ -6,7 +6,7 @@
             $().ready(function (e) {
                 swal({
                     title: "Success!",
-                    text: "Gedung Telah Di Tambahkan",
+                    text: "Admin Telah Di Tambahkan",
                     icon: "success",
                     button: false,
                     timer: 2000
@@ -18,7 +18,7 @@
             $().ready(function (e) {
                 swal({
                     title: "Success!",
-                    text: "Gedung Telah Di Perbarui",
+                    text: "Admin Telah Di Perbarui",
                     icon: "success",
                     button: false,
                     timer: 2000
@@ -30,7 +30,7 @@
             $().ready(function (e) {
                 swal({
                     title: "Success!",
-                    text: "Gedung Telah Di Hapus",
+                    text: "Admin Telah Di Hapus",
                     icon: "success",
                     button: false,
                     timer: 2000

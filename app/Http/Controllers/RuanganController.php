@@ -47,14 +47,20 @@ class RuanganController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         //
+        /*Validator::make($request, [
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($user->id),
+            ],
+        ]);*/
 //        bikin validasi
             $validasi = $request->validate([
-                'id_ruangan' => ['required', 'max:255', new Kapital/*Rule::unique('ruangans')->ignore(\App\Ruangan::all()->id, 'id_ruangan')*/],/*,
-                'ruangan' => ['required', 'max:255', new Uppercase]*/
-                'nama_ruangan' => ['unique:ruangans,nama_ruangan']
+                'id_ruangan' => ['required', 'max:255', new Kapital]/*,
+                'nama_ruangan' => ['unique:ruangans']*/
             ]);
 
         $ruangan = new Ruangan;
@@ -109,11 +115,12 @@ class RuanganController extends Controller
         //
 //        bikin validasi
             $validasi = $request->validate([
-                'ruangan' => ['required', 'max:255', new Kapital/*Rule::unique('ruangans')->ignore(\App\Ruangan::all()->id, 'id_ruangan'*/]
+                'ruangan' => ['required', 'max:255', new Kapital]
             ]);
 
             $ruangan = Ruangan::find($id);
             $ruangan->id_ruangan = $request->ruangan;
+            /*$ruangan->nama_ruangan = $request->nama_ruangan;*/
 //            $ruangan->id_gedung = $request->selectgedung;
 
             $ruangan->save();

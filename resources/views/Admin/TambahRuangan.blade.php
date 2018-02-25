@@ -44,7 +44,7 @@
                             </select>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Ruangan</label>
+                    {{--<label for="exampleInputEmail1">Nama Ruangan</label>--}}
                     <input type="hidden" name="nama_ruangan" class="form-control" id="" placeholder="">
                 </div>
             </div>
