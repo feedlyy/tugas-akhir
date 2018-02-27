@@ -13,10 +13,10 @@ class AdminTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('admins')->insert([
+        /*DB::table('admins')->insert([
            'nama_admin' => 'vokasi',
            'password' => bcrypt('vokasi'),
             'id_status' => '1',
-        ]);
+        ]);*/
     }
 }

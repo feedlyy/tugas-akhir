@@ -8,7 +8,8 @@
                     title: "Success!",
                     text: "Staff Telah Di Tambahkan!",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
         </script>
@@ -19,7 +20,8 @@
                     title: "Success!",
                     text: "Staff Telah Di Update!",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
         </script>
@@ -30,7 +32,8 @@
                     title: "Success!",
                     text: "Staff Telah Di Hapus!",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
         </script>
@@ -59,39 +62,32 @@
     </script>
 
     <div class="container putih">
-        <h2 style="">List Ruangan</h2>
-        <a href="{{ url('admin/ruangan/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Ruangan</button></a>
+        <h2 style="">List Staff</h2>
+        <a href="{{ url('admin/staff/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Admin</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
                 <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
                     <thead>
                     <tr>
-                        <th>ID Ruangan</th>
-                        <th>ID Gedung</th>
-                        <th>Nama Ruangan</th>
+                        <th>ID Staff</th>
+                        <th>ID Status</th>
+                        <th>NIP</th>
+                        <th>Nama Staff</th>
+                        <th>Email</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($ruangan) > 0)
-                        @foreach($ruangan as $data)
+                        @foreach($staff as $data)
                             <tr>
-                                <td>{{ $data->id_ruangan }}</td>
-                                <td>{{ $data->id_gedung }} - {{ \App\Gedung::find($data->id_gedung)->nama_gedung }}</td>
-                                <td>{{ $data->id_gedung }} - {{ $data->id_ruangan }}</td>
-                                {{--<form method="post" action="{{ route('ruangan.destroy', $data->id_ruangan) }}">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    {{ csrf_field() }}
-                                    <td>
-                                        <a href="{{ route('ruangan.edit', $data->id_ruangan) }}">
-                                           <input type="button" class="btn btn-warning" value="Edit">
-                                        </a>
-                                        <input type="submit" value="Hapus" class="btn btn-danger">
-                                    </td>
-                                </form>--}}
+                                <td>{{ $data->id_staff }}</td>
+                                <td>{{ $data->id_status }}</td>
+                                <td>{{ $data->nip }}</td>
+                                <td>{{ $data->nama_staff }}</td>
+                                <td>{{ $data->email }}</td>
                                 <td>
-                                    {!! Form::open(['route' => ['ruangan.destroy', $data->id_ruangan], 'method' => 'delete', 'class' => 'hapus']) !!}
-                                    <a href="{{ route('ruangan.edit', $data->id_ruangan) }}">
+                                    {!! Form::open(['route' => ['staff.destroy', $data->id_staff ], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                    <a href="{{ route('staff.edit', $data->id_staff ) }}">
                                         <input type="button" class="btn btn-warning" value="Edit">
                                     </a>
                                     {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
@@ -99,9 +95,6 @@
                                 </td>
                             </tr>
                         @endforeach
-                    @else
-                        <p>Tidak ada data</p>
-                    @endif
                     </tbody>
                 </table>
             </div>

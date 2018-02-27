@@ -29,7 +29,8 @@ Route::prefix('admin')->group(function (){
     Route::resources([
        'gedung' => 'GedungController',
         'ruangan' => 'RuanganController',
-        'admin' => 'AdminController'
+        'admin' => 'AdminController',
+        'staff' => 'StaffController'
     ]);
     Route::get('kalender', 'KalenderController@kalender')->name('kalender');
    });

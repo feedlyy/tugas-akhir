@@ -138,7 +138,7 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="#">
+                            <a href="{{ url('admin/staff') }}">
                                 <i class="fa fa-user"></i> <span>Staff</span>
                             </a>
                         </li>
@@ -169,7 +169,7 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="#">
+                            <a href="{{ url('admin/staff') }}">
                                 <i class="fa fa-user-o"></i> <span>Staff</span>
                             </a>
                         </li>
@@ -195,7 +195,7 @@
                         </li>
                         @else
                         <li class="treeview">
-                            <a href="#">
+                            <a href="{{ url('admin/staff') }}">
                                 <i class="fa fa-user"></i> <span>Staff</span>
                             </a>
                         </li>

@@ -8,7 +8,8 @@
                     title: "Success!",
                     text: "Ruangan Telah Di Tambahkan!",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
         </script>
@@ -19,7 +20,8 @@
                     title: "Success!",
                     text: "Ruangan Telah Di Update!",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
         </script>
@@ -30,7 +32,8 @@
                     title: "Success!",
                     text: "Gedung Telah Di Hapus!",
                     icon: "success",
-                    button: "Done!",
+                    button: false,
+                    timer: 2000
                 });
             })
         </script>
