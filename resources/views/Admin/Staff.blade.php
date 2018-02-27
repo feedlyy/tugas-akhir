@@ -63,7 +63,7 @@
 
     <div class="container putih">
         <h2 style="">List Staff</h2>
-        <a href="{{ url('admin/staff/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Admin</button></a>
+        <a href="{{ url('admin/staff/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Staff</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
                 <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">

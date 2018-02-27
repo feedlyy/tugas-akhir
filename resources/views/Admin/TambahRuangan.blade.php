@@ -33,7 +33,7 @@
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">ID Ruangan</label>
-                    <input type="text" name="id_ruangan" class="form-control" id="" placeholder="">
+                    <input type="text" name="id_ruangan" class="form-control" id="" placeholder="" value="{{ old('id_ruangan') }}" autofocus required>
                 </div>
                 <div class="form-group">
                         <label>ID Gedung</label>
