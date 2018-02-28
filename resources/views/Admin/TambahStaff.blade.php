@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nomor Hp</label>
-                    <input type="text" name="hp" class="form-control" value="{{ old('hp') }}" id="" placeholder="" autofocus required>
+                    <input type="text" name="hp" class="form-control" value="{{ old('hp') }}" id="" placeholder="08..." autofocus required>
                 </div>
             </div>
             <!-- /.box-body -->

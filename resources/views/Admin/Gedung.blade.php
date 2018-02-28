@@ -86,7 +86,7 @@
                                 <td>
                                     {!! Form::open(['route' => ['gedung.destroy', $data->id_gedung], 'method' => 'delete', 'class' => 'hapus']) !!}
                                     <a href="{{ route('gedung.edit', $data->id_gedung) }}">
-                                        <input type="button" class="btn btn-warning" value="Edit">
+                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
                                     </a>
                                     {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
                                     {!! Form::close() !!}
