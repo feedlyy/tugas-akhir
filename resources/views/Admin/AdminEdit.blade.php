@@ -32,11 +32,17 @@
         <form role="form" method="post" action="{{ route('admin.update', $admin->id_admin) }}">
             <input type="hidden" name="_method" value="PATCH">
             {{ csrf_field() }}
-
+            <h4>Ganti Password</h4>
             <div class="box-body">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Password</label>
-                    <input type="text" name="password" class="form-control" id="" placeholder="" value="{{ $admin->password }}">
+                    <label for="exampleInputEmail1">Password Baru</label>
+                    <input type="password" name="password_baru" class="form-control" id="" placeholder="" value="">
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Konfirmasi Password Baru</label>
+                    <input type="password" name="konfirm_password" class="form-control" id="" placeholder="" value="">
                 </div>
             </div>
             {{--<div class="box-body">

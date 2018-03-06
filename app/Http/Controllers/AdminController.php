@@ -103,12 +103,13 @@ class AdminController extends Controller
     {
         //
         $validasi = $request->validate([
-            'password' => ['required']
+            'password_baru' => ['required', 'same:konfirm_password'],
+            'konfirm_password' => ['required', 'same:password_baru']
         ]);
 
         $admin = Admin::find($id);
 
-        $admin->password = bcrypt($request->password);
+        $admin->password = bcrypt($request->konfirm_password);
         $admin->save();
 
         return redirect('admin/admin')->with(session()->flash('update', ''));

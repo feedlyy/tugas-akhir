@@ -64,7 +64,7 @@ class RuanganController extends Controller
             ->where('id_ruangan', $request->id_ruangan)
             ->where('id_gedung', $request->selectgedung)->get();
         if (count($users) > 0) {
-            return redirect('admin/ruangan/create')->with(session()->flash('alert_data_is_exist', 'Data itu sudah ada'));
+            return redirect('admin/ruangan/create')->with(session()->flash('alert_data_is_exist', ''));
         } else {
             /*$id = Ruangan::all('nama_ruangan');*/
             /*bikin validasi*/
@@ -79,7 +79,7 @@ class RuanganController extends Controller
             $ruangan = new Ruangan;
             $ruangan->id_ruangan = $request->id_ruangan;
             $ruangan->id_gedung = $request->selectgedung;
-            $ruangan->nama_ruangan = $request->selectgedung.$request->id_ruangan;
+            $ruangan->nama_ruangan = $request->selectgedung.' - '.$request->id_ruangan;
 
             /*$ruangan->nama_ruangan = $request->input('', $request->id_ruangan);*/
             /*kalau mau ambil semua inputan jadi satu array pake request all*/

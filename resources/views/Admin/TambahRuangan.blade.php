@@ -9,8 +9,8 @@
                     swal({
                         title: "Warning!",
                         text: error,
-                        icon: "warning",
-                        button: "OK",
+                        button: false,
+                        timer: 2000
                     });
                 })
             </script>

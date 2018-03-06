@@ -51,7 +51,7 @@ class StaffController extends Controller
             'nama_staff' => ['required', 'string', new Uppercase],
             'email_staff' => ['required', 'email'],
             'alamat' => ['required'],
-            'hp' => ['required', 'numeric'],
+            'hp' => ['required', 'numeric', 'digits_between:10,13'],
         ]);
 
         $staff = new Staff;
@@ -106,7 +106,7 @@ class StaffController extends Controller
             'nama_staff' => ['required', 'string', new Uppercase],
             'email_staff' => ['required', 'email'],
             'alamat' => ['required'],
-            'hp' => ['required', 'numeric']
+            'hp' => ['required', 'numeric', 'digits_between:10,13']
         ]);
 
         $staff = Staff::find($id);
