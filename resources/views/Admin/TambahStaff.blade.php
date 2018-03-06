@@ -34,8 +34,9 @@
                 <div class="form-group">
                     <label>ID Status</label>
                     <select class="form-control select2" style="width: 100%;" name="id_status">
+                        <option disabled selected="selected">Pilih Status</option>
                         @foreach($status as $data)
-                            <option selected="selected">{{ $data->id_status }}</option>
+                            <option>{{ $data->id_status }}</option>
                         @endforeach
                     </select>
                     <h6>1 = Fakultas, 2 = Departemen, 3 = Prodi</h6>

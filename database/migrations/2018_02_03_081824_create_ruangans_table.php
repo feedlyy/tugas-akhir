@@ -14,11 +14,12 @@ class CreateRuangansTable extends Migration
     public function up()
     {
         Schema::create('ruangans', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('id_ruangan');
-            $table->primary('id_ruangan');
+            /*$table->primary('id_ruangan');*/
 
             $table->string('id_gedung');
-            $table->string('nama_ruangan')->nullable();
+            $table->string('nama_ruangan')->index();
 
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
 

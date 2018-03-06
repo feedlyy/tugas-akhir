@@ -15,10 +15,22 @@
                 })
             </script>
         @endforeach
+    @elseif(session()->has('alert_data_is_exist'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Data sudah ada",
+                    icon: "warning",
+                    button: false,
+                    timer: 2000
+                });
+            })
+        </script>
     @endif
 
     <!-- general form elements -->
-    <div class="box box-primary">
+    <div class="box box-primary" id="app">
         <div class="box-header with-border">
             <h3 class="box-title">Tambah Ruangan</h3>
         </div>
@@ -33,13 +45,14 @@
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">ID Ruangan</label>
-                    <input type="text" name="id_ruangan" class="form-control" id="" placeholder="" value="{{ old('id_ruangan') }}" autofocus required>
+                    <input v-model="pesan" type="text" name="id_ruangan" class="form-control" id="" placeholder="" value="{{ old('id_ruangan') }}" autofocus required>
                 </div>
                 <div class="form-group">
                         <label>ID Gedung</label>
                             <select class="form-control select2" style="width: 100%;" name="selectgedung">
+                                <option disabled selected="selected">Pilih Gedung</option>
                                 @foreach($ruangan as $ruang)
-                                <option selected="selected">{{ $ruang->id_gedung }}</option>
+                                    <option>{{ $ruang->id_gedung }}</option>
                                 @endforeach
                             </select>
                 </div>

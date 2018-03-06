@@ -30,7 +30,8 @@ Route::prefix('admin')->group(function (){
        'gedung' => 'GedungController',
         'ruangan' => 'RuanganController',
         'admin' => 'AdminController',
-        'staff' => 'StaffController'
+        'staff' => 'StaffController',
+        'acara' => 'AcaraController'
     ]);
     Route::get('kalender', 'KalenderController@kalender')->name('kalender');
    });

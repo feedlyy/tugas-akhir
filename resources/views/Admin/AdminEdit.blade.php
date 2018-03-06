@@ -32,12 +32,7 @@
         <form role="form" method="post" action="{{ route('admin.update', $admin->id_admin) }}">
             <input type="hidden" name="_method" value="PATCH">
             {{ csrf_field() }}
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Admin</label>
-                    <input type="text" name="nama_admin" class="form-control" id="" placeholder="" value="{{ $admin->nama_admin }}">
-                </div>
-            </div>
+
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Password</label>

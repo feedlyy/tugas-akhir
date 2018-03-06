@@ -30,13 +30,14 @@
             $().ready(function (e) {
                 swal({
                     title: "Success!",
-                    text: "Gedung Telah Di Hapus!",
+                    text: "Ruangan Telah Di Hapus!",
                     icon: "success",
                     button: false,
                     timer: 2000
                 });
             })
         </script>
+
     @endif
 
     <script>
@@ -69,6 +70,7 @@
                 <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>ID Ruangan</th>
                         <th>ID Gedung</th>
                         <th>Nama Ruangan</th>
@@ -79,9 +81,11 @@
                     @if(count($ruangan) > 0)
                         @foreach($ruangan as $data)
                             <tr>
+                                <td>{{ $data->id }}</td>
                                 <td>{{ $data->id_ruangan }}</td>
                                 <td>{{ $data->id_gedung }} - {{ \App\Gedung::find($data->id_gedung)->nama_gedung }}</td>
-                                <td>{{ $data->id_gedung }} - {{ $data->id_ruangan }}</td>
+                                <td>{{ $data->nama_ruangan }}</td>
+                                {{--<td>{{ $data->id_gedung }} - {{ $data->id_ruangan }}</td>--}}
                                 {{--<form method="post" action="{{ route('ruangan.destroy', $data->id_ruangan) }}">
                                     <input type="hidden" name="_method" value="DELETE">
                                     {{ csrf_field() }}
@@ -93,8 +97,8 @@
                                     </td>
                                 </form>--}}
                                 <td>
-                                    {!! Form::open(['route' => ['ruangan.destroy', $data->id_ruangan], 'method' => 'delete', 'class' => 'hapus']) !!}
-                                    <a href="{{ route('ruangan.edit', $data->id_ruangan) }}">
+                                    {!! Form::open(['route' => ['ruangan.destroy', $data->id], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                    <a href="{{ route('ruangan.edit', $data->id) }}">
                                         {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
                                     </a>
                                     {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}

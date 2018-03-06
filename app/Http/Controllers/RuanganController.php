@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Ruangan;
 use App\Gedung;
+use App\Rules\CombineColumn;
 use App\Rules\Kapital;
 use App\Rules\Uppercase;
-use Illuminate\Contracts\Validation\Rule;
+/*use Illuminate\Contracts\Validation\Rule;*/
+
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
 use Illuminate\View\View;
 
 
@@ -38,7 +45,10 @@ class RuanganController extends Controller
         //
         /*ini make model nya gedung karena buat get seluruh id yang ada di gedung*/
         $ruangan = Gedung::all();
-        return view('Admin.TambahRuangan')->with('ruangan', $ruangan);
+        $gedung = Ruangan::all();
+        return view('Admin.TambahRuangan')
+            ->with('gedung', $gedung)
+            ->with('ruangan', $ruangan);
     }
 
     /**
@@ -50,28 +60,38 @@ class RuanganController extends Controller
 
     public function store(Request $request)
     {
-        //
-        /*Validator::make($request, [
-            'email' => [
-                'required',
-                Rule::unique('users')->ignore($user->id),
-            ],
-        ]);*/
-//        bikin validasi
+        $users = Ruangan::select('id_ruangan', 'id_gedung')
+            ->where('id_ruangan', $request->id_ruangan)
+            ->where('id_gedung', $request->selectgedung)->get();
+        if (count($users) > 0) {
+            return redirect('admin/ruangan/create')->with(session()->flash('alert_data_is_exist', 'Data itu sudah ada'));
+        } else {
+            /*$id = Ruangan::all('nama_ruangan');*/
+            /*bikin validasi*/
             $validasi = $request->validate([
                 'id_ruangan' => ['required', 'max:255', new Kapital]/*,
-                'nama_ruangan' => ['unique:ruangans']*/
+                'nama_ruangan' => ['unique:ruangans,nama_ruangan']*/
             ]);
 
-        $ruangan = new Ruangan;
-        $ruangan->id_ruangan = $request->id_ruangan;
-        $ruangan->nama_ruangan = $request->nama_ruangan;
-        $ruangan->id_gedung = $request->selectgedung;
-        $ruangan->save();
+            /*$collection = collect([$ruangan->id_gedung, $ruangan->id_ruangan]);
+            $combined = $collection->combine([$request->selectgedung, $request->id_ruangan]);
+            $combined->all();*/
+            $ruangan = new Ruangan;
+            $ruangan->id_ruangan = $request->id_ruangan;
+            $ruangan->id_gedung = $request->selectgedung;
+            $ruangan->nama_ruangan = $request->selectgedung.$request->id_ruangan;
 
-        $request->session()->flash('status', 'Data Berhasil Di Input');
+            /*$ruangan->nama_ruangan = $request->input('', $request->id_ruangan);*/
+            /*kalau mau ambil semua inputan jadi satu array pake request all*/
+            /*$ruangan = $request->all();*/
 
-        return redirect('admin/ruangan');
+            $ruangan->save();
+
+            $request->session()->flash('status', 'Data Berhasil Di Input');
+
+            return redirect('admin/ruangan');
+        }
+
 
     }
 

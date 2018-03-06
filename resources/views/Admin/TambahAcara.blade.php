@@ -21,45 +21,37 @@
     <!-- general form elements -->
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Tambah Admin</h3>
+            <h3 class="box-title">Tambah Acara</h3>
         </div>
         <div class="box-header">
-            <a class="fa fa-arrow-left" href="{{ route('admin.index') }}"><span style="font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif; font-size: small;">&nbspKembali ke list admin</span></a>
+            <a class="fa fa-arrow-left" href="{{ route('acara.index') }}"><span style="font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif; font-size: small;">&nbspKembali ke list acara</span></a>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="post" action="{{ route('admin.store') }}">
+        <form role="form" method="post" action="{{ route('acara.store') }}">
             {{ csrf_field() }}
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nama Acara</label>
+                    <input type="text" name="nama_event" class="form-control" id="" placeholder="">
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tanggal Acara</label>
+                    <input type="text" name="tanggal" class="form-control" id="" placeholder="">
+                </div>
+            </div>
             {{--<div class="box-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">ID Admin</label>
-                    <input type="text" name="id_admin" class="form-control" id="" placeholder="">
-                </div>
-            </div>--}}
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Admin</label>
-                    <input type="text" name="nama_admin" class="form-control" id="" placeholder="">
-                </div>
-            </div>
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Password</label>
-                    <input type="password" name="password" class="form-control" id="" placeholder="">
-                </div>
-            </div>
-            <div class="box-body">
                 <div class="form-group">
                     <label>ID Status</label>
                     <select class="form-control select2" style="width: 100%;" name="selectstatus">
-                        <option disabled selected="selected">Pilih Status</option>
                         @foreach($status as $data)
-                            <option>{{ $data->id_status }}</option>
+                            <option selected="selected">{{ $data->id_status }}</option>
                         @endforeach
                     </select>
-                    <h6>1 = Fakultas, 2 = Departemen, 3 = Prodi</h6>
                 </div>
-            </div>
+            </div>--}}
 
             <!-- /.box-body -->
             <div class="box-footer">

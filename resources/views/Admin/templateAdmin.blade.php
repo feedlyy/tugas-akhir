@@ -52,6 +52,8 @@
     <script src="{{ url('sweetalert/sweetalert.min.js') }}"></script>
     {{--promise js--}}
     <script src="{{ url('promise/promise.min.js') }}"></script>
+    {{--buat vue--}}
+    <script src="{{ asset('js/vie.min.js') }}"></script>
 
     {{--ini buat table view nya di gedung maupun ruangan--}}
     <script src="{{ url('dataTables/js/jquery.dataTables.min.js') }}"></script>
@@ -143,7 +145,7 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="#">
+                            <a href="{{ url('admin/acara') }}">
                                 <i class="fa fa-calendar-plus-o"></i> <span>Acara</span>
                             </a>
                         </li>
@@ -174,7 +176,7 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="#">
+                            <a href="{{ url('admin/acara') }}">
                                 <i class="fa fa-calendar-plus-o"></i> <span>Acara</span>
                             </a>
                         </li>
@@ -200,7 +202,7 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="#">
+                            <a href="{{ url('admin/acara') }}">
                                 <i class="fa fa-calendar-plus-o"></i> <span>Acara</span>
                             </a>
                         </li>

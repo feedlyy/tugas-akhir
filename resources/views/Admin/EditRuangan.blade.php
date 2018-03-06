@@ -36,12 +36,12 @@
                     <label for="exampleInputEmail1">ID Ruangan</label>
                     <input type="text" name="ruangan" class="form-control" id="" placeholder="" value="{{ $ruangan->id_ruangan }}">
                 </div>
-            </div><div class="box-body">
+            {{--</div><div class="box-body">
                 <div class="form-group">
-                    {{--<label for="exampleInputEmail1">ID Ruangan</label>--}}
+                    --}}{{--<label for="exampleInputEmail1">ID Ruangan</label>--}}{{--
                     <input type="text" name="nama_ruangan" class="form-control" id="" placeholder="" value="{{ $ruangan->nama_ruangan }}">
                 </div>
-            </div>
+            </div>--}}
             <!-- /.box-body -->
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
