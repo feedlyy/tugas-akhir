@@ -52,8 +52,13 @@
     <script src="{{ url('sweetalert/sweetalert.min.js') }}"></script>
     {{--promise js--}}
     <script src="{{ url('promise/promise.min.js') }}"></script>
-    {{--buat vue--}}
-    <script src="{{ asset('js/vie.min.js') }}"></script>
+    {{--moment js--}}
+    <script src="{{ url('moment/moment.min.js') }}"></script>
+
+    {{--date range picker js and css--}}
+    <script src="{{ url('daterangepicker/daterangepicker.js') }}"></script>
+    <link rel="stylesheet" href="{{ url('daterangepicker/daterangepicker.css') }}">
+
 
     {{--ini buat table view nya di gedung maupun ruangan--}}
     <script src="{{ url('dataTables/js/jquery.dataTables.min.js') }}"></script>
@@ -283,5 +288,7 @@
     $(function () {
         $('.select2').select2();
     })
+
+
 </script>
 </html>

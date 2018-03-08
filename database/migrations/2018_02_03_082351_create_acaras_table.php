@@ -17,6 +17,7 @@ class CreateAcarasTable extends Migration
             $table->increments('id_acara');
             $table->string('nama_event');
             $table->date('tanggal_acara');
+            /*$table->date('')*/
             $table->timestamp('waktu_mulai');
             $table->timestamp('waktu_selesai');
             $table->timestamp('alarm');

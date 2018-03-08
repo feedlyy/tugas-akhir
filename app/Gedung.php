@@ -27,5 +27,18 @@ class Gedung extends Model
         'id_gedung', 'nama_gedung',
     ];
 
+    /*ini adalah contoh function penggunaan Accessor
+    Dengan adanya Accessor kita dapat mem-format attribut yang di dapat ataupun di kirim
+    penamaan fungsi nya getFooAttributes($value)
+    dimana Foo ini adalah nama kolom/attribut table yang di akses
+    bisa ucwords ataupun strtolower Foo nya
+    contoh: misal mau custom format untuk nama gedung ketika di get
+    maka bisa getNamaGedungAttributes($value) atau getnamagedungAttributes($value)*/
+
+    /*public function getNamaGedungAttribute($value)
+    {
+        return strtolower($value);
+    }*/
+
 
 }

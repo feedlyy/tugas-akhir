@@ -49,5 +49,7 @@
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
+        {{--{{ $gedung->nama_gedung }}--}}
+
     </div>
 @endsection

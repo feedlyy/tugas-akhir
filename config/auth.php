@@ -46,10 +46,10 @@ return [
             'provider' => 'admins',
         ],
 
-        'gedung' => [
+        /*'gedung' => [
           'driver' => 'session',
           'provider' => 'gedungs',
-        ],
+        ],*/
     ],
 
     /*
@@ -75,10 +75,10 @@ return [
             'model' => App\Admin::class,
         ],
 
-        'gedungs' => [
+        /*'gedungs' => [
           'driver' => 'eloquent',
           'model' => App\Gedung::class,
-        ],
+        ],*/
 
         // 'users' => [
         //     'driver' => 'database',

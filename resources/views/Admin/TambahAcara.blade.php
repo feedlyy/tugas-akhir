@@ -43,6 +43,24 @@
                     <input type="text" name="tanggal" class="form-control" id="" placeholder="">
                 </div>
             </div>
+
+            <div class="box-body">
+                <!-- Date and time range -->
+                <div class="form-group">
+                    <label>Date and time range:</label>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-clock-o"></i>
+                        </div>
+                        {{--<input type="text" class="form-control pull-right" id="reservationtime">--}}
+                        <input type="text" class="form-control" name="daterange" value="" />
+                    </div>
+                    <!-- /.input group -->
+                </div>
+            </div>
+
+            <!-- /.form group -->
             {{--<div class="box-body">
                 <div class="form-group">
                     <label>ID Status</label>
@@ -60,4 +78,17 @@
             </div>
         </form>
     </div>
+
+    <script>
+        /*untuk daterangepicker*/
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY h:mm A'
+                }
+            });
+        });
+    </script>
 @endsection

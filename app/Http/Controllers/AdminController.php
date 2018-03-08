@@ -86,10 +86,7 @@ class AdminController extends Controller
     {
         //
         $admin =  Admin::find($id);
-        $status = Status::all();
-        return view('Admin.AdminEdit')
-            ->with('status', $status)
-            ->with('admin', $admin);
+        return view('Admin.AdminEdit')->with('admin', $admin);
     }
 
     /**

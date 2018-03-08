@@ -60,6 +60,7 @@ class RuanganController extends Controller
 
     public function store(Request $request)
     {
+        /*ini buat ngambil inputan dari id_ruangan dan selectgedung*/
         $users = Ruangan::select('id_ruangan', 'id_gedung')
             ->where('id_ruangan', $request->id_ruangan)
             ->where('id_gedung', $request->selectgedung)->get();
@@ -73,17 +74,13 @@ class RuanganController extends Controller
                 'nama_ruangan' => ['unique:ruangans,nama_ruangan']*/
             ]);
 
-            /*$collection = collect([$ruangan->id_gedung, $ruangan->id_ruangan]);
-            $combined = $collection->combine([$request->selectgedung, $request->id_ruangan]);
-            $combined->all();*/
+
             $ruangan = new Ruangan;
             $ruangan->id_ruangan = $request->id_ruangan;
             $ruangan->id_gedung = $request->selectgedung;
             $ruangan->nama_ruangan = $request->selectgedung.' - '.$request->id_ruangan;
 
-            /*$ruangan->nama_ruangan = $request->input('', $request->id_ruangan);*/
-            /*kalau mau ambil semua inputan jadi satu array pake request all*/
-            /*$ruangan = $request->all();*/
+
 
             $ruangan->save();
 
