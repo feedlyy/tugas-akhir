@@ -16,10 +16,10 @@ class CreateAcarasTable extends Migration
         Schema::create('acaras', function (Blueprint $table) {
             $table->increments('id_acara');
             $table->string('nama_event');
-            $table->date('tanggal_acara');
-            /*$table->date('')*/
+            /*$table->date('tanggal_acara');
             $table->timestamp('waktu_mulai');
-            $table->timestamp('waktu_selesai');
+            $table->timestamp('waktu_selesai');*/
+            $table->dateTime('detail_acara');
             $table->timestamp('alarm');
             $table->string('nama_ruangan');
             /*$table->string('id_gedung');

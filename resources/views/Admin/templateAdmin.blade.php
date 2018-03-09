@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="{{ url('dataTables/css/dataTables.responsive.css') }}">
     {{--select2--}}
     <link rel="stylesheet" href="{{ url('Select2/select2.min.css') }}">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="{{ url('../../plugins/timepicker/bootstrap-timepicker.min.css') }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,10 +56,11 @@
     <script src="{{ url('promise/promise.min.js') }}"></script>
     {{--moment js--}}
     <script src="{{ url('moment/moment.min.js') }}"></script>
-
     {{--date range picker js and css--}}
     <script src="{{ url('daterangepicker/daterangepicker.js') }}"></script>
     <link rel="stylesheet" href="{{ url('daterangepicker/daterangepicker.css') }}">
+    <!-- bootstrap time picker -->
+    <script src="{{ url('../../plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 
 
     {{--ini buat table view nya di gedung maupun ruangan--}}

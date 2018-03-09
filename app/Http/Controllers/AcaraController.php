@@ -6,6 +6,7 @@ use App\Acara;
 use Illuminate\Http\Request;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
+use App\Ruangan;
 
 class AcaraController extends Controller
 {
@@ -18,6 +19,7 @@ class AcaraController extends Controller
     {
         //
         $acara = Acara::all();
+
         return view('Admin.Acara')->with('acara', $acara);
 
 
@@ -31,7 +33,8 @@ class AcaraController extends Controller
     public function create()
     {
         //
-        return view('Admin.TambahAcara');
+        $ruangan = Ruangan::all();
+        return view('Admin.TambahAcara')->with('ruangan', $ruangan);
     }
 
     /**
