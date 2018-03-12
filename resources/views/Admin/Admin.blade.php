@@ -76,19 +76,48 @@
                     </tr>
                     </thead>
                     @foreach($admin as $data)
+                        @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                            <tr>
+                                <td>{{ $data->id_admin }}</td>
+                                <td>{{ $data->nama_admin }}</td>
+                                <td>{{ $data->id_status }}</td>
+                                <td>
+                                    @if($data->id_status == 1)
+                                    <a href="{{ route('admin.edit', $data->id_admin) }}">
+                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                    </a>
+                                    @else
+                                        {!! Form::open(['route' => ['admin.destroy', $data->id_admin], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                        <a href="{{ route('admin.edit', $data->id_admin) }}">
+                                            {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                        </a>
+                                        {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
+                                        {!! Form::close() !!}
+                                        @endif
+                                </td>
+
+                            </tr>
+                        @else
                         <tr>
                             <td>{{ $data->id_admin }}</td>
                             <td>{{ $data->nama_admin }}</td>
                             <td>{{ $data->id_status }}</td>
                             <td>
+                                @if($data->id_status == 1 || $data->id_status == 2)
+                                    <a href="{{ route('admin.edit', $data->id_admin) }}">
+                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                    </a>
+                                @else
                                 {!! Form::open(['route' => ['admin.destroy', $data->id_admin], 'method' => 'delete', 'class' => 'hapus']) !!}
                                 <a href="{{ route('admin.edit', $data->id_admin) }}">
                                     {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
                                 </a>
                                 {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
                                 {!! Form::close() !!}
+                                    @endif
                             </td>
                         </tr>
+                        @endif
                     @endforeach
                 </table>
             </div>

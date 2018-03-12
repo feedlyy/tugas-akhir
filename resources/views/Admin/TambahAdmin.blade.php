@@ -52,12 +52,31 @@
             <div class="box-body">
                 <div class="form-group">
                     <label>ID Status</label>
+                    @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
                     <select class="form-control select2" style="width: 100%;" name="selectstatus">
                         <option disabled selected="selected">Pilih Status</option>
                         @foreach($status as $data)
+                            @if($data->id_status == 1)
+                                <option disabled>{{ $data->id_status == 1 }}</option>
+                            @else
                             <option>{{ $data->id_status }}</option>
+                            @endif
                         @endforeach
                     </select>
+                    @else
+                        <select class="form-control select2" style="width: 100%;" name="selectstatus">
+                            <option disabled selected="selected">Pilih Status</option>
+                            @foreach($status as $data)
+                                @if($data->id_status == 1)
+                                    <option disabled>{{ $data->id_status == 1}}</option>
+                                    @elseif($data->id_status == 2)
+                                    <option disabled>{{ $data->id_status == 2 }}</option>
+                                @else
+                                <option>{{ $data->id_status }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    @endif
                     <h6>1 = Fakultas, 2 = Departemen, 3 = Prodi</h6>
                 </div>
             </div>

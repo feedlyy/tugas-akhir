@@ -131,8 +131,7 @@ class RuanganController extends Controller
 
             $ruangan = Ruangan::find($id);
             $ruangan->id_ruangan = $request->id_ruangan;
-            /*$ruangan->nama_ruangan = $request->nama_ruangan;
-            $ruangan->id_gedung = $request->selectgedung;*/
+            $ruangan->nama_ruangan = Ruangan::find($id)->id_gedung.' - '.$request->id_ruangan;
             $ruangan->save();
             $request->session()->flash('update', 'Data Berhasil Di Update');
 
