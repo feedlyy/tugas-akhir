@@ -10,6 +10,7 @@
                         title: "Warning!",
                         text: error,
                         button: false,
+                        icon: "warning",
                         timer: 2000
                     });
                 })

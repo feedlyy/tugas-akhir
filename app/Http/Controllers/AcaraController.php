@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Acara;
+use App\Rules\Uppercase;
 use Illuminate\Http\Request;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
@@ -52,8 +53,24 @@ class AcaraController extends Controller
         pertama fungsi store ke db
         kedua create event ke googlecalendar nya*/
 
+        $validasi = $request->validate([
+            'nama_acara' => ['required', new Uppercase],
+            'tamu_undangan' => ['required', 'email'],
+            'nama_ruang' => ['required']
+        ]);
+
         /*ini store ke db*/
         $acara = New Acara;
+        $acara->nama_event = $request->nama_acara;
+        $acara->detail_acara = Carbon::parse($request->detail_acara)->toDateTimeString();
+        $acara->alarm = Carbon::now();
+        $acara->nama_ruangan = $request->nama_ruang;
+        $acara->tamu_undangan = $request->tamu_undangan;
+        $acara->id_admin = 1;
+
+        $acara->save();
+        return redirect('admin/acara')->with(session()->flash('status', ''));
+
 
         /*ini store ke gCalendar*/
         $google = New Event;
@@ -103,5 +120,9 @@ class AcaraController extends Controller
     public function destroy($id)
     {
         //
+        $acara = Acara::find($id);
+        $acara->delete();
+
+        return redirect('admin/acara')->with(session()->flash('hapus', ''));
     }
 }

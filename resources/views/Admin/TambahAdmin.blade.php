@@ -40,7 +40,7 @@
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nama Admin</label>
-                    <input type="text" name="nama_admin" class="form-control" id="" placeholder="">
+                    <input type="text" name="nama_admin" class="form-control" id="" placeholder="" value="{{ old('nama_admin') }}">
                 </div>
             </div>
             <div class="box-body">

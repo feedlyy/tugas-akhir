@@ -67,7 +67,7 @@
         <a href="{{ url('admin/ruangan/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Ruangan</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
-                <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
+                <table id="example1" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -77,48 +77,44 @@
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    @if(count($ruangan) > 0)
-                        @foreach($ruangan as $data)
-                            <tr>
-                                <td>{{ $data->id }}</td>
-                                <td>{{ $data->id_ruangan }}</td>
-                                <td>{{ $data->id_gedung }} - {{ \App\Gedung::find($data->id_gedung)->nama_gedung }}</td>
-                                <td>{{ $data->nama_ruangan }}</td>
-                                {{--<td>{{ $data->id_gedung }} - {{ $data->id_ruangan }}</td>--}}
-                                {{--<form method="post" action="{{ route('ruangan.destroy', $data->id_ruangan) }}">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    {{ csrf_field() }}
-                                    <td>
-                                        <a href="{{ route('ruangan.edit', $data->id_ruangan) }}">
-                                           <input type="button" class="btn btn-warning" value="Edit">
-                                        </a>
-                                        <input type="submit" value="Hapus" class="btn btn-danger">
-                                    </td>
-                                </form>--}}
+                    @foreach($ruangan as $data)
+                        <tr>
+                            <td>{{ $data->id }}</td>
+                            <td>{{ $data->id_ruangan }}</td>
+                            <td>{{ $data->id_gedung }} - {{ \App\Gedung::find($data->id_gedung)->nama_gedung }}</td>
+                            <td>{{ $data->nama_ruangan }}</td>
+                            {{--<td>{{ $data->id_gedung }} - {{ $data->id_ruangan }}</td>--}}
+                            {{--<form method="post" action="{{ route('ruangan.destroy', $data->id_ruangan) }}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                {{ csrf_field() }}
                                 <td>
-                                    {!! Form::open(['route' => ['ruangan.destroy', $data->id], 'method' => 'delete', 'class' => 'hapus']) !!}
-                                    <a href="{{ route('ruangan.edit', $data->id) }}">
-                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                    <a href="{{ route('ruangan.edit', $data->id_ruangan) }}">
+                                       <input type="button" class="btn btn-warning" value="Edit">
                                     </a>
-                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
-                                    {!! Form::close() !!}
+                                    <input type="submit" value="Hapus" class="btn btn-danger">
                                 </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <p>Tidak ada data</p>
-                    @endif
-                    </tbody>
+                            </form>--}}
+                            <td>
+                                {!! Form::open(['route' => ['ruangan.destroy', $data->id], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                <a href="{{ route('ruangan.edit', $data->id) }}">
+                                    {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                </a>
+                                {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
                 </table>
             </div>
         </div>
     </div>
 
-    {{--<script src="{{ url('dataTables/js/jquery.min.js') }}"></script>--}}
-
-
     <script>
-        $('table').DataTable();
+        /*javascript untuk table nya*/
+        $(function () {
+            $('#example1').DataTable({
+
+            })
+        })
     </script>
 @endsection

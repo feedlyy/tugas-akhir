@@ -27,8 +27,13 @@
     <link rel="stylesheet" href="{{ url('dataTables/css/dataTables.responsive.css') }}">
     {{--select2--}}
     <link rel="stylesheet" href="{{ url('Select2/select2.min.css') }}">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="{{ url('../../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
     <!-- Bootstrap time Picker -->
     <link rel="stylesheet" href="{{ url('../../plugins/timepicker/bootstrap-timepicker.min.css') }}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ url('../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,6 +61,8 @@
     <script src="{{ url('promise/promise.min.js') }}"></script>
     {{--moment js--}}
     <script src="{{ url('moment/moment.min.js') }}"></script>
+    <!-- bootstrap datepicker -->
+    <script src="{{ url('../../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
     {{--date range picker js and css--}}
     <script src="{{ url('daterangepicker/daterangepicker.js') }}"></script>
     <link rel="stylesheet" href="{{ url('daterangepicker/daterangepicker.css') }}">
@@ -63,10 +70,14 @@
     <script src="{{ url('../../plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
 
 
+
     {{--ini buat table view nya di gedung maupun ruangan--}}
     <script src="{{ url('dataTables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url('dataTables/js/dataTables.bootstrap.js') }}"></script>
     <script src="{{ url('dataTables/js/dataTables.responsive.js') }}"></script>
+<!-- DataTables -->
+    <script src="{{ url('../../bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <!-- Site wrapper -->
@@ -278,20 +289,14 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
-</body>
 <script>
     //ini untuk kalau side tree nya di click bakal nambahin class active
     var url = window.location;
-
     $('ul.sidebar-menu a').filter(function () {
         return this.href == url;
     }).parent().addClass('active');
 
-    $(function () {
-        $('.select2').select2();
-    })
-
 
 </script>
+</body>
 </html>

@@ -66,7 +66,7 @@
         <a href="{{ url('admin/admin/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Admin</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
-                <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
+                <table id="example1" class="table table-bordered table-striped responsive">
                     <thead>
                     <tr>
                         <th>ID Admin</th>
@@ -75,7 +75,6 @@
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody>
                     @foreach($admin as $data)
                         <tr>
                             <td>{{ $data->id_admin }}</td>
@@ -91,16 +90,15 @@
                             </td>
                         </tr>
                     @endforeach
-                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-
-
-
     <script>
-        $('table').DataTable();
+        /*javascript untuk table nya*/
+        $(function () {
+            $('#example1').DataTable()
+        })
     </script>
 @endsection

@@ -11,7 +11,7 @@
                         title: "Warning!",
                         text: error,
                         icon: "warning",
-                        button: "OK",
+                        button: "OK"
                     });
                 })
             </script>
@@ -28,20 +28,14 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="post" action="{{ route('ruangan.update', $ruangan->id_ruangan) }}">
+        <form role="form" method="post" action="{{ route('ruangan.update', $ruangan->id) }}">
             <input type="hidden" name="_method" value="PATCH">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">ID Ruangan</label>
-                    <input type="text" name="ruangan" class="form-control" id="" placeholder="" value="{{ $ruangan->id_ruangan }}">
+                    <input type="text" name="id_ruangan" class="form-control" id="" placeholder="" value="{{ $ruangan->id_ruangan }}">
                 </div>
-            {{--</div><div class="box-body">
-                <div class="form-group">
-                    --}}{{--<label for="exampleInputEmail1">ID Ruangan</label>--}}{{--
-                    <input type="text" name="nama_ruangan" class="form-control" id="" placeholder="" value="{{ $ruangan->nama_ruangan }}">
-                </div>
-            </div>--}}
             <!-- /.box-body -->
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Update</button>

@@ -66,48 +66,46 @@
         <a href="{{ url('admin/acara/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Acara</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
-                <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
-                    <thead>
-                    <tr>
-                        <th>ID Acara</th>
-                        <th>Nama Acara</th>
-                        <th>Tanggal</th>
-                        <th>Waktu</th>
-                        <th>Tamu Undangan</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($acara as $data)
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
                         <tr>
-                            <td>{{ $data->id_acara }}</td>
-                            <td>{{ $data->nama_acara }}</td>
-                            <td>{{ $data->tanggal_acara }}</td>
-                            <td>{{ $data->waktu_mulai }} - {{ $data->waktu_selesai }}</td>
-                            <td>{{ $data->tamu_undangan }}</td>
-                            <td>
-                                {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
-                                <a href="{{ route('admin.edit', $data->id_acara) }}">
-                                    {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
-                                </a>
-                                <a href="{{ route('acara.show', $data->id_acara) }}">
-                                    {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
-                                </a>
-                                {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
-                                {!! Form::close() !!}
-                            </td>
+                            <th>ID Acara</th>
+                            <th>Nama Acara</th>
+                            <th>Tanggal</th>
+                            <th>Waktu</th>
+                            <th>Action</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        @foreach($acara as $data)
+                            <tr>
+                                <td>{{ $data->id_acara }}</td>
+                                <td>{{ $data->nama_event }}</td>
+                                <td>{{ $data->detail_acara }}</td>
+                                <td>{{ $data->alarm }}</td>
+                                <td>
+                                    {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                    <a href="{{ route('acara.edit', $data->id_acara) }}">
+                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                    </a>
+                                    <a href="{{ route('acara.show', $data->id_acara) }}">
+                                        {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                    </a>
+                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                    {!! Form::close() !!}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
             </div>
         </div>
     </div>
 
-
-
-
     <script>
-        $('table').DataTable();
+        /*javascript untuk table nya*/
+        $(function () {
+            $('#example1').DataTable({
+
+            })
+        })
     </script>
 @endsection

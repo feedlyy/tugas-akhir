@@ -34,22 +34,23 @@
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nama Acara</label>
-                    <input type="text" name="nama_acara" class="form-control" id="" placeholder="">
+                    <input type="text" name="nama_acara" class="form-control" id="" placeholder="" value="{{ old('nama_acara') }}">
                 </div>
 
-                <!-- Date and time range -->
+            <!-- Date -->
                 <div class="form-group">
-                    <label>Detail Acara</label>
+                    <label>Date:</label>
 
-                    <div class="input-group">
+                    <div class="input-group date">
                         <div class="input-group-addon">
-                            <i class="fa fa-clock-o"></i>
+                            <i class="fa fa-calendar"></i>
                         </div>
-                        {{--<input type="text" class="form-control pull-right" id="reservationtime">--}}
-                        <input type="text" class="form-control" name="daterange" value="" />
+                        <input type="text" class="form-control pull-right" id="datepicker">
                     </div>
+
                     <!-- /.input group -->
                 </div>
+                <!-- /.form group -->
 
             <!-- time Picker -->
                 <div class="bootstrap-timepicker">
@@ -57,7 +58,7 @@
                         <label>Reminder (Sebelum Acara)</label>
 
                         <div class="input-group">
-                            <input type="text" name="reminder" class="form-control timepicker">
+                            <input type="text" name="reminder" class="form-control timepicker" value="{{ old('reminder') }}">
 
                             <div class="input-group-addon">
                                 <i class="fa fa-clock-o"></i>
@@ -82,20 +83,9 @@
                 {{--tamu undangan--}}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Tamu Undangan</label>
-                    <input type="email" name="tamu_undangan" class="form-control" id="" placeholder="">
+                    <input type="email" name="tamu_undangan" class="form-control" id="" placeholder="" value="{{ old('tamu_undangan') }}">
                 </div>
 
-                {{--id admin--}}
-                {{--<div class="form-group">
-                    <label>Nama Ruangan</label>
-                    <select class="form-control select2" style="width: 100%;" name="nama_ruang">
-                        <option disabled selected="selected">Pilih Ruangan</option>
-                        @foreach($ruangan as $ruang)
-                            <option>{{ $ruang->nama_ruangan }}</option>
-                        @endforeach
-                    </select>
-                </div>--}}
-                {{--penutup box body--}}
             </div>
 
 
@@ -107,21 +97,22 @@
     </div>
 
     <script>
-        /*untuk daterangepicker*/
-        $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                timePicker: true,
-                timePickerIncrement: 30,
-                locale: {
-                    format: 'MM/DD/YYYY h:mm A'
-                }
-            });
-        });
+        $(function () {
+            //Date picker
+            $('#datepicker').datepicker({
+                autoclose: true
+            })
 
-        /*untuk timepicker*/
-        //Timepicker
-        $('.timepicker').timepicker({
-            showInputs: false
+            /*untuk timepicker*/
+            //Timepicker
+            $('.timepicker').timepicker({
+                showInputs: false
+            })
+
         })
+
+
+
+
     </script>
 @endsection

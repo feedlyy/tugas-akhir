@@ -49,7 +49,8 @@ class AdminController extends Controller
         $validasi = $request->validate([
            /*'id_admin' => ['required', new Lowercase, 'unique:admins'],*/
             'nama_admin' => ['required', new Lowercase, 'unique:admins,nama_admin'],
-            'password' => ['required']
+            'password' => ['required'],
+            'selectstatus' => ['required']
         ]);
 
         $admin = new Admin;

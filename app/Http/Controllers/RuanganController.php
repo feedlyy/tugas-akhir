@@ -67,11 +67,10 @@ class RuanganController extends Controller
         if (count($users) > 0) {
             return redirect('admin/ruangan/create')->with(session()->flash('alert_data_is_exist', ''));
         } else {
-            /*$id = Ruangan::all('nama_ruangan');*/
             /*bikin validasi*/
             $validasi = $request->validate([
-                'id_ruangan' => ['required', 'max:255', new Kapital]/*,
-                'nama_ruangan' => ['unique:ruangans,nama_ruangan']*/
+                'id_ruangan' => ['required', 'max:255', new Kapital],
+                'selectgedung' => ['required']
             ]);
 
 
@@ -79,9 +78,6 @@ class RuanganController extends Controller
             $ruangan->id_ruangan = $request->id_ruangan;
             $ruangan->id_gedung = $request->selectgedung;
             $ruangan->nama_ruangan = $request->selectgedung.' - '.$request->id_ruangan;
-
-
-
             $ruangan->save();
 
             $request->session()->flash('status', 'Data Berhasil Di Input');
@@ -114,10 +110,8 @@ class RuanganController extends Controller
     {
         //
         $ruangan = Ruangan::find($id);
-        $gedungs = Gedung::all();
-        return View('Admin.EditRuangan')
-            ->with('ruangan', $ruangan)
-            ->with('gedung', $gedungs);
+
+        return View('Admin.EditRuangan')->with('ruangan', $ruangan);
     }
 
     /**
@@ -130,18 +124,16 @@ class RuanganController extends Controller
     public function update(Request $request, $id)
     {
         //
-//        bikin validasi
+            /*bikin validasi*/
             $validasi = $request->validate([
-                'ruangan' => ['required', 'max:255', new Kapital]
+                'id_ruangan' => ['required', 'max:255', new Kapital]
             ]);
 
             $ruangan = Ruangan::find($id);
-            $ruangan->id_ruangan = $request->ruangan;
-            /*$ruangan->nama_ruangan = $request->nama_ruangan;*/
-//            $ruangan->id_gedung = $request->selectgedung;
-
+            $ruangan->id_ruangan = $request->id_ruangan;
+            /*$ruangan->nama_ruangan = $request->nama_ruangan;
+            $ruangan->id_gedung = $request->selectgedung;*/
             $ruangan->save();
-
             $request->session()->flash('update', 'Data Berhasil Di Update');
 
             return redirect('admin/ruangan');

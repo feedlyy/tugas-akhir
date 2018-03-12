@@ -16,7 +16,7 @@ class Acara extends Model
       'nama_event', 'detail_acara', 'alarm', 'nama_ruangan', 'tamu_undangan', 'id_admin'
     ];
 
-    protected $dates = [
+    /*protected $dates = [
       'detail_acara'
-    ];
+    ];*/
 }
