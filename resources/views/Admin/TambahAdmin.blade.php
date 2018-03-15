@@ -101,6 +101,10 @@
     </div>
 
     <script>
+            /*fungsi javascript
+            jika value pada select status = 3 (prodi) maka
+            inputan select departemen yang tadi nya disabled akan diubah menjadi false
+            selain value = 3 maka select departemen akan disabled(true)*/
             function ifProdi() {
                 if (document.getElementById('status').value == 3){
                     document.getElementById('departemen').disabled = false;

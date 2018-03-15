@@ -51,6 +51,9 @@ class AdminController extends Controller
     {
         //
 
+        /*cek jika data sudah ada di database dengan string contains
+        string contains itu fungsi laravel helper dimana parameter pertama adalah list katanya
+        parameter kedua adalah kata yang dicari*/
         $cek = str_contains(Admin::all('nama_admin'), $request->nama_admin);
         if ($cek == true){
             return redirect('admin/admin/create')->with(session()->flash('alr_exist', ''));
