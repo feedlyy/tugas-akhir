@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Acara;
 use App\Rules\Uppercase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
 use App\Ruangan;
@@ -54,7 +55,7 @@ class AcaraController extends Controller
         kedua create event ke googlecalendar nya*/
 
         $validasi = $request->validate([
-            'nama_acara' => ['required', new Uppercase],
+            'nama_acara' => ['required', 'max:25', new Uppercase],
             'tamu_undangan' => ['required', 'email'],
             'nama_ruang' => ['required']
         ]);
@@ -66,7 +67,7 @@ class AcaraController extends Controller
         $acara->alarm = Carbon::now();
         $acara->nama_ruangan = $request->nama_ruang;
         $acara->tamu_undangan = $request->tamu_undangan;
-        $acara->id_admin = 1;
+        $acara->id_admin = Auth::user()->id_admin;
 
         $acara->save();
         return redirect('admin/acara')->with(session()->flash('status', ''));

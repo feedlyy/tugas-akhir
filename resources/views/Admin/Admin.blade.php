@@ -76,17 +76,23 @@
                     </tr>
                     </thead>
                     @foreach($admin as $data)
+                        {{--view table di sini di bikin custom, jika yang login fakultas(id_status == 1)
+                        maka tampilkan seluruh data--}}
                         @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
                             <tr>
                                 <td>{{ $data->id_admin }}</td>
                                 <td>{{ $data->nama_admin }}</td>
                                 <td>{{ $data->id_status }}</td>
                                 <td>
+                                    {{--jika ketemu dengan data yang id_status nya 1/fakultas
+                                    karna dia super admin dia ga akan bisa di hapus--}}
                                     @if($data->id_status == 1)
                                     <a href="{{ route('admin.edit', $data->id_admin) }}">
                                         {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
                                     </a>
                                     @else
+                                        {{--selain itu jika ketemu data lain maka dia bisa edit atau
+                                        hapus--}}
                                         {!! Form::open(['route' => ['admin.destroy', $data->id_admin], 'method' => 'delete', 'class' => 'hapus']) !!}
                                         <a href="{{ route('admin.edit', $data->id_admin) }}">
                                             {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
@@ -97,24 +103,33 @@
                                 </td>
 
                             </tr>
-                        @else
+                            {{--custom view table ini untuk memfilter agar data yang di tampilkan di table sesuai dengan
+                            departemen dan prodi dari departemen itu masing2
+                            jika yang login memiliki kesamaan nama_admin yang sama dengan fungsi start_with
+                            dimana start_with merupakan laravel helper yang mengecek string dengan parameter pertama
+                            adalah list katanya dan parameter kedua adalah kata yang dicari--}}
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->nama_admin == starts_with($data->nama_admin, \Illuminate\Support\Facades\Auth::user()->nama_admin))
                         <tr>
                             <td>{{ $data->id_admin }}</td>
                             <td>{{ $data->nama_admin }}</td>
                             <td>{{ $data->id_status }}</td>
                             <td>
-                                @if($data->id_status == 1 || $data->id_status == 2)
-                                    <a href="{{ route('admin.edit', $data->id_admin) }}">
-                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
-                                    </a>
-                                @else
-                                {!! Form::open(['route' => ['admin.destroy', $data->id_admin], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                {{--otomatis kan yang login departemennya
+                                departemen tidak dapat menghapus departemen itu sendiri karna bukan kebijakan
+                                departemen untuk menghapus departemen, melainkan kebijakan fakultas
+                                departemen hanya dapat edit/hapus prodinya saja / edit dirinya sendiri--}}
+                                @if($data->id_status == 2)
                                 <a href="{{ route('admin.edit', $data->id_admin) }}">
                                     {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
                                 </a>
-                                {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
-                                {!! Form::close() !!}
-                                    @endif
+                                    @else
+                                    {!! Form::open(['route' => ['admin.destroy', $data->id_admin], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                    <a href="{{ route('admin.edit', $data->id_admin) }}">
+                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                    </a>
+                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
+                                    {!! Form::close() !!}
+                                @endif
                             </td>
                         </tr>
                         @endif

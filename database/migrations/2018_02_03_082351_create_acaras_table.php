@@ -16,20 +16,18 @@ class CreateAcarasTable extends Migration
         Schema::create('acaras', function (Blueprint $table) {
             $table->increments('id_acara');
             $table->string('nama_event');
-            /*$table->date('tanggal_acara');
-            $table->timestamp('waktu_mulai');
-            $table->timestamp('waktu_selesai');*/
-            $table->dateTime('detail_acara');
-            $table->timestamp('alarm');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->integer('alarm')->unsigned();
+            $table->string('id_gedung');
             $table->string('nama_ruangan');
-            /*$table->string('id_gedung');
-            $table->string('id_ruangan');*/
             $table->string('tamu_undangan');
             $table->integer('id_admin')->unsigned();
 
+
+            $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
             $table->foreign('nama_ruangan')->references('nama_ruangan')->on('ruangans')->onDelete('CASCADE');
-            /*$table->foreign('id_ruangan')->references('id_ruangan')->on('ruangans')->onDelete('CASCADE');
-            $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');*/
+            /*$table->foreign('id_ruangan')->references('id_ruangan')->on('ruangans')->onDelete('CASCADE');*/
             $table->foreign('id_admin')->references('id_admin')->on('admins')->onDelete('CASCADE');
             $table->timestamps();
         });

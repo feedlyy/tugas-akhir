@@ -66,7 +66,7 @@
         <a href="{{ url('admin/acara/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Acara</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-bordered table-striped responsive">
                         <thead>
                         <tr>
                             <th>ID Acara</th>

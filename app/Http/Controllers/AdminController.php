@@ -8,6 +8,7 @@ use App\Admin;
 use App\Status;
 use App\Rules\Kapital;
 use App\Rules\Uppercase;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 
@@ -34,7 +35,10 @@ class AdminController extends Controller
     {
         //
         $status = Status::all();
-        return view('Admin.TambahAdmin')->with('status', $status);
+        $admin = Admin::all();
+        return view('Admin.TambahAdmin')
+            ->with('admin', $admin)
+            ->with('status', $status);
     }
 
     /**
@@ -46,24 +50,43 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         //
-        $validasi = $request->validate([
-           /*'id_admin' => ['required', new Lowercase, 'unique:admins'],*/
-            'nama_admin' => ['required', new Lowercase, 'unique:admins,nama_admin'],
-            'password' => ['required'],
-            'selectstatus' => ['required']
-        ]);
 
-        $admin = new Admin;
-        /*penjelasan $admin->id_admin(ini yang ada di kolom table)
-        sedangkan $request->id_admin(ini name yang ada di input view nya)
-        kebetulan dibikin sama name nya*/
-        /*$admin->id_admin = $request->id_admin;*/
-        $admin->nama_admin = $request->nama_admin;
-        $admin->password = bcrypt($request->password);
-        $admin->id_status = $request->selectstatus;
+        $cek = str_contains(Admin::all('nama_admin'), $request->nama_admin);
+        if ($cek == true){
+            return redirect('admin/admin/create')->with(session()->flash('alr_exist', ''));
+        } else{
+            $validasi = $request->validate([
+                /*'id_admin' => ['required', new Lowercase, 'unique:admins'],*/
+                'nama_admin' => ['required', new Lowercase],
+                'password' => ['required'],
+                'selectstatus' => ['required']
+            ]);
 
-        $admin->save();
-        return redirect('admin/admin')->with(session()->flash('status', ''));
+            $admin = new Admin;
+            /*penjelasan $admin->id_admin(ini yang ada di kolom table)
+            sedangkan $request->id_admin(ini name yang ada di input view nya)
+            kebetulan dibikin sama name nya*/
+            /*$admin->id_admin = $request->id_admin;*/
+
+            /*bikin custom exception untuk nama admin
+            jika ada penambahan ke prodi(id_status == 3) tapi yang login/menambahkan adalah fakultas
+            maka akan seperti ini*/
+            if (Auth::user()->id_status == 2){
+                $admin->nama_admin = Auth::user()->nama_admin.'-'.$request->nama_admin;
+            } elseif($request->selectstatus == 2){
+                $admin->nama_admin = $request->nama_admin;
+            } elseif ($request->selectstatus == 3){
+                $admin->nama_admin = $request->selectdepartemen.'-'.$request->nama_admin;
+            }
+            $admin->password = bcrypt($request->password);
+            $admin->id_status = $request->selectstatus;
+
+            $admin->save();
+            return redirect('admin/admin')->with(session()->flash('status', ''));
+        }
+
+
+
     }
 
     /**

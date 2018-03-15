@@ -17,6 +17,18 @@
                 })
             </script>
         @endforeach
+    @elseif(session()->has('alr_exist'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Data sudah ada",
+                    icon: "warning",
+                    button: false,
+                    timer: 2000
+                });
+            })
+        </script>
     @endif
 
     <!-- general form elements -->
@@ -31,46 +43,34 @@
         <!-- form start -->
         <form role="form" method="post" action="{{ route('admin.store') }}">
             {{ csrf_field() }}
-            {{--<div class="box-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">ID Admin</label>
-                    <input type="text" name="id_admin" class="form-control" id="" placeholder="">
-                </div>
-            </div>--}}
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nama Admin</label>
                     <input type="text" name="nama_admin" class="form-control" id="" placeholder="" value="{{ old('nama_admin') }}">
                 </div>
-            </div>
-            <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Password</label>
                     <input type="password" name="password" class="form-control" id="" placeholder="">
                 </div>
-            </div>
-            <div class="box-body">
                 <div class="form-group">
                     <label>ID Status</label>
                     @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
-                    <select class="form-control select2" style="width: 100%;" name="selectstatus">
+                    <select id="status" class="form-control select2" style="width: 100%;" name="selectstatus" onchange="ifProdi()">
                         <option disabled selected="selected">Pilih Status</option>
                         @foreach($status as $data)
                             @if($data->id_status == 1)
-                                <option disabled>{{ $data->id_status == 1 }}</option>
+                                <option disabled>{{ $data->id_status}}</option>
                             @else
-                            <option>{{ $data->id_status }}</option>
+                            <option value="{{ $data->id_status }}">{{ $data->id_status }}</option>
                             @endif
                         @endforeach
                     </select>
-                    @else
+                    @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
                         <select class="form-control select2" style="width: 100%;" name="selectstatus">
                             <option disabled selected="selected">Pilih Status</option>
                             @foreach($status as $data)
-                                @if($data->id_status == 1)
-                                    <option disabled>{{ $data->id_status == 1}}</option>
-                                    @elseif($data->id_status == 2)
-                                    <option disabled>{{ $data->id_status == 2 }}</option>
+                                @if($data->id_status == 1 || $data->id_status == 2)
+                                    <option disabled>{{ $data->id_status}}</option>
                                 @else
                                 <option>{{ $data->id_status }}</option>
                                 @endif
@@ -78,6 +78,18 @@
                         </select>
                     @endif
                     <h6>1 = Fakultas, 2 = Departemen, 3 = Prodi</h6>
+                </div>
+                <div class="form-group">
+                    <label>Pilih Departemen (Jika Tambah Prodi)</label>
+                        <select id="departemen" class="form-control select2" style="width: 100%;" name="selectdepartemen" disabled>
+                            <option disabled selected="selected">Pilih Departemen</option>
+                            @foreach($admin as $data)
+                                @if($data->id_status == 2)
+                                <option>{{ $data->nama_admin }}</option>
+                                    @else
+                                @endif
+                            @endforeach
+                        </select>
                 </div>
             </div>
 
@@ -87,4 +99,15 @@
             </div>
         </form>
     </div>
+
+    <script>
+            function ifProdi() {
+                if (document.getElementById('status').value == 3){
+                    document.getElementById('departemen').disabled = false;
+                } else {
+                    document.getElementById('departemen').disabled = true;
+                }
+            }
+
+    </script>
 @endsection
