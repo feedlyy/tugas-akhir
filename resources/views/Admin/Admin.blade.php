@@ -103,12 +103,9 @@
                                 </td>
 
                             </tr>
-                            {{--custom view table ini untuk memfilter agar data yang di tampilkan di table sesuai dengan
-                            departemen dan prodi dari departemen itu masing2
-                            jika yang login memiliki kesamaan nama_admin yang sama dengan fungsi start_with
-                            dimana start_with merupakan laravel helper yang mengecek string dengan parameter pertama
-                            adalah list katanya dan parameter kedua adalah kata yang dicari--}}
-                        @elseif(\Illuminate\Support\Facades\Auth::user()->nama_admin == starts_with($data->nama_admin, \Illuminate\Support\Facades\Auth::user()->nama_admin))
+                            {{--custom view table ini hanya akan menampilkan data yang memiliki kesamaan parent_id
+                            antara data2 parent_id yang ada dengan admin yang login saat itu--}}
+                        @elseif($data->parent_id == \Illuminate\Support\Facades\Auth::user()->id_admin)
                         <tr>
                             <td>{{ $data->id_admin }}</td>
                             <td>{{ $data->nama_admin }}</td>

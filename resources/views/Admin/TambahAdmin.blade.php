@@ -85,7 +85,7 @@
                             <option disabled selected="selected">Pilih Departemen</option>
                             @foreach($admin as $data)
                                 @if($data->id_status == 2)
-                                <option>{{ $data->nama_admin }}</option>
+                                <option value="{{ $data->id_admin }}">{{ $data->nama_admin }}</option>
                                     @else
                                 @endif
                             @endforeach

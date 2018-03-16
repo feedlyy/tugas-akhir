@@ -63,7 +63,7 @@ class AcaraController extends Controller
         /*ini store ke db*/
         $acara = New Acara;
         $acara->nama_event = $request->nama_acara;
-        $acara->detail_acara = Carbon::parse($request->detail_acara)->toDateTimeString();
+        $acara->detail_acara = Carbon::parse($request->start_date)->toDateTimeString();
         $acara->alarm = Carbon::now();
         $acara->nama_ruangan = $request->nama_ruang;
         $acara->tamu_undangan = $request->tamu_undangan;

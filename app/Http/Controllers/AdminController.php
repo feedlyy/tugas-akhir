@@ -50,17 +50,8 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         //
-
-        /*cek jika data sudah ada di database dengan string contains
-        string contains itu fungsi laravel helper dimana parameter pertama adalah list katanya
-        parameter kedua adalah kata yang dicari*/
-        $cek = str_contains(Admin::all('nama_admin'), $request->nama_admin);
-        if ($cek == true){
-            return redirect('admin/admin/create')->with(session()->flash('alr_exist', ''));
-        } else{
             $validasi = $request->validate([
-                /*'id_admin' => ['required', new Lowercase, 'unique:admins'],*/
-                'nama_admin' => ['required', new Lowercase],
+                'nama_admin' => ['required', new Lowercase, 'unique:admins,nama_admin'],
                 'password' => ['required'],
                 'selectstatus' => ['required']
             ]);
@@ -71,22 +62,35 @@ class AdminController extends Controller
             kebetulan dibikin sama name nya*/
             /*$admin->id_admin = $request->id_admin;*/
 
-            /*bikin custom exception untuk nama admin
-            jika ada penambahan ke prodi(id_status == 3) tapi yang login/menambahkan adalah fakultas
-            maka akan seperti ini*/
-            if (Auth::user()->id_status == 2){
-                $admin->nama_admin = Auth::user()->nama_admin.'-'.$request->nama_admin;
-            } elseif($request->selectstatus == 2){
-                $admin->nama_admin = $request->nama_admin;
-            } elseif ($request->selectstatus == 3){
-                $admin->nama_admin = $request->selectdepartemen.'-'.$request->nama_admin;
-            }
+
+            $admin->nama_admin = $request->nama_admin;
             $admin->password = bcrypt($request->password);
             $admin->id_status = $request->selectstatus;
 
+            /*ini adalah konsep linked list yang diajarkan faldy
+            jadi dimana terdapat parent_id untuk pengganti id_departemen/id_prodi yang
+            seharusnya ada di table admin
+            jadi dengan adanya linked list, dapat menentukan admin ini bagian dari siapa
+            contoh: vokasi memiliki id_admin 1 dan parent_id null
+            nanti ketika menambahkan departemen baru, misal tedi dengan id_admin 2
+            maka parent_id tedi akan menjadi 1(karena tedi merupakan fakultas vokasi)
+            dan begitu pula jika menambahkan prodi, misal komsi
+            maka komsi akan memiliki parent_id = 2. karena komsi merupakan departemen tedi
+            dan seterusnya*/
+
+            if (Auth::user()->id_status == 1){
+                if ($request->selectstatus == 2){
+                    $admin->parent_id = Auth::user()->id_admin;
+                } elseif($request->selectstatus == 3){
+                    $admin->parent_id = $request->selectdepartemen;
+                }
+            } else{
+                $admin->parent_id = Auth::user()->id_admin;
+            }
+
             $admin->save();
             return redirect('admin/admin')->with(session()->flash('status', ''));
-        }
+
 
 
 

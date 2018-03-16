@@ -16,8 +16,8 @@ class CreateAcarasTable extends Migration
         Schema::create('acaras', function (Blueprint $table) {
             $table->increments('id_acara');
             $table->string('nama_event');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->integer('alarm')->unsigned();
             $table->string('id_gedung');
             $table->string('nama_ruangan');

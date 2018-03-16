@@ -18,8 +18,7 @@ class CreateAdminsTable extends Migration
             $table->string('nama_admin');
             $table->string('password');
             $table->integer('id_status')->unsigned();
-            /*$table->integer('id_departemen')->unsigned()->nullable();
-            $table->integer('id_prodi')->unsigned()->nullable();*/
+            $table->integer('parent_id')->nullable();
 
             $table->foreign('id_status')->references('id_status')->on('statuses')->onDelete('CASCADE');
             /*$table->foreign('id_departemen')->references('id_departemen')->on('departements')->onDelete('CASCADE');

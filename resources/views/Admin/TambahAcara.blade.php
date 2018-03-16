@@ -39,13 +39,13 @@
 
             <!-- Date -->
                 <div class="form-group">
-                    <label>Date:</label>
+                    <label>Start Datetime</label>
 
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" class="form-control pull-right" id="datepicker">
+                        <input type="text" name="start_date" class="form-control pull-right" id="datepicker">
                     </div>
 
                     <!-- /.input group -->
@@ -99,11 +99,14 @@
     <script>
         $(function () {
             //Date picker
-            $('#datepicker').datepicker({
-                autoclose: true
-            })
+            $('#datepicker').daterangepicker({
+                singleDatePicker: true,
+                timePicker: true,
+                timePicker24Hour: true,
+                opens: "right"
+            });
 
-            /*untuk timepicker*/
+                /*untuk timepicker*/
             //Timepicker
             $('.timepicker').timepicker({
                 showInputs: false
