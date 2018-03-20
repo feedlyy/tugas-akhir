@@ -123,6 +123,8 @@ class AcaraController extends Controller
     public function show($id)
     {
         //
+        $acara = Acara::find($id);
+        return view('Admin.ShowAcara')->with('acara', $acara);
     }
 
     /**

@@ -70,8 +70,8 @@
                     <thead>
                     <tr>
                         <th>ID Staff</th>
-                        <th>ID Status</th>
-                        <th>NIP</th>
+                        {{--<th>ID Status</th>
+                        <th>NIP</th>--}}
                         <th>Nama Staff</th>
                         <th>Email</th>
                         <th>Action</th>
@@ -81,8 +81,8 @@
                         @foreach($staff as $data)
                             <tr>
                                 <td>{{ $data->id_staff }}</td>
-                                <td>{{ $data->id_status }}</td>
-                                <td>{{ $data->nip }}</td>
+                                {{--<td>{{ $data->id_status }}</td>
+                                <td>{{ $data->nip }}</td>--}}
                                 <td>{{ $data->nama_staff }}</td>
                                 <td>{{ $data->email }}</td>
                                 <td>
