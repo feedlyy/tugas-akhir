@@ -80,7 +80,7 @@
                             <tr>
                                 <td>{{ $data->id_acara }}</td>
                                 <td>{{ $data->nama_event }}</td>
-                                <td>{{ $data->detail_acara }}</td>
+                                <td>{{ $data->start_date }}</td>
                                 <td>{{ $data->alarm }}</td>
                                 <td>
                                     {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
@@ -98,6 +98,9 @@
                     </table>
             </div>
         </div>
+    </div>
+    <div>
+
     </div>
 
     <script>

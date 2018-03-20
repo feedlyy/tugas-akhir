@@ -59,7 +59,7 @@
                         <option disabled selected="selected">Pilih Status</option>
                         @foreach($status as $data)
                             @if($data->id_status == 1)
-                                <option disabled>{{ $data->id_status}}</option>
+                                <option hidden>{{ $data->id_status}}</option>
                             @else
                             <option value="{{ $data->id_status }}">{{ $data->id_status }}</option>
                             @endif
@@ -70,7 +70,7 @@
                             <option disabled selected="selected">Pilih Status</option>
                             @foreach($status as $data)
                                 @if($data->id_status == 1 || $data->id_status == 2)
-                                    <option disabled>{{ $data->id_status}}</option>
+                                    <option hidden>{{ $data->id_status}}</option>
                                 @else
                                 <option>{{ $data->id_status }}</option>
                                 @endif

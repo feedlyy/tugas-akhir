@@ -39,43 +39,43 @@
 
             <!-- Date -->
                 <div class="form-group">
-                    <label>Start Datetime</label>
+                    <label>Datetime</label>
 
                     <div class="input-group date">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="start_date" class="form-control pull-right" id="datepicker">
+                        <input type="text" name="start_date" class="form-control pull-right" id="datepicker" value="{{ old('start_date') }}">
                     </div>
 
                     <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
 
-            <!-- time Picker -->
-                <div class="bootstrap-timepicker">
-                    <div class="form-group">
-                        <label>Reminder (Sebelum Acara)</label>
-
-                        <div class="input-group">
-                            <input type="text" name="reminder" class="form-control timepicker" value="{{ old('reminder') }}">
-
-                            <div class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
-                            </div>
-                        </div>
-                        <!-- /.input group -->
-                    </div>
-                    <!-- /.form group -->
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Reminder Acara (Dalam Menit)</label>
+                    <input type="number" name="reminder" class="form-control" id="" placeholder="" value="{{ old('reminder') }}">
                 </div>
+
+                {{--id gedung--}}
+                <div class="form-group">
+                    <label>ID Gedung</label>
+                    <select class="form-control select2" id="id_gedung" style="width: 100%;" name="id_gedung" onchange="ifGedung()">
+                        <option disabled selected="selected">Pilih Gedung</option>
+                        @foreach($gedung as $data)
+                            <option>{{ $data->id_gedung }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
 
                 {{--nama ruangan--}}
                 <div class="form-group">
                     <label>Nama Ruangan</label>
-                    <select class="form-control select2" style="width: 100%;" name="nama_ruang">
+                    <select class="form-control select2" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
                         @foreach($ruangan as $ruang)
-                            <option>{{ $ruang->nama_ruangan }}</option>
+                            <option id="nama_ruang">{{ $ruang->nama_ruangan }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -99,20 +99,28 @@
     <script>
         $(function () {
             //Date picker
-            $('#datepicker').daterangepicker({
-                singleDatePicker: true,
+            $('input[name="start_date"]').daterangepicker({
                 timePicker: true,
-                timePicker24Hour: true,
-                opens: "right"
+                opens: "right",
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY h:mm A'
+                }
             });
 
-                /*untuk timepicker*/
-            //Timepicker
-            $('.timepicker').timepicker({
-                showInputs: false
-            })
 
         })
+
+        /*function ifGedung() {
+            var ruang = document.getElementById('ruang').value;
+            var gedung = document.getElementById('id_gedung').value;
+            var cek = "{{ str_before("<script>ruang</script>", ' -') }}";
+            if (gedung == cek){
+                document.getElementById('nama_ruang').hidden = false;
+            } else {
+                document.getElementById('nama_ruang').hidden = true;
+            }
+        }*/
 
 
 

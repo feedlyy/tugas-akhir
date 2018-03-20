@@ -13,7 +13,7 @@ class Acara extends Model
 
     protected $fillable = [
       /*'nama_event', 'tanggal_acara', 'waktu_mulai', 'waktu_selesai', 'alarm', 'id_gedung', 'id_ruangan', 'tamu_undangan', 'id_admin',*/
-      'nama_event', 'start_date', 'end_date', 'alarm', 'id_gedung', 'nama_ruangan', 'tamu_undangan', 'id_admin'
+      'nama_event', 'start_date', 'end_date', 'alarm', 'id_gedung', 'nama_ruangan', 'tamu_undangan', 'id_admin', 'event_id_google_calendar'
     ];
 
     /*protected $dates = [

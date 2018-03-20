@@ -15,6 +15,7 @@ class CreateAcarasTable extends Migration
     {
         Schema::create('acaras', function (Blueprint $table) {
             $table->increments('id_acara');
+            $table->text('event_id_google_calendar');
             $table->string('nama_event');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
