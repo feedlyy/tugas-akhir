@@ -51,8 +51,6 @@ class AcaraController extends Controller
     public function store(Request $request)
     {
         //
-        /*$contoh = Carbon::parse($request->tanggal_acara);*/
-
         /*berarti logikanya di store ini ada 2 kali fungsi
         pertama fungsi store ke db
         kedua create event ke eventcalendar nya*/
@@ -62,7 +60,8 @@ class AcaraController extends Controller
             'tamu_undangan' => ['required', 'email'],
             'nama_ruang' => ['required'],
             'reminder' => ['required', 'numeric', 'max:60'],
-            'id_gedung' => ['required']
+            'id_gedung' => ['required'],
+            'start_date' => ['required']
         ]);
 
         /*jadi kan inputan date itu kayak gini, contoh
@@ -135,6 +134,13 @@ class AcaraController extends Controller
     public function edit($id)
     {
         //
+        $gedung = Gedung::all();
+        $ruangan = Ruangan::all();
+        $acara = Acara::find($id);
+        return view('Admin.EditAcara')
+            ->with('gedung', $gedung)
+            ->with('ruangan', $ruangan)
+            ->with('acara', $acara);
     }
 
     /**
@@ -147,6 +153,39 @@ class AcaraController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validasi = $request->validate([
+            'nama_acara' => ['required', 'max:25', new Uppercase],
+            'tamu_undangan' => ['required', 'email'],
+            'nama_ruang' => ['required'],
+            'id_gedung' => ['required'],
+            'start_date' => ['required']
+        ]);
+
+        $start = str_before($request->start_date, ' -');
+        $end = str_after($request->start_date, '- ');
+
+
+        $acara = Acara::find($id);
+        $acara->nama_event = $request->nama_acara;
+        $acara->tamu_undangan = $request->tamu_undangan;
+        $acara->start_date = Carbon::parse($start)->toDateTimeString();
+        $acara->end_date = Carbon::parse($end)->toDateTimeString();
+        $acara->id_gedung = $request->id_gedung;
+        $acara->nama_ruangan = $request->nama_ruang;
+        $acara->save();
+
+        $event = Event::find($acara->event_id_google_calendar);
+        $event->update([
+            'name' => $request->nama_acara,
+            'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
+            'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
+        ]);
+        $event->addAttendee(['email' => $request->tamu_undangan]);
+        $event->save();
+
+        return redirect('admin/acara')->with(session()->flash('update', ''));
+
+
     }
 
     /**

@@ -11,8 +11,7 @@
                         title: "Warning!",
                         text: error,
                         icon: "warning",
-                        button: false,
-                        timer: 2000
+                        button: "OK",
                     });
                 })
             </script>
@@ -22,22 +21,23 @@
     <!-- general form elements -->
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Tambah Acara</h3>
+            <h3 class="box-title">Edit Acara</h3>
         </div>
         <div class="box-header">
             <a class="fa fa-arrow-left" href="{{ route('acara.index') }}"><span style="font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif; font-size: small;">&nbspKembali ke list acara</span></a>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="post" action="{{ route('acara.store') }}">
+        <form role="form" method="post" action="{{ route('acara.update', $acara->id_acara) }}">
+            <input type="hidden" name="_method" value="PATCH">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Nama Acara</label>
-                    <input type="text" name="nama_acara" class="form-control" id="" placeholder="" value="{{ old('nama_acara') }}">
+                        <input type="text" name="nama_acara" class="form-control" id="" placeholder="" value="{{ $acara->nama_event }}">
                 </div>
 
-            <!-- Date -->
+                <!-- Date -->
                 <div class="form-group">
                     <label>Datetime</label>
 
@@ -45,17 +45,12 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="start_date" class="form-control pull-right" id="datepicker" value="{{ old('start_date') }}">
+                        <input type="text" name="start_date" class="form-control pull-right" id="datepicker" value="{{ $acara->start_date }}">
                     </div>
 
                     <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
-
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Reminder Acara (Dalam Menit)</label>
-                    <input type="number" name="reminder" class="form-control" id="" placeholder="" value="{{ old('reminder') }}">
-                </div>
 
                 {{--id gedung--}}
                 <div class="form-group">
@@ -67,7 +62,6 @@
                         @endforeach
                     </select>
                 </div>
-
 
                 {{--nama ruangan--}}
                 <div class="form-group">
@@ -83,17 +77,17 @@
                 {{--tamu undangan--}}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Tamu Undangan</label>
-                    <input type="email" name="tamu_undangan" class="form-control" id="" placeholder="" value="{{ old('tamu_undangan') }}">
+                    <input type="email" name="tamu_undangan" class="form-control" id="" placeholder="" value="{{ $acara->tamu_undangan }}">
                 </div>
 
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
-    </div>
 
+    </div>
     <script>
         $(function () {
             //Date picker
@@ -105,8 +99,6 @@
                     format: 'MM/DD/YYYY h:mm A'
                 }
             });
-
-
         })
     </script>
 @endsection
