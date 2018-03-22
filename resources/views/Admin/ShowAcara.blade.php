@@ -61,7 +61,7 @@
 
             <strong><i class="fa fa-user-plus margin-r-5"></i>Penanggung Jawab</strong>
 
-            <p class="text-muted">{{ $acara->id_admin }}</p>
+            <p class="text-muted">{{ $acara->penanggung_jawab }}</p>
 
         </div>
         <!-- /.box-body -->

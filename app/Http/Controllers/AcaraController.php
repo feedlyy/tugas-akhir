@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Acara;
 use App\Rules\Uppercase;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\GoogleCalendar\Event;
@@ -51,65 +52,60 @@ class AcaraController extends Controller
     public function store(Request $request)
     {
         //
-        /*berarti logikanya di store ini ada 2 kali fungsi
-        pertama fungsi store ke db
-        kedua create event ke eventcalendar nya*/
-
-        $validasi = $request->validate([
-            'nama_acara' => ['required', 'max:25', new Uppercase],
-            'tamu_undangan' => ['required', 'email'],
-            'nama_ruang' => ['required'],
-            'reminder' => ['required', 'numeric', 'max:60'],
-            'id_gedung' => ['required'],
-            'start_date' => ['required']
-        ]);
-
         /*jadi kan inputan date itu kayak gini, contoh
         03/17/2018 12:00 AM - 03/17/2018 11:59 PM
         nah sedangkan nanti input nya itu di pisah, start date sama end date
         jadi pake laravel string helper buat ambil valuenya masing2*/
         $start = str_before($request->start_date, ' -');
         $end = str_after($request->start_date, '- ');
+        if (Carbon::parse($start)->toDateString() < Carbon::today()->toDateString()){
+            return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
+        } else {
+            /*berarti logikanya di store ini ada 2 kali fungsi
+        pertama fungsi store ke db
+        kedua create event ke eventcalendar nya*/
+
+            $validasi = $request->validate([
+                'nama_acara' => ['required', 'max:25', new Uppercase],
+                'tamu_undangan' => ['required', 'email'],
+                'nama_ruang' => ['required'],
+                'reminder' => ['required', 'numeric', 'max:60'],
+                'id_gedung' => ['required'],
+                'start_date' => ['required'],
+            ]);
+
+            $event = Event::create([
+                'name' => $request->nama_acara,
+                'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
+                'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
+            ]);
+            $event->addAttendee(['email' => $request->tamu_undangan]);
+            $event->save();
+
+            /*$acara= Acara::find($id);
+            $event = Event::find($acara->event_id_google_calendar)->update($request);*/
+            /*ini store ke db*/
+            $acara = new Acara;
+            /*event_id_google_calendar ini untuk menyimpan event_id tiap acara
+            di google calendar dan menyimpannya di db.
+            jadi koneksi untuk ke google calendar nya*/
+            $acara->event_id_google_calendar = $event->id;
+            $acara->nama_event = $request->nama_acara;
+            $acara->start_date = Carbon::parse($start)->toDateTimeString();
+            $acara->end_date = Carbon::parse($end)->toDateTimeString();
+            $acara->alarm = $request->reminder;
+            $acara->id_gedung = $request->id_gedung;
+            $acara->nama_ruangan = $request->nama_ruang;
+            $acara->tamu_undangan = $request->tamu_undangan;
+            $acara->penanggung_jawab = Auth::user()->nama_admin;
+            $acara->save();
+
+
+            return redirect('admin/acara')->with(session()->flash('status', ''));
+        }
 
 
 
-//        /*ini store ke gCalendar*/
-//        $event = new Event;
-//        $event->name = $request->nama_acara;
-//        $event->startDateTime = Carbon::parse($start, 'Asia/Jakarta');
-//        $event->endDateTime = Carbon::parse($end, 'Asia/Jakarta');
-//        $event->addAttendee(['email' => $request->tamu_undangan]);
-//        $event->save();
-
-        $event = Event::create([
-            'name' => $request->nama_acara,
-        'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
-        'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
-        ]);
-        $event->addAttendee(['email' => $request->tamu_undangan]);
-        $event->save();
-
-
-        /*$acara= Acara::find($id);
-        $event = Event::find($acara->event_id_google_calendar)->update($request);*/
-        /*ini store ke db*/
-        $acara = new Acara;
-        /*event_id_google_calendar ini untuk menyimpan event_id tiap acara
-        di google calendar dan menyimpannya di db.
-        jadi koneksi untuk ke google calendar nya*/
-        $acara->event_id_google_calendar = $event->id;
-        $acara->nama_event = $request->nama_acara;
-        $acara->start_date = Carbon::parse($start)->toDateTimeString();
-        $acara->end_date = Carbon::parse($end)->toDateTimeString();
-        $acara->alarm = $request->reminder;
-        $acara->id_gedung = $request->id_gedung;
-        $acara->nama_ruangan = $request->nama_ruang;
-        $acara->tamu_undangan = $request->tamu_undangan;
-        $acara->id_admin = Auth::user()->id_admin;
-        $acara->save();
-
-
-        return redirect('admin/acara')->with(session()->flash('status', ''));
 
 
     }

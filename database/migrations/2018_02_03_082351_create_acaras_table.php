@@ -23,13 +23,12 @@ class CreateAcarasTable extends Migration
             $table->string('id_gedung');
             $table->string('nama_ruangan');
             $table->string('tamu_undangan');
-            $table->integer('id_admin')->unsigned();
+            $table->string('penanggung_jawab');
 
 
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
             $table->foreign('nama_ruangan')->references('nama_ruangan')->on('ruangans')->onDelete('CASCADE');
-            /*$table->foreign('id_ruangan')->references('id_ruangan')->on('ruangans')->onDelete('CASCADE');*/
-            $table->foreign('id_admin')->references('id_admin')->on('admins')->onDelete('CASCADE');
+
             $table->timestamps();
         });
     }

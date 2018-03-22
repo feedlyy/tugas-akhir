@@ -12,11 +12,23 @@
                         text: error,
                         icon: "warning",
                         button: false,
-                        timer: 2000
+                        timer: 3000
                     });
                 })
             </script>
         @endforeach
+    @elseif(session()->has('dateError'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Tanggal mulai acara tidak boleh kurang dari hari ini",
+                    icon: "warning",
+                    button: false,
+                    timer: 3000
+                });
+            })
+        </script>
     @endif
 
     <!-- general form elements -->
@@ -105,8 +117,23 @@
                     format: 'MM/DD/YYYY h:mm A'
                 }
             });
+        });
+        
+        /*function ifGedung() {
+            var gedung = document.getElementById('id_gedung').value;
+            var ruang = document.getElementById('ruang').value;
+            var cek = ruang.search(gedung);
+            /!*for (var i=0; i>= ruang; i++){
 
+            }*!/
+            if (gedung == ruang.indexOf(gedung)){
+                document.getElementById('nama_ruang').hidden = false;
+            } else {
+                document.getElementById('nama_ruang').hidden = true;
+            }
 
-        })
+        }*/
+        
+        
     </script>
 @endsection
