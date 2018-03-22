@@ -103,11 +103,6 @@ class AcaraController extends Controller
 
             return redirect('admin/acara')->with(session()->flash('status', ''));
         }
-
-
-
-
-
     }
 
     /**
@@ -151,6 +146,9 @@ class AcaraController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $start = str_before($request->start_date, ' -');
+        $end = str_after($request->start_date, '- ');
+
         $validasi = $request->validate([
             'nama_acara' => ['required', 'max:25', new Uppercase],
             'tamu_undangan' => ['required', 'email'],
@@ -159,8 +157,6 @@ class AcaraController extends Controller
             'start_date' => ['required']
         ]);
 
-        $start = str_before($request->start_date, ' -');
-        $end = str_after($request->start_date, '- ');
 
 
         $acara = Acara::find($id);
@@ -172,18 +168,22 @@ class AcaraController extends Controller
         $acara->nama_ruangan = $request->nama_ruang;
         $acara->save();
 
-        $event = Event::find($acara->event_id_google_calendar);
-        $event->update([
+
+        /*$event->update([
             'name' => $request->nama_acara,
             'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
             'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
-        ]);
+        ]);*/
+        $event = Event::find($acara->event_id_google_calendar);
+        $event->name = $request->nama_acara;
+        $event->startDateTime = Carbon::parse($start, 'Asia/Jakarta');
+        $event->endDateTime = Carbon::parse($end, 'Asia/Jakarta');
         $event->addAttendee(['email' => $request->tamu_undangan]);
         $event->save();
 
+        /*$event = Event::find($acara->event_id_google_calendar)->update($request->all());*/
+
         return redirect('admin/acara')->with(session()->flash('update', ''));
-
-
     }
 
     /**
