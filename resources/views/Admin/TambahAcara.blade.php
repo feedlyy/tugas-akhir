@@ -119,20 +119,22 @@
             });
         });
         
-        /*function ifGedung() {
+        function ifGedung() {
             var gedung = document.getElementById('id_gedung').value;
             var ruang = document.getElementById('ruang').value;
-            var cek = ruang.search(gedung);
-            /!*for (var i=0; i>= ruang; i++){
+            var cek = ruang.includes(gedung);
+            /*for (var i=0; i>= ruang; i++){
 
-            }*!/
-            if (gedung == ruang.indexOf(gedung)){
-                document.getElementById('nama_ruang').hidden = false;
+            }*/
+            if (gedung.select){
+                if (cek){
+                    document.getElementById('nama_ruang').hidden = false;
+                }
             } else {
                 document.getElementById('nama_ruang').hidden = true;
             }
 
-        }*/
+        }
         
         
     </script>

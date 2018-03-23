@@ -58,6 +58,10 @@ class AcaraController extends Controller
         jadi pake laravel string helper buat ambil valuenya masing2*/
         $start = str_before($request->start_date, ' -');
         $end = str_after($request->start_date, '- ');
+
+        /*ini untuk pengecekan start date nya, jadi jika pilihan hari nya kemarin
+        atau tidak hari ini atau tidak hari esoknya, maka akan di return false
+        jika tidak proses nya akan di lanjutkan*/
         if (Carbon::parse($start)->toDateString() < Carbon::today()->toDateString()){
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
         } else {
@@ -148,42 +152,44 @@ class AcaraController extends Controller
         //
         $start = str_before($request->start_date, ' -');
         $end = str_after($request->start_date, '- ');
-
-        $validasi = $request->validate([
-            'nama_acara' => ['required', 'max:25', new Uppercase],
-            'tamu_undangan' => ['required', 'email'],
-            'nama_ruang' => ['required'],
-            'id_gedung' => ['required'],
-            'start_date' => ['required']
-        ]);
-
-
-
-        $acara = Acara::find($id);
-        $acara->nama_event = $request->nama_acara;
-        $acara->tamu_undangan = $request->tamu_undangan;
-        $acara->start_date = Carbon::parse($start)->toDateTimeString();
-        $acara->end_date = Carbon::parse($end)->toDateTimeString();
-        $acara->id_gedung = $request->id_gedung;
-        $acara->nama_ruangan = $request->nama_ruang;
-        $acara->save();
+        if (Carbon::parse($start)->toDateString() < Carbon::today()->toDateString()){
+            return redirect('admin/acara/'.$id.'/edit')->with(session()->flash('dateError', ''));
+        } else {
+            $validasi = $request->validate([
+                'nama_acara' => ['required', 'max:25', new Uppercase],
+                'tamu_undangan' => ['required', 'email'],
+                'nama_ruang' => ['required'],
+                'id_gedung' => ['required'],
+                'start_date' => ['required']
+            ]);
 
 
-        /*$event->update([
-            'name' => $request->nama_acara,
-            'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
-            'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
-        ]);*/
-        $event = Event::find($acara->event_id_google_calendar);
-        $event->name = $request->nama_acara;
-        $event->startDateTime = Carbon::parse($start, 'Asia/Jakarta');
-        $event->endDateTime = Carbon::parse($end, 'Asia/Jakarta');
-        $event->addAttendee(['email' => $request->tamu_undangan]);
-        $event->save();
+            $acara = Acara::find($id);
+            $acara->nama_event = $request->nama_acara;
+            $acara->tamu_undangan = $request->tamu_undangan;
+            $acara->start_date = Carbon::parse($start)->toDateTimeString();
+            $acara->end_date = Carbon::parse($end)->toDateTimeString();
+            $acara->id_gedung = $request->id_gedung;
+            $acara->nama_ruangan = $request->nama_ruang;
+            $acara->save();
 
-        /*$event = Event::find($acara->event_id_google_calendar)->update($request->all());*/
 
-        return redirect('admin/acara')->with(session()->flash('update', ''));
+            /*$event->update([
+                'name' => $request->nama_acara,
+                'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
+                'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
+            ]);*/
+            $event = Event::find($acara->event_id_google_calendar);
+            $event->name = $request->nama_acara;
+            $event->startDateTime = Carbon::parse($start, 'Asia/Jakarta');
+            $event->endDateTime = Carbon::parse($end, 'Asia/Jakarta');
+            $event->addAttendee(['email' => $request->tamu_undangan]);
+            $event->save();
+
+            /*$event = Event::find($acara->event_id_google_calendar)->update($request->all());*/
+
+            return redirect('admin/acara')->with(session()->flash('update', ''));
+        }
     }
 
     /**

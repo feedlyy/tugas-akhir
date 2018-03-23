@@ -62,7 +62,7 @@
     </script>
 
     <div class="container putih">
-        <h2 style="">List Acara</h2>
+        <h2 style="">List acara {{\Illuminate\Support\Facades\Auth::user()->nama_admin}}</h2>
         <a href="{{ url('admin/acara/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Acara</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
@@ -77,23 +77,49 @@
                         </tr>
                         </thead>
                         @foreach($acara as $data)
-                            <tr>
-                                <td>{{ $data->id_acara }}</td>
-                                <td>{{ $data->nama_event }}</td>
-                                <td>{{ $data->start_date }}</td>
-                                <td>{{ $data->alarm }}</td>
-                                <td>
-                                    {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
-                                    <a href="{{ route('acara.edit', $data->id_acara) }}">
-                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
-                                    </a>
-                                    <a href="{{ route('acara.show', $data->id_acara) }}">
-                                        {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
-                                    </a>
-                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
-                                    {!! Form::close() !!}
-                                </td>
-                            </tr>
+                            @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                                <tr>
+                                    <td>{{ $data->id_acara }}</td>
+                                    <td>{{ $data->nama_event }}</td>
+                                    <td>{{ $data->start_date }}</td>
+                                    <td>{{ $data->alarm }}</td>
+                                    <td>
+                                        @if($data->penanggung_jawab == 'vokasi')
+                                        {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                        <a href="{{ route('acara.edit', $data->id_acara) }}">
+                                            {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                        </a>
+                                        <a href="{{ route('acara.show', $data->id_acara) }}">
+                                            {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                        </a>
+                                        {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                        {!! Form::close() !!}
+                                        @else
+                                            <a href="{{ route('acara.show', $data->id_acara) }}">
+                                                {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @elseif(\Illuminate\Support\Facades\Auth::user()->nama_admin == $data->penanggung_jawab)
+                                <tr>
+                                    <td>{{ $data->id_acara }}</td>
+                                    <td>{{ $data->nama_event }}</td>
+                                    <td>{{ $data->start_date }}</td>
+                                    <td>{{ $data->alarm }}</td>
+                                    <td>
+                                        {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                        <a href="{{ route('acara.edit', $data->id_acara) }}">
+                                            {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                        </a>
+                                        <a href="{{ route('acara.show', $data->id_acara) }}">
+                                            {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                        </a>
+                                        {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                        {!! Form::close() !!}
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </table>
             </div>
