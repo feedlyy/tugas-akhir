@@ -59,10 +59,19 @@ class AcaraController extends Controller
         $start = str_before($request->start_date, ' -');
         $end = str_after($request->start_date, '- ');
 
+        /*ini adalah validasi untuk diantara, jadi ini untuk validasi tanggal dan waktu nya
+        biar tidak bentrok, menggunakan fungsi dari carbon yaitu between()*/
+        $between = (Carbon::parse($start))
+            ->between(Carbon::parse($start), Carbon::parse($end));
+
         /*ini untuk pengecekan start date nya, jadi jika pilihan hari nya kemarin
         atau tidak hari ini atau tidak hari esoknya, maka akan di return false
         jika tidak proses nya akan di lanjutkan*/
-        if (Carbon::parse($start)->toDateString() < Carbon::today()->toDateString()){
+        /*if (Carbon::parse($start)->toDateString() < Carbon::today()->toDateString()){
+            return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
+        } else {*/
+
+        if ($between == true){
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
         } else {
             /*berarti logikanya di store ini ada 2 kali fungsi
@@ -95,13 +104,13 @@ class AcaraController extends Controller
             jadi koneksi untuk ke google calendar nya*/
             $acara->event_id_google_calendar = $event->id;
             $acara->nama_event = $request->nama_acara;
-            $acara->start_date = Carbon::parse($start)->toDateTimeString();
-            $acara->end_date = Carbon::parse($end)->toDateTimeString();
+            $acara->start_date = Carbon::parse($start);
+            $acara->end_date = Carbon::parse($end);
             $acara->alarm = $request->reminder;
             $acara->id_gedung = $request->id_gedung;
             $acara->nama_ruangan = $request->nama_ruang;
             $acara->tamu_undangan = $request->tamu_undangan;
-            $acara->penanggung_jawab = Auth::user()->nama_admin;
+            $acara->penanggung_jawab = Auth::user()->id_admin;
             $acara->save();
 
 

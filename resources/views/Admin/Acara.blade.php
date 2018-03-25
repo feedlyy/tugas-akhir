@@ -84,7 +84,7 @@
                                     <td>{{ $data->start_date }}</td>
                                     <td>{{ $data->alarm }}</td>
                                     <td>
-                                        @if($data->penanggung_jawab == 'vokasi')
+                                        @if($data->penanggung_jawab == 1)
                                         {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                         <a href="{{ route('acara.edit', $data->id_acara) }}">
                                             {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
@@ -101,7 +101,7 @@
                                         @endif
                                     </td>
                                 </tr>
-                                @elseif(\Illuminate\Support\Facades\Auth::user()->nama_admin == $data->penanggung_jawab)
+                                @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2 && \Illuminate\Support\Facades\Auth::user()->id_admin == $data->penanggung_jawab)
                                 <tr>
                                     <td>{{ $data->id_acara }}</td>
                                     <td>{{ $data->nama_event }}</td>
