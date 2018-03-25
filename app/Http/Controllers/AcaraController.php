@@ -57,8 +57,8 @@ class AcaraController extends Controller
         03/17/2018 12:00 AM - 03/17/2018 11:59 PM
         nah sedangkan nanti input nya itu di pisah, start date sama end date
         jadi pake laravel string helper buat ambil valuenya masing2*/
-        $start = Carbon::parse(str_before($request->start_date, ' -'))->tz('Asia/Jakarta');
-        $end = Carbon::parse(str_after($request->start_date, '- '))->tz('Asia/Jakarta');
+        $start = Carbon::parse(str_before($request->start_date, ' -'), 'Asia/Jakarta');
+        $end = Carbon::parse(str_after($request->start_date, '- '), 'Asia/Jakarta');
 
         /*ini adalah validasi untuk diantara, jadi ini untuk validasi tanggal dan waktu nya
         biar tidak bentrok, menggunakan fungsi dari carbon yaitu between()*/
