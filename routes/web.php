@@ -37,6 +37,7 @@ Route::prefix('admin')->group(function (){
    });
 });
 
+/*ini untuk fungsi ajax yg select nama ruang*/
 Route::get('nama/{id_gedung}', 'GetNamaController@getNamaRuang');
 
 

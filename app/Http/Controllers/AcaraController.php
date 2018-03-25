@@ -21,11 +21,11 @@ class AcaraController extends Controller
      */
     public function index()
     {
-        /*$acara = Acara::all();
+        $acara = Acara::all();
 
-        return view('Admin.Acara')->with('acara', $acara);*/
-        $acara = Acara::all()->last();
-        dd($acara);
+        return view('Admin.Acara')->with('acara', $acara);
+        /*$acara = Acara::all()->last();
+        dd($acara);*/
 
     }
 
