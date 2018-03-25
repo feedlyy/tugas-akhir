@@ -86,9 +86,9 @@
                     <label>Nama Ruangan</label>
                     <select class="form-control select2" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
-                        @foreach($ruangan as $ruang)
+                        {{--@foreach($ruangan as $ruang)
                             <option id="nama_ruang">{{ $ruang->nama_ruangan }}</option>
-                        @endforeach
+                        @endforeach--}}
                     </select>
                 </div>
 
@@ -119,13 +119,13 @@
             });
         });
         
-        function ifGedung() {
+        /*function ifGedung() {
             var gedung = document.getElementById('id_gedung').value;
             var ruang = document.getElementById('ruang').value;
             var cek = ruang.includes(gedung);
-            /*for (var i=0; i>= ruang; i++){
+            /!*for (var i=0; i>= ruang; i++){
 
-            }*/
+            }*!/
             if (gedung.select){
                 if (cek){
                     document.getElementById('nama_ruang').hidden = false;
@@ -134,7 +134,31 @@
                 document.getElementById('nama_ruang').hidden = true;
             }
 
-        }
+        }*/
+        $('#id_gedung').change(function(){
+
+
+            var selected_gedung_type = $(this).val();
+
+            $.ajax({
+                url : "/nama/" + selected_gedung_type,
+                type:'get',
+                dataType: 'json',
+                success: function(response) {
+
+
+                    //alert(response); // show [object, Object]
+
+                    var $select = $('#ruang');
+
+                    $select.find('option').remove();
+                    $.each(response,function(key, value)
+                    {
+                        $select.append('<option ' + response[key].nama_ruangan + '>' + response[key].nama_ruangan + '</option>'); // return empty
+                    });
+                }
+            });
+        });
         
         
     </script>

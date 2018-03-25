@@ -21,10 +21,11 @@ class AcaraController extends Controller
      */
     public function index()
     {
-        $acara = Acara::all();
+        /*$acara = Acara::all();
 
-        return view('Admin.Acara')->with('acara', $acara);
-
+        return view('Admin.Acara')->with('acara', $acara);*/
+        $acara = Acara::all()->last();
+        dd($acara);
 
     }
 
@@ -56,13 +57,14 @@ class AcaraController extends Controller
         03/17/2018 12:00 AM - 03/17/2018 11:59 PM
         nah sedangkan nanti input nya itu di pisah, start date sama end date
         jadi pake laravel string helper buat ambil valuenya masing2*/
-        $start = str_before($request->start_date, ' -');
-        $end = str_after($request->start_date, '- ');
+        $start = Carbon::parse(str_before($request->start_date, ' -'))->tz('Asia/Jakarta');
+        $end = Carbon::parse(str_after($request->start_date, '- '))->tz('Asia/Jakarta');
 
         /*ini adalah validasi untuk diantara, jadi ini untuk validasi tanggal dan waktu nya
         biar tidak bentrok, menggunakan fungsi dari carbon yaitu between()*/
-        $between = (Carbon::parse($start))
-            ->between(Carbon::parse($start), Carbon::parse($end));
+        /*$eventsDuluan = Acara::whereBetween('start_date', array($start, $end))->get();
+        $eventsBelakangan = Acara::whereBetween('end_date', array($start, $end))->get();
+        $countEvents = $eventsDuluan->count() + $eventsBelakangan->count();*/
 
         /*ini untuk pengecekan start date nya, jadi jika pilihan hari nya kemarin
         atau tidak hari ini atau tidak hari esoknya, maka akan di return false
@@ -71,12 +73,15 @@ class AcaraController extends Controller
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
         } else {*/
 
-        if ($between == true){
-            return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
-        } else {
+
+        /*if ($countEvents > 0) {
+            return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
+                ->withInput();
+        } else {*/
             /*berarti logikanya di store ini ada 2 kali fungsi
         pertama fungsi store ke db
         kedua create event ke eventcalendar nya*/
+
 
             $validasi = $request->validate([
                 'nama_acara' => ['required', 'max:25', new Uppercase],
@@ -89,8 +94,8 @@ class AcaraController extends Controller
 
             $event = Event::create([
                 'name' => $request->nama_acara,
-                'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
-                'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
+                'startDateTime' => $start,
+                'endDateTime' => $end,
             ]);
             $event->addAttendee(['email' => $request->tamu_undangan]);
             $event->save();
@@ -104,8 +109,8 @@ class AcaraController extends Controller
             jadi koneksi untuk ke google calendar nya*/
             $acara->event_id_google_calendar = $event->id;
             $acara->nama_event = $request->nama_acara;
-            $acara->start_date = Carbon::parse($start);
-            $acara->end_date = Carbon::parse($end);
+            $acara->start_date = $start;
+            $acara->end_date = $end;
             $acara->alarm = $request->reminder;
             $acara->id_gedung = $request->id_gedung;
             $acara->nama_ruangan = $request->nama_ruang;
@@ -115,7 +120,7 @@ class AcaraController extends Controller
 
 
             return redirect('admin/acara')->with(session()->flash('status', ''));
-        }
+
     }
 
     /**

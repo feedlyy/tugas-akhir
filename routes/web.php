@@ -22,7 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home2', 'AdminViewHandleController@tes')->name('home2');
 
 
-
 Route::prefix('admin')->group(function (){
    Route::middleware('auth')->group(function (){
     Route::get('', 'AdminViewHandleController@tampilan')->name('tampilan');
@@ -34,9 +33,11 @@ Route::prefix('admin')->group(function (){
         'acara' => 'AcaraController'
     ]);
     Route::get('kalender', 'KalenderController@kalender')->name('kalender');
+
    });
 });
 
+Route::get('nama/{id_gedung}', 'GetNamaController@getNamaRuang');
 
 
 
