@@ -7,6 +7,7 @@ use App\Rules\Uppercase;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
 use App\Ruangan;
@@ -62,9 +63,20 @@ class AcaraController extends Controller
 
         /*ini adalah validasi untuk diantara, jadi ini untuk validasi tanggal dan waktu nya
         biar tidak bentrok, menggunakan fungsi dari carbon yaitu between()*/
-        /*$eventsDuluan = Acara::whereBetween('start_date', array($start, $end))->get();
-        $eventsBelakangan = Acara::whereBetween('end_date', array($start, $end))->get();
-        $countEvents = $eventsDuluan->count() + $eventsBelakangan->count();*/
+        $eventsDuluan = Acara::select('start_date')->whereBetween('start_date', [$start, $end])->get();;
+        $eventsBelakangan = Acara::select('end_date')->whereBetween('end_date', [$start, $end])->get();;
+
+        $pengecekan = Acara::whereBetween('start_date', [$start, $end])
+            ->orWhereBetween('end_date', [$start, $end])
+            ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
+            ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end])
+            ->get();
+        $cek = count($pengecekan);
+
+        $countEvents = $eventsDuluan->count() + $eventsBelakangan->count();
+
+//        dd($pengecekan, $countEvents);
+        dd($cek);
 
         /*ini untuk pengecekan start date nya, jadi jika pilihan hari nya kemarin
         atau tidak hari ini atau tidak hari esoknya, maka akan di return false
@@ -73,11 +85,10 @@ class AcaraController extends Controller
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
         } else {*/
 
-
-        /*if ($countEvents > 0) {
+        if ($countEvents > 0) {
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
                 ->withInput();
-        } else {*/
+        } else {
             /*berarti logikanya di store ini ada 2 kali fungsi
         pertama fungsi store ke db
         kedua create event ke eventcalendar nya*/
@@ -120,7 +131,7 @@ class AcaraController extends Controller
 
 
             return redirect('admin/acara')->with(session()->flash('status', ''));
-
+        }
     }
 
     /**
@@ -164,9 +175,9 @@ class AcaraController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $start = str_before($request->start_date, ' -');
-        $end = str_after($request->start_date, '- ');
-        if (Carbon::parse($start)->toDateString() < Carbon::today()->toDateString()){
+        $start = Carbon::parse(str_before($request->start_date, ' -'), 'Asia/Jakarta');
+        $end = Carbon::parse(str_after($request->start_date, '- '), 'Asia/Jakarta');
+        if (Carbon::parse($start) < Carbon::today()){
             return redirect('admin/acara/'.$id.'/edit')->with(session()->flash('dateError', ''));
         } else {
             $validasi = $request->validate([
@@ -181,8 +192,8 @@ class AcaraController extends Controller
             $acara = Acara::find($id);
             $acara->nama_event = $request->nama_acara;
             $acara->tamu_undangan = $request->tamu_undangan;
-            $acara->start_date = Carbon::parse($start)->toDateTimeString();
-            $acara->end_date = Carbon::parse($end)->toDateTimeString();
+            $acara->start_date = $start;
+            $acara->end_date = $end;
             $acara->id_gedung = $request->id_gedung;
             $acara->nama_ruangan = $request->nama_ruang;
             $acara->save();
@@ -195,8 +206,8 @@ class AcaraController extends Controller
             ]);*/
             $event = Event::find($acara->event_id_google_calendar);
             $event->name = $request->nama_acara;
-            $event->startDateTime = Carbon::parse($start, 'Asia/Jakarta');
-            $event->endDateTime = Carbon::parse($end, 'Asia/Jakarta');
+            $event->startDateTime = $start;
+            $event->endDateTime = $end;
             $event->addAttendee(['email' => $request->tamu_undangan]);
             $event->save();
 
