@@ -24,7 +24,8 @@ class AcaraController extends Controller
     public function index()
     {
         $acara = Acara::all();
-        $query = Acara::join('admins', 'acaras.penanggung_jawab', '=', 'admins.id_admin')
+        $query = Acara::query()
+            ->join('admins', 'acaras.penanggung_jawab', '=', 'admins.id_admin')
             ->where('acaras.penanggung_jawab', Auth::user()->id_admin)
             ->orWhere('admins.parent_id', Auth::user()->id_admin)
             ->get();
@@ -69,67 +70,83 @@ class AcaraController extends Controller
 
         /*ini adalah validasi untuk diantara, jadi ini untuk validasi tanggal dan waktu nya
         biar tidak bentrok, menggunakan fungsi dari carbon yaitu between()*/
-        $pengecekan = Acara::whereBetween('start_date', [$start, $end])
+        $pengecekan = Acara::where('nama_ruangan', '=', $request->nama_ruang)
+            ->where(function ($query) use ($start, $end){
+                $query->whereBetween('start_date', [$start, $end])
+                    ->orWhereBetween('end_date', [$start, $end])
+                    ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
+                    ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end]);
+            })
+            ->get();
+        $cek = count($pengecekan);
+
+        $selectruangan = Acara::query()
+            ->select('nama_ruangan')
+            ->orWhereBetween('start_date', [$start, $end])
             ->orWhereBetween('end_date', [$start, $end])
             ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
             ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end])
             ->get();
-        $cek = count($pengecekan);
-        /*dd($cek);*/
 
+        $galant = [];
         /*ini untuk pengecekan start date nya, jadi jika pilihan hari nya kemarin
         atau tidak hari ini atau tidak hari esoknya, maka akan di return false
         jika tidak proses nya akan di lanjutkan*/
-        /*if (Carbon::parse($start)->toDateString() < Carbon::today()->toDateString()){
-            return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
-        } else {*/
+        if ($start < Carbon::today()){
+            $galant = array_add($galant, '', 'error1');
+        } elseif($cek > 0) {
+            $galant = array_add($galant, '', 'error2');
+        }
+
+        /*return $selectruangan[0].nama_ruangan;*/
+        dd($request->nama_ruang, $selectruangan, $galant, $pengecekan);
 
         if ($cek > 0) {
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
                 ->withInput();
         } else {
-            /*berarti logikanya di store ini ada 2 kali fungsi
-        pertama fungsi store ke db
-        kedua create event ke eventcalendar nya*/
+        /*berarti logikanya di store ini ada 2 kali fungsi
+    pertama fungsi store ke db
+    kedua create event ke eventcalendar nya*/
 
 
-            $validasi = $request->validate([
-                'nama_acara' => ['required', 'max:25', new Uppercase],
-                'tamu_undangan' => ['required', 'email'],
-                'nama_ruang' => ['required'],
-                'reminder' => ['required', 'numeric', 'max:60'],
-                'id_gedung' => ['required'],
-                'start_date' => ['required'],
-            ]);
+        $validasi = $request->validate([
+            'nama_acara' => ['required', 'max:25', new Uppercase],
+            'tamu_undangan' => ['required', 'email'],
+            'nama_ruang' => ['required'],
+            'reminder' => ['required', 'numeric', 'max:60'],
+            'id_gedung' => ['required'],
+            'start_date' => ['required'],
+        ]);
 
-            $event = Event::create([
-                'name' => $request->nama_acara,
-                'startDateTime' => $start,
-                'endDateTime' => $end,
-            ]);
-            $event->addAttendee(['email' => $request->tamu_undangan]);
-            $event->save();
-
-            /*$acara= Acara::find($id);
-            $event = Event::find($acara->event_id_google_calendar)->update($request);*/
-            /*ini store ke db*/
-            $acara = new Acara;
-            /*event_id_google_calendar ini untuk menyimpan event_id tiap acara
-            di google calendar dan menyimpannya di db.
-            jadi koneksi untuk ke google calendar nya*/
-            $acara->event_id_google_calendar = $event->id;
-            $acara->nama_event = $request->nama_acara;
-            $acara->start_date = $start;
-            $acara->end_date = $end;
-            $acara->alarm = $request->reminder;
-            $acara->id_gedung = $request->id_gedung;
-            $acara->nama_ruangan = $request->nama_ruang;
-            $acara->tamu_undangan = $request->tamu_undangan;
-            $acara->penanggung_jawab = Auth::user()->id_admin;
-            $acara->save();
+        /*fungsi store google calendar*/
+        $event = Event::create([
+            'name' => $request->nama_acara,
+            'startDateTime' => $start,
+            'endDateTime' => $end,
+        ]);
+        $event->addAttendee(['email' => $request->tamu_undangan]);
+        $event->save();
 
 
-            return redirect('admin/acara')->with(session()->flash('status', ''));
+        /*ini store ke db*/
+        $acara = new Acara;
+        /*event_id_google_calendar ini untuk menyimpan event_id tiap acara
+        di google calendar dan menyimpannya di db.
+        jadi koneksi untuk ke google calendar nya*/
+        $acara->event_id_google_calendar = $event->id;
+        $acara->nama_event = $request->nama_acara;
+        $acara->start_date = $start;
+        $acara->end_date = $end;
+        $acara->alarm = $request->reminder;
+        $acara->id_gedung = $request->id_gedung;
+        $acara->nama_ruangan = $request->nama_ruang;
+        $acara->tamu_undangan = $request->tamu_undangan;
+        $acara->penanggung_jawab = Auth::user()->id_admin;
+        $acara->save();
+
+
+        return redirect('admin/acara')->with(session()->flash('status', ''));
         }
     }
 
