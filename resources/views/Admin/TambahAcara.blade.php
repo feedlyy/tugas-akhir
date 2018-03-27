@@ -22,7 +22,7 @@
             $().ready(function (e) {
                 swal({
                     title: "Warning!",
-                    text: "Tanggal mulai acara tidak boleh kurang dari hari ini",
+                    text: "Terdapat kesalahan input atau data sudah ada, masukan inputan yang lain",
                     icon: "warning",
                     button: false,
                     timer: 3000

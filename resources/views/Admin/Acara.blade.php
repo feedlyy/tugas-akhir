@@ -101,13 +101,16 @@
                                         @endif
                                     </td>
                                 </tr>
-                                @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2 && \Illuminate\Support\Facades\Auth::user()->id_admin == $data->penanggung_jawab)
+                            @endif
+                        @endforeach
+                                @foreach($query as $data)
                                 <tr>
                                     <td>{{ $data->id_acara }}</td>
                                     <td>{{ $data->nama_event }}</td>
                                     <td>{{ $data->start_date }}</td>
                                     <td>{{ $data->alarm }}</td>
                                     <td>
+                                        @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->id_admin)
                                         {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                         <a href="{{ route('acara.edit', $data->id_acara) }}">
                                             {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
@@ -117,10 +120,16 @@
                                         </a>
                                         {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
                                         {!! Form::close() !!}
+                                        @else
+                                            <a href="{{ route('acara.show', $data->id_acara) }}">
+                                                {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
-                            @endif
-                        @endforeach
+                                @endforeach
+
+
                     </table>
             </div>
         </div>

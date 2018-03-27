@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Acara;
+use App\Admin;
 use App\Rules\Uppercase;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
@@ -23,10 +24,15 @@ class AcaraController extends Controller
     public function index()
     {
         $acara = Acara::all();
+        $query = Acara::join('admins', 'acaras.penanggung_jawab', '=', 'admins.id_admin')
+            ->where('acaras.penanggung_jawab', Auth::user()->id_admin)
+            ->orWhere('admins.parent_id', Auth::user()->id_admin)
+            ->get();
 
-        return view('Admin.Acara')->with('acara', $acara);
-        /*$acara = Acara::all()->last();
-        dd($acara);*/
+        return view('Admin.Acara')
+            ->with('acara', $acara)
+            ->with('query', $query);
+
 
     }
 
@@ -63,20 +69,13 @@ class AcaraController extends Controller
 
         /*ini adalah validasi untuk diantara, jadi ini untuk validasi tanggal dan waktu nya
         biar tidak bentrok, menggunakan fungsi dari carbon yaitu between()*/
-        $eventsDuluan = Acara::select('start_date')->whereBetween('start_date', [$start, $end])->get();;
-        $eventsBelakangan = Acara::select('end_date')->whereBetween('end_date', [$start, $end])->get();;
-
         $pengecekan = Acara::whereBetween('start_date', [$start, $end])
             ->orWhereBetween('end_date', [$start, $end])
             ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
             ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end])
             ->get();
         $cek = count($pengecekan);
-
-        $countEvents = $eventsDuluan->count() + $eventsBelakangan->count();
-
-//        dd($pengecekan, $countEvents);
-        dd($cek);
+        /*dd($cek);*/
 
         /*ini untuk pengecekan start date nya, jadi jika pilihan hari nya kemarin
         atau tidak hari ini atau tidak hari esoknya, maka akan di return false
@@ -85,7 +84,7 @@ class AcaraController extends Controller
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''));
         } else {*/
 
-        if ($countEvents > 0) {
+        if ($cek > 0) {
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
                 ->withInput();
         } else {
@@ -177,7 +176,7 @@ class AcaraController extends Controller
         //
         $start = Carbon::parse(str_before($request->start_date, ' -'), 'Asia/Jakarta');
         $end = Carbon::parse(str_after($request->start_date, '- '), 'Asia/Jakarta');
-        if (Carbon::parse($start) < Carbon::today()){
+        if ($start < Carbon::today()){
             return redirect('admin/acara/'.$id.'/edit')->with(session()->flash('dateError', ''));
         } else {
             $validasi = $request->validate([
