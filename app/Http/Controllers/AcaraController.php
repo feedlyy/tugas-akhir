@@ -70,7 +70,8 @@ class AcaraController extends Controller
 
         /*ini adalah validasi untuk diantara, jadi ini untuk validasi tanggal dan waktu nya
         biar tidak bentrok, menggunakan fungsi dari carbon yaitu between()*/
-        $pengecekan = Acara::where('nama_ruangan', '=', $request->nama_ruang)
+        $pengecekan = Acara::query()
+            ->where('nama_ruangan', '=', $request->nama_ruang)
             ->where(function ($query) use ($start, $end){
                 $query->whereBetween('start_date', [$start, $end])
                     ->orWhereBetween('end_date', [$start, $end])
@@ -80,26 +81,26 @@ class AcaraController extends Controller
             ->get();
         $cek = count($pengecekan);
 
-        $selectruangan = Acara::query()
+        /*$selectruangan = Acara::query()
             ->select('nama_ruangan')
             ->orWhereBetween('start_date', [$start, $end])
             ->orWhereBetween('end_date', [$start, $end])
             ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
             ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end])
-            ->get();
+            ->get();*/
 
-        $galant = [];
+        $galat = [];
         /*ini untuk pengecekan start date nya, jadi jika pilihan hari nya kemarin
         atau tidak hari ini atau tidak hari esoknya, maka akan di return false
         jika tidak proses nya akan di lanjutkan*/
         if ($start < Carbon::today()){
-            $galant = array_add($galant, '', 'error1');
+            $galat = array_add($galat, '', 'error1');
         } elseif($cek > 0) {
-            $galant = array_add($galant, '', 'error2');
+            $galat = array_add($galat, '', 'error2');
         }
 
         /*return $selectruangan[0].nama_ruangan;*/
-        dd($request->nama_ruang, $selectruangan, $galant, $pengecekan);
+        dd($request->nama_ruang, $galat);
 
         if ($cek > 0) {
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
