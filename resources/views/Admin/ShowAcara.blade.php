@@ -54,7 +54,7 @@
             <strong><i class="fa fa-users margin-r-5"></i>Tamu Undangan</strong>
 
             <p class="text-muted">
-                {{ $acara->tamu_undangan }}
+                {{ $query }}
             </p>
 
             <hr>

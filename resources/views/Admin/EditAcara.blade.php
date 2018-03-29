@@ -57,7 +57,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="start_date" class="form-control pull-right" id="datepicker" value="{{ $acara->start_date }}">
+                        <input type="text" name="start_date" class="form-control pull-right" id="datepicker" value="">
                     </div>
 
                     <!-- /.input group -->
@@ -67,18 +67,25 @@
                 {{--id gedung--}}
                 <div class="form-group">
                     <label>ID Gedung</label>
-                    <select class="form-control select2" id="id_gedung" style="width: 100%;" name="id_gedung" onchange="ifGedung()">
+                    <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung" onchange="ifGedung()">
                         <option disabled selected="selected">Pilih Gedung</option>
                         @foreach($gedung as $data)
                             <option>{{ $data->id_gedung }}</option>
                         @endforeach
                     </select>
                 </div>
+                {{--<div class="form-group">
+                    <label>ID Gedung</label>
+
+                        {{ Form::select('id_gedung', [$array], null, ['placeholder' => 'Pilih Gedung', 'class' => 'form-control']) }}
+
+                </div>--}}
+
 
                 {{--nama ruangan--}}
                 <div class="form-group">
                     <label>Nama Ruangan</label>
-                    <select class="form-control select2" id="ruang" style="width: 100%;" name="nama_ruang">
+                    <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
                         {{--@foreach($ruangan as $ruang)
                             <option id="nama_ruang">{{ $ruang->nama_ruangan }}</option>
@@ -89,7 +96,9 @@
                 {{--tamu undangan--}}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Tamu Undangan</label>
-                    <input type="email" name="tamu_undangan" class="form-control" id="" placeholder="" value="{{ $acara->tamu_undangan }}">
+                    <select class="form-control select2" multiple="multiple" name="tamu_undangan[]">
+                        <option></option>
+                    </select>
                 </div>
 
             </div>
@@ -107,11 +116,31 @@
                 timePicker: true,
                 opens: "right",
                 timePickerIncrement: 30,
+                timePicker24Hour: true,
+                startDate: "{{ \Carbon\Carbon::parse($acara->start_date)->format('d/m/Y H:i') }}",
+                endDate: "{{ \Carbon\Carbon::parse($acara->end_date)->format('d/m/Y H:i') }}",
                 locale: {
-                    format: 'MM/DD/YYYY h:mm A'
+                    format: 'MM/DD/YYYY hh:mm'
                 }
             });
-        })
+        });
+
+        $(".select2").select2({
+            tags: true,
+            tokenSeparators: [',', ' '],
+            createTag: function (params) {
+                // Don't offset to create a tag if there is no @ symbol
+                if (params.term.indexOf('@') === -1) {
+                    // Return null to disable tag creation
+                    return null;
+                }
+
+                return {
+                    id: params.term,
+                    text: params.term
+                }
+            }
+        });
 
         $('#id_gedung').change(function(){
 

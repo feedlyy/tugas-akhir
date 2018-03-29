@@ -176,7 +176,14 @@ class AcaraController extends Controller
     {
         //
         $acara = Acara::find($id);
-        return view('Admin.ShowAcara')->with('acara', $acara);
+        $query = Acara::query()
+            ->join('tamus', 'acaras.id_acara', '=', 'tamus.id_acara')
+            ->select('tamus.email')
+            ->get();
+
+        return view('Admin.ShowAcara')
+            ->with('query', $query)
+            ->with('acara', $acara);
     }
 
     /**
@@ -191,10 +198,15 @@ class AcaraController extends Controller
         $gedung = Gedung::all();
         $ruangan = Ruangan::all();
         $acara = Acara::find($id);
+        $tamu = Tamu::all('email');
+        $array = [];
+
         return view('Admin.EditAcara')
+            ->with('tamu', $tamu)
             ->with('gedung', $gedung)
             ->with('ruangan', $ruangan)
             ->with('acara', $acara);
+
     }
 
     /**
