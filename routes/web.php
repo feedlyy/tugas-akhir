@@ -34,6 +34,8 @@ Route::prefix('admin')->group(function (){
     ]);
     Route::get('kalender', 'KalenderController@kalender')->name('kalender');
 
+    /*ini untuk post data dari import excel*/
+    Route::post('importExcel', 'ImportExcelController@importExcel')->name('import');
    });
 });
 

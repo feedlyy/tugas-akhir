@@ -37,6 +37,18 @@
                 });
             })
         </script>
+    @elseif(session()->has('import'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Success!",
+                    text: "Data Berhasil Di Import",
+                    icon: "success",
+                    button: false,
+                    timer: 2000
+                });
+            })
+        </script>
     @endif
 
     <script>
@@ -64,7 +76,7 @@
     <div class="container putih">
         <h2 style="">List Staff</h2>
         <a href="{{ url('admin/staff/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Staff</button></a>
-        <a href="{{ url('admin/staff/create') }}"><button class="fa fa-plus btn btn-success">Import Excel</button></a>
+        <button data-toggle="modal" data-target="#modal-default" class="fa fa-plus btn btn-success">Import Excel</button>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
                 <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
@@ -80,8 +92,6 @@
                         @foreach($staff as $data)
                             <tr>
                                 <td>{{ $data->id_staff }}</td>
-                                {{--<td>{{ $data->id_status }}</td>
-                                <td>{{ $data->nip }}</td>--}}
                                 <td>{{ $data->nama_staff }}</td>
                                 <td>{{ $data->email }}</td>
                                 <td>
@@ -101,6 +111,32 @@
                 </table>
             </div>
         </div>
+
+        <form method="post" action="{{ route('import') }}" enctype="multipart/form-data">
+            {{ csrf_field() }}
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Import Excel</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{--inputan disini hanya menerima bentukan .xlsx, .xls, .csv--}}
+                        <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="fileSelect" runat="server" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary pull-right">Import</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        </form>
+        <!-- /.modal -->
     </div>
 
     {{--<script src="{{ url('dataTables/js/jquery.min.js') }}"></script>--}}
