@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{ url('dataTables/css/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url('dataTables/css/dataTables.responsive.css') }}">
     {{--select2--}}
-    <link rel="stylesheet" href="{{ url('Select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('../../bower_components/select2/dist/css/select2.min.css') }}">
     <!-- bootstrap datepicker -->
     <link rel="stylesheet" href="{{ url('../../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
     <!-- Bootstrap time Picker -->
@@ -68,6 +68,8 @@
     <link rel="stylesheet" href="{{ url('daterangepicker/daterangepicker.css') }}">
     <!-- bootstrap time picker -->
     <script src="{{ url('../../plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
+    {{--select2--}}
+    <script src="{{ url('../../bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 
 
 

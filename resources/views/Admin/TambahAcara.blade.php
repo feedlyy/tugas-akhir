@@ -22,7 +22,19 @@
             $().ready(function (e) {
                 swal({
                     title: "Warning!",
-                    text: "Terdapat kesalahan input atau data sudah ada, masukan inputan yang lain",
+                    text: "Tanggal mulai salah, mohon pilih kembali",
+                    icon: "warning",
+                    button: false,
+                    timer: 3000
+                });
+            })
+        </script>
+        @elseif(session()->has('dateTimeError'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Acara/Ruangan telah terdaftar, mohon pilih kembali",
                     icon: "warning",
                     button: false,
                     timer: 3000
@@ -72,7 +84,7 @@
                 {{--id gedung--}}
                 <div class="form-group">
                     <label>ID Gedung</label>
-                    <select class="form-control select2" id="id_gedung" style="width: 100%;" name="id_gedung" onchange="ifGedung()">
+                    <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung" onchange="ifGedung()">
                         <option disabled selected="selected">Pilih Gedung</option>
                         @foreach($gedung as $data)
                             <option>{{ $data->id_gedung }}</option>
@@ -84,7 +96,7 @@
                 {{--nama ruangan--}}
                 <div class="form-group">
                     <label>Nama Ruangan</label>
-                    <select class="form-control select2" id="ruang" style="width: 100%;" name="nama_ruang">
+                    <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
                         {{--@foreach($ruangan as $ruang)
                             <option id="nama_ruang">{{ $ruang->nama_ruangan }}</option>
@@ -95,7 +107,11 @@
                 {{--tamu undangan--}}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Tamu Undangan</label>
-                    <input type="email" name="tamu_undangan" class="form-control" id="" placeholder="" value="{{ old('tamu_undangan') }}">
+                    {{--<input type="email" name="tamu_undangan" class="form-control" id="" placeholder="" value="{{ old('tamu_undangan') }}">--}}
+                    <select class="form-control select2" multiple="multiple" name="tamu_undangan[]">
+                        <option></option>
+                    </select>
+
                 </div>
 
             </div>
@@ -117,6 +133,24 @@
                     format: 'MM/DD/YYYY h:mm A'
                 }
             });
+
+
+            $(".select2").select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                createTag: function (params) {
+                    // Don't offset to create a tag if there is no @ symbol
+                    if (params.term.indexOf('@') === -1) {
+                        // Return null to disable tag creation
+                        return null;
+                    }
+
+                    return {
+                        id: params.term,
+                        text: params.term
+                    }
+                }
+            })
         });
         
         /*function ifGedung() {

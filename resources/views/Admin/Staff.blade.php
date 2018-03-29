@@ -64,14 +64,13 @@
     <div class="container putih">
         <h2 style="">List Staff</h2>
         <a href="{{ url('admin/staff/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Staff</button></a>
+        <a href="{{ url('admin/staff/create') }}"><button class="fa fa-plus btn btn-success">Import Excel</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
                 <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
                     <thead>
                     <tr>
                         <th>ID Staff</th>
-                        {{--<th>ID Status</th>
-                        <th>NIP</th>--}}
                         <th>Nama Staff</th>
                         <th>Email</th>
                         <th>Action</th>

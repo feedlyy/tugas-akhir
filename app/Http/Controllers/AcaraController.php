@@ -13,6 +13,7 @@ use Spatie\GoogleCalendar\Event;
 use Carbon\Carbon;
 use App\Ruangan;
 use App\Gedung;
+use App\Tamu;
 
 class AcaraController extends Controller
 {
@@ -29,9 +30,16 @@ class AcaraController extends Controller
             ->where('acaras.penanggung_jawab', Auth::user()->id_admin)
             ->orWhere('admins.parent_id', Auth::user()->id_admin)
             ->get();
+        $query2 = Acara::query()
+            ->where('penanggung_jawab', '=', Auth::user()->id_admin)
+            ->get();
+
+        $masuk = [];
+
 
         return view('Admin.Acara')
             ->with('acara', $acara)
+            ->with('query2', $query2)
             ->with('query', $query);
 
 
@@ -61,6 +69,7 @@ class AcaraController extends Controller
     public function store(Request $request)
     {
         //
+
         /*jadi kan inputan date itu kayak gini, contoh
         03/17/2018 12:00 AM - 03/17/2018 11:59 PM
         nah sedangkan nanti input nya itu di pisah, start date sama end date
@@ -81,39 +90,31 @@ class AcaraController extends Controller
             ->get();
         $cek = count($pengecekan);
 
-        /*$selectruangan = Acara::query()
-            ->select('nama_ruangan')
-            ->orWhereBetween('start_date', [$start, $end])
-            ->orWhereBetween('end_date', [$start, $end])
-            ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
-            ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end])
-            ->get();*/
-
         $galat = [];
-        /*ini untuk pengecekan start date nya, jadi jika pilihan hari nya kemarin
-        atau tidak hari ini atau tidak hari esoknya, maka akan di return false
-        jika tidak proses nya akan di lanjutkan*/
+
         if ($start < Carbon::today()){
-            $galat = array_add($galat, '', 'error1');
+            $galat = array_add($galat, '1', 'error1');
         } elseif($cek > 0) {
-            $galat = array_add($galat, '', 'error2');
+            $galat = array_add($galat, '2', 'error2');
         }
-
         /*return $selectruangan[0].nama_ruangan;*/
-        dd($request->nama_ruang, $galat);
+        /*dd($request->nama_ruang, $galat);*/
 
-        if ($cek > 0) {
+        if (array_has($galat, '1')) {
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
                 ->withInput();
+        } elseif (array_has($galat, '2')) {
+            return redirect('admin/acara/create')->with(session()->flash('dateTimeError', ''))
+                ->withInput();
         } else {
-        /*berarti logikanya di store ini ada 2 kali fungsi
-    pertama fungsi store ke db
-    kedua create event ke eventcalendar nya*/
 
+        /*berarti logikanya di store ini ada 2 kali fungsi
+        pertama fungsi store ke db
+        kedua create event ke eventcalendar nya*/
 
         $validasi = $request->validate([
             'nama_acara' => ['required', 'max:25', new Uppercase],
-            'tamu_undangan' => ['required', 'email'],
+            'tamu_undangan.*' => ['required', 'email'],
             'nama_ruang' => ['required'],
             'reminder' => ['required', 'numeric', 'max:60'],
             'id_gedung' => ['required'],
@@ -125,10 +126,17 @@ class AcaraController extends Controller
             'name' => $request->nama_acara,
             'startDateTime' => $start,
             'endDateTime' => $end,
+            'location' => $request->nama_ruang,
+            /*'attendees' => [
+                'email' => $request->tamu_undangan
+            ],*/
         ]);
-        $event->addAttendee(['email' => $request->tamu_undangan]);
+        foreach ($request->tamu_undangan as $data){
+            $event->addAttendee(['email' => $data]);
+        }
         $event->save();
 
+        dd($event);
 
         /*ini store ke db*/
         $acara = new Acara;
@@ -145,6 +153,8 @@ class AcaraController extends Controller
         $acara->tamu_undangan = $request->tamu_undangan;
         $acara->penanggung_jawab = Auth::user()->id_admin;
         $acara->save();
+
+
 
 
         return redirect('admin/acara')->with(session()->flash('status', ''));
