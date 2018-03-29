@@ -20,5 +20,9 @@ class GedungTableSeeder extends Seeder
            'id_gedung' => 'SV',
            'nama_gedung' => 'Sekolah Vokasi',
         ]);
+        DB::table('gedungs')->insert([
+            'id_gedung' => 'HY',
+            'nama_gedung' => 'Herman Yohanes',
+        ]);
     }
 }

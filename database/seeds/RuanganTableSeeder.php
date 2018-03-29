@@ -13,7 +13,7 @@ class RuanganTableSeeder extends Seeder
     {
         //
         DB::table('ruangans')->insert([
-            'id_ruangan' => '123',
+            'id_ruangan' => '126',
             'id_gedung' => 'SV',
             'nama_ruangan' => 'SV - 123',
         ]);
@@ -21,6 +21,26 @@ class RuanganTableSeeder extends Seeder
             'id_ruangan' => '121',
             'id_gedung' => 'SV',
             'nama_ruangan' => 'SV - 121',
+        ]);
+        DB::table('ruangans')->insert([
+            'id_ruangan' => '301',
+            'id_gedung' => 'GP',
+            'nama_ruangan' => 'GP - 301',
+        ]);
+        DB::table('ruangans')->insert([
+            'id_ruangan' => '303',
+            'id_gedung' => 'GP',
+            'nama_ruangan' => 'GP - 303',
+        ]);
+        DB::table('ruangans')->insert([
+            'id_ruangan' => '201',
+            'id_gedung' => 'HY',
+            'nama_ruangan' => 'HY - 201',
+        ]);
+        DB::table('ruangans')->insert([
+            'id_ruangan' => '202',
+            'id_gedung' => 'HY',
+            'nama_ruangan' => 'HY - 202',
         ]);
     }
 }

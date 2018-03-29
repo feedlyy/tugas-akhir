@@ -116,7 +116,7 @@ class AcaraController extends Controller
             'nama_acara' => ['required', 'max:25', new Uppercase],
             'tamu_undangan.*' => ['required', 'email'],
             'nama_ruang' => ['required'],
-            'reminder' => ['required', 'numeric', 'max:60'],
+            /*'reminder.*' => ['required', 'numeric', 'max:60'],*/
             'id_gedung' => ['required'],
             'start_date' => ['required'],
         ]);
@@ -127,16 +127,19 @@ class AcaraController extends Controller
             'startDateTime' => $start,
             'endDateTime' => $end,
             'location' => $request->nama_ruang,
-            /*'attendees' => [
-                'email' => $request->tamu_undangan
-            ],*/
+            /*'reminders' => array(
+                'useDefault' => FALSE,
+                'overrides' => array(
+                    array('method' => 'email', 'minutes' => 20),
+                    array('method' => 'popup', 'minutes' => 10),
+                ),
+            ),*/
         ]);
         foreach ($request->tamu_undangan as $data){
             $event->addAttendee(['email' => $data]);
         }
         $event->save();
 
-        dd($event);
 
         /*ini store ke db*/
         $acara = new Acara;
@@ -147,15 +150,17 @@ class AcaraController extends Controller
         $acara->nama_event = $request->nama_acara;
         $acara->start_date = $start;
         $acara->end_date = $end;
-        $acara->alarm = $request->reminder;
         $acara->id_gedung = $request->id_gedung;
         $acara->nama_ruangan = $request->nama_ruang;
-        $acara->tamu_undangan = $request->tamu_undangan;
         $acara->penanggung_jawab = Auth::user()->id_admin;
         $acara->save();
 
-
-
+        foreach ($request->tamu_undangan as $data){
+            $tamu = new Tamu;
+            $tamu->id_acara = $acara->id_acara;
+            $tamu->email = $data;
+            $tamu->save();
+        }
 
         return redirect('admin/acara')->with(session()->flash('status', ''));
         }

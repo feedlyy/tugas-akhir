@@ -76,10 +76,13 @@
                 </div>
                 <!-- /.form group -->
 
-                <div class="form-group">
+                {{--<div class="form-group">
                     <label for="exampleInputEmail1">Reminder Acara (Dalam Menit)</label>
-                    <input type="number" name="reminder" class="form-control" id="" placeholder="" value="{{ old('reminder') }}">
-                </div>
+                    --}}{{--<input type="number" name="reminder" class="form-control" id="" placeholder="" value="{{ old('reminder') }}">--}}{{--
+                    <select class="form-control" id="reminder" multiple="multiple" name="reminder[]">
+                        <option></option>
+                    </select>
+                </div>--}}
 
                 {{--id gedung--}}
                 <div class="form-group">
@@ -98,16 +101,12 @@
                     <label>Nama Ruangan</label>
                     <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
-                        {{--@foreach($ruangan as $ruang)
-                            <option id="nama_ruang">{{ $ruang->nama_ruangan }}</option>
-                        @endforeach--}}
                     </select>
                 </div>
 
                 {{--tamu undangan--}}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Tamu Undangan</label>
-                    {{--<input type="email" name="tamu_undangan" class="form-control" id="" placeholder="" value="{{ old('tamu_undangan') }}">--}}
                     <select class="form-control select2" multiple="multiple" name="tamu_undangan[]">
                         <option></option>
                     </select>
@@ -150,7 +149,25 @@
                         text: params.term
                     }
                 }
-            })
+            });
+
+            $('#reminder').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                createTag: function (params) {
+                    var term = $.trim(params.term);
+
+                    if (term === '') {
+                        return null;
+                    }
+
+                    return {
+                        id: term,
+                        text: term,
+                        newTag: true // add additional parameters
+                    }
+                }
+            });
         });
         
         /*function ifGedung() {

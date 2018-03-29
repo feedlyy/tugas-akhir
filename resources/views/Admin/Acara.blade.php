@@ -72,7 +72,7 @@
                             <th>ID Acara</th>
                             <th>Nama Acara</th>
                             <th>Tanggal</th>
-                            <th>Waktu</th>
+                            {{--<th>Waktu</th>--}}
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -82,7 +82,7 @@
                                 <td>{{ $data->id_acara }}</td>
                                 <td>{{ $data->nama_event }}</td>
                                 <td>{{ $data->start_date }}</td>
-                                <td>{{ $data->alarm }}</td>
+                                {{--<td>{{ $data->alarm }}</td>--}}
                                 <td>
                                     @if($data->penanggung_jawab == 1)
                                         {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
@@ -108,7 +108,7 @@
                                     <td>{{ $data->id_acara }}</td>
                                     <td>{{ $data->nama_event }}</td>
                                     <td>{{ $data->start_date }}</td>
-                                    <td>{{ $data->alarm }}</td>
+                                    {{--<td>{{ $data->alarm }}</td>--}}
                                     <td>
                                         @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->id_admin)
                                             {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
@@ -134,7 +134,7 @@
                                             <td>{{ $data->id_acara }}</td>
                                             <td>{{ $data->nama_event }}</td>
                                             <td>{{ $data->start_date }}</td>
-                                            <td>{{ $data->alarm }}</td>
+                                            {{--<td>{{ $data->alarm }}</td>--}}
                                             <td>
                                                 @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->id_admin)
                                                     {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}

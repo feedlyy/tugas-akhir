@@ -19,10 +19,8 @@ class CreateAcarasTable extends Migration
             $table->string('nama_event');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->integer('alarm')->unsigned();
             $table->string('id_gedung');
             $table->string('nama_ruangan');
-            $table->string('tamu_undangan');
             $table->string('penanggung_jawab');
 
 
