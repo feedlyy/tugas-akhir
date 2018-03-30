@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="{{ url('../../plugins/timepicker/bootstrap-timepicker.min.css') }}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ url('../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    {{--datetime picker bootstrap--}}
+    <link rel="stylesheet" href="{{ url('bootstrap/css/bootstrap-datetimepicker.css') }}">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -61,8 +63,6 @@
     <script src="{{ url('promise/promise.min.js') }}"></script>
     {{--moment js--}}
     <script src="{{ url('moment/moment.min.js') }}"></script>
-    <!-- bootstrap datepicker -->
-    <script src="{{ url('../../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
     {{--date range picker js and css--}}
     <script src="{{ url('daterangepicker/daterangepicker.js') }}"></script>
     <link rel="stylesheet" href="{{ url('daterangepicker/daterangepicker.css') }}">
@@ -70,6 +70,12 @@
     <script src="{{ url('../../plugins/timepicker/bootstrap-timepicker.min.js') }}"></script>
     {{--select2--}}
     <script src="{{ url('../../bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+    {{--transition bootstrap--}}
+    <script src="{{ url('bootstrap/js/transition.js') }}"></script>
+    {{--collapse bootstrap--}}
+    <script src="{{ url('bootstrap/js/collapse.js') }}"></script>
+    {{--bootstrap datepicker--}}
+    <script src="{{ url('bootstrap/js/bootstrap-datetimepicker.min.js') }}"></script>
 
 
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Staff;
-use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel;
 
 class ImportExcelController extends Controller
 {
@@ -25,6 +25,7 @@ class ImportExcelController extends Controller
                     $staff->save();
                 }
             }
+
         }
         return redirect('admin/staff')->with(session()->flash('import', ''));
     }

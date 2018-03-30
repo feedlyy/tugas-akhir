@@ -50,19 +50,32 @@
                 </div>
 
                 <!-- Date -->
+                <label>Datetime</label>
                 <div class="form-group">
-                    <label>Datetime</label>
-
-                    <div class="input-group date">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker6'>
+                                <input type='text' value="{{ $acara->start_date }}" class="form-control" name="start_date"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
-                        <input type="text" name="start_date" class="form-control pull-right" id="datepicker" value="">
                     </div>
-
-                    <!-- /.input group -->
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input type='text' value="{{ $acara->end_date }}" class="form-control" name="end_date"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.form group -->
+                <br>
+                <br>
 
                 {{--id gedung--}}
                 <div class="form-group">
@@ -74,13 +87,6 @@
                         @endforeach
                     </select>
                 </div>
-                {{--<div class="form-group">
-                    <label>ID Gedung</label>
-
-                        {{ Form::select('id_gedung', [$array], null, ['placeholder' => 'Pilih Gedung', 'class' => 'form-control']) }}
-
-                </div>--}}
-
 
                 {{--nama ruangan--}}
                 <div class="form-group">
@@ -112,16 +118,22 @@
     <script>
         $(function () {
             //Date picker
-            $('input[name="start_date"]').daterangepicker({
-                timePicker: true,
-                opens: "right",
-                timePickerIncrement: 30,
-                timePicker24Hour: true,
-                startDate: "{{ \Carbon\Carbon::parse($acara->start_date)->format('d/m/Y H:i') }}",
-                endDate: "{{ \Carbon\Carbon::parse($acara->end_date)->format('d/m/Y H:i') }}",
-                locale: {
-                    format: 'MM/DD/YYYY hh:mm'
-                }
+            $(function () {
+                $('#datetimepicker6').datetimepicker({
+                    format : 'MM/DD/YYYY HH:mm',
+                    date: new Date("{{ $acara->start_date }}")
+                });
+                $('#datetimepicker7').datetimepicker({
+                    format : 'MM/DD/YYYY HH:mm',
+                    date: new Date("{{ $acara->end_date }}"),
+                    useCurrent: false //Important! See issue #1075
+                });
+                $("#datetimepicker6").on("dp.change", function (e) {
+                    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker7").on("dp.change", function (e) {
+                    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+                });
             });
         });
 

@@ -112,7 +112,7 @@
             </div>
         </div>
 
-        <form method="post" action="{{ route('import') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ url('admin/importExcel') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
         <div class="modal fade" id="modal-default">
             <div class="modal-dialog">
@@ -124,7 +124,7 @@
                     </div>
                     <div class="modal-body">
                         {{--inputan disini hanya menerima bentukan .xlsx, .xls, .csv--}}
-                        <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="fileSelect" runat="server" />
+                        <input name="file" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="fileSelect" runat="server" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
