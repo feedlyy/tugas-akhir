@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Staff;
-use Maatwebsite\Excel;
 
 class ImportExcelController extends Controller
 {
@@ -12,7 +11,7 @@ class ImportExcelController extends Controller
     public function importExcel(Request $request){
         if ($request->hasFile('file')){
             $path = $request->file('file')->getRealPath();
-            $data = Excel::load($path, function($reader){})->get();
+            /*$data = Excel::load($path, function($reader){})->get();*/
             if (!empty($data) && $data->count()){
                 foreach ($data as $key => $value){
                     $staff = new Staff;

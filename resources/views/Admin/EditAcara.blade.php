@@ -121,10 +121,12 @@
             $(function () {
                 $('#datetimepicker6').datetimepicker({
                     format : 'MM/DD/YYYY HH:mm',
+                    /*ini untuk get value dari db*/
                     date: new Date("{{ $acara->start_date }}")
                 });
                 $('#datetimepicker7').datetimepicker({
                     format : 'MM/DD/YYYY HH:mm',
+                    /*ini untuk get value dari db*/
                     date: new Date("{{ $acara->end_date }}"),
                     useCurrent: false //Important! See issue #1075
                 });

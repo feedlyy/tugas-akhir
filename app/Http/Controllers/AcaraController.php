@@ -75,8 +75,7 @@ class AcaraController extends Controller
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
 
 
-        /*ini adalah validasi untuk diantara, jadi ini untuk validasi tanggal dan waktu nya
-        biar tidak bentrok, menggunakan fungsi dari carbon yaitu between()*/
+        /*validasi untuk pengecekan antara waktu dan ruangan serta email agar tidak bentrok*/
         $pengecekan = Acara::query()
             ->where('nama_ruangan', '=', $request->nama_ruang)
             ->where(function ($query) use ($start, $end){
@@ -85,26 +84,31 @@ class AcaraController extends Controller
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end]);
             })
+            /*->join('tamus', 'acaras.id_acara', '=', 'tamus.id_acara')
+            ->where('tamus.email', '=', $request->tamu_undangan)*/
             ->get();
         $cek = count($pengecekan);
 
+        /*array sementara untuk menyimpan error*/
         $galat = [];
 
+        /*ini validasi jika menambahkan jadwal kurang dari hari ini*/
         if ($start < Carbon::today()){
             $galat = array_add($galat, '1', 'error1');
-        } elseif($cek > 0) {
+        } elseif($cek > 0) { /*dan ini validasi untuk waktu dan ruangan serta email*/
             $galat = array_add($galat, '2', 'error2');
         }
-        /*return $selectruangan[0].nama_ruangan;*/
-        /*dd($request->nama_ruang, $galat);*/
 
+        dd($galat);
+
+        /*jika array galat mempunyai error yang pertama*/
         if (array_has($galat, '1')) {
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
                 ->withInput();
-        } elseif (array_has($galat, '2')) {
+        } elseif (array_has($galat, '2')) { /*jika array galat mempunyai error yang kedua*/
             return redirect('admin/acara/create')->with(session()->flash('dateTimeError', ''))
                 ->withInput();
-        } else {
+        } else { /*jika tidak ada error maka proses store akan dilanjutkan*/
 
         /*berarti logikanya di store ini ada 2 kali fungsi
         pertama fungsi store ke db
@@ -125,19 +129,11 @@ class AcaraController extends Controller
             'startDateTime' => $start,
             'endDateTime' => $end,
             'location' => $request->nama_ruang,
-            /*'reminders' => array(
-                'useDefault' => FALSE,
-                'overrides' => array(
-                    array('method' => 'email', 'minutes' => 20),
-                    array('method' => 'popup', 'minutes' => 10),
-                ),
-            ),*/
         ]);
         foreach ($request->tamu_undangan as $data){
             $event->addAttendee(['email' => $data]);
         }
         $event->save();
-
 
         /*ini store ke db*/
         $acara = new Acara;
