@@ -83,7 +83,8 @@
                     <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung" onchange="ifGedung()">
                         <option disabled selected="selected">Pilih Gedung</option>
                         @foreach($gedung as $data)
-                            <option>{{ $data->id_gedung }}</option>
+                            <option <?php if($data->id_gedung == $acara->id_gedung){echo "selected";} ?>
+                            >{{ $data->id_gedung }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -93,9 +94,10 @@
                     <label>Nama Ruangan</label>
                     <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
-                        {{--@foreach($ruangan as $ruang)
-                            <option id="nama_ruang">{{ $ruang->nama_ruangan }}</option>
-                        @endforeach--}}
+                        @foreach($ruangan as $data)
+                            <option <?php if($data->nama_ruangan == $acara->nama_ruangan){echo "selected";} ?> id="nama_ruang"
+                            ></option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -156,9 +158,8 @@
             }
         });
 
+
         $('#id_gedung').change(function(){
-
-
             var selected_gedung_type = $(this).val();
 
             $.ajax({
@@ -176,6 +177,7 @@
                     $.each(response,function(key, value)
                     {
                         $select.append('<option ' + response[key].nama_ruangan + '>' + response[key].nama_ruangan + '</option>'); // return empty
+
                     });
                 }
             });

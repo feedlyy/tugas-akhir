@@ -34,9 +34,6 @@ class AcaraController extends Controller
             ->where('penanggung_jawab', '=', Auth::user()->id_admin)
             ->get();
 
-        $masuk = [];
-
-
         return view('Admin.Acara')
             ->with('acara', $acara)
             ->with('query2', $query2)
@@ -75,7 +72,7 @@ class AcaraController extends Controller
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
 
 
-        /*validasi untuk pengecekan antara waktu dan ruangan serta email agar tidak bentrok*/
+        /*validasi untuk pengecekan ruangan pada range waktu tertentu agar tidak bentrok*/
         $pengecekan = Acara::query()
             ->where('nama_ruangan', '=', $request->nama_ruang)
             ->where(function ($query) use ($start, $end){
@@ -84,10 +81,21 @@ class AcaraController extends Controller
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end]);
             })
-            /*->join('tamus', 'acaras.id_acara', '=', 'tamus.id_acara')
-            ->where('tamus.email', '=', $request->tamu_undangan)*/
             ->get();
         $cek = count($pengecekan);
+
+        /*validasi untuk pengecekan email pada range waktu tertentu agar tidak bentrok*/
+        $pengecekan2 = Tamu::query()
+            ->where('email', '=', $request->tamu_undangan)
+            ->join('acaras', 'tamus.id_acara', '=', 'acaras.id_acara')
+            ->where(function ($query) use ($start, $end){
+                $query->whereBetween('acaras.start_date', [$start, $end])
+                    ->orWhereBetween('acaras.end_date', [$start, $end])
+                    ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
+                    ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
+            })
+            ->get();
+        $cek2 = count($pengecekan2);
 
         /*array sementara untuk menyimpan error*/
         $galat = [];
@@ -95,11 +103,11 @@ class AcaraController extends Controller
         /*ini validasi jika menambahkan jadwal kurang dari hari ini*/
         if ($start < Carbon::today()){
             $galat = array_add($galat, '1', 'error1');
-        } elseif($cek > 0) { /*dan ini validasi untuk waktu dan ruangan serta email*/
+        } elseif($cek > 0 || $cek2 > 0) { /*dan ini validasi untuk waktu dan ruangan serta email*/
             $galat = array_add($galat, '2', 'error2');
         }
 
-        dd($galat);
+        return json_encode($pengecekan2);
 
         /*jika array galat mempunyai error yang pertama*/
         if (array_has($galat, '1')) {

@@ -4,23 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Staff;
+use Illuminate\Support\Facades\App;
+
+
 
 class ImportExcelController extends Controller
 {
+
     //
     public function importExcel(Request $request){
+
         if ($request->hasFile('file')){
             $path = $request->file('file')->getRealPath();
-            /*$data = Excel::load($path, function($reader){})->get();*/
             if (!empty($data) && $data->count()){
-                foreach ($data as $key => $value){
+                foreach ($data as $key){
                     $staff = new Staff;
-                    $staff->id_status = $value->id_status;
-                    $staff->nip = $value->nip;
-                    $staff->nama_staff = $value->nama_staff;
-                    $staff->email = $value->email;
-                    $staff->alamat = $value->alamat;
-                    $staff->no_hp = $value->no_hp;
+                    $staff->id_status = $key->id_status;
+                    $staff->nip = $key->nip;
+                    $staff->nama_staff = $key->nama_staff;
+                    $staff->email = $key->email;
+                    $staff->alamat = $key->alamat;
+                    $staff->no_hp = $key->no_hp;
                     $staff->save();
                 }
             }

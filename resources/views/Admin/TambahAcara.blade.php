@@ -34,7 +34,7 @@
             $().ready(function (e) {
                 swal({
                     title: "Warning!",
-                    text: "Acara/Ruangan telah terdaftar, mohon pilih kembali",
+                    text: "Ruangan/Tamu Undangan telah terdaftar, mohon pilih kembali",
                     icon: "warning",
                     button: false,
                     timer: 3000
