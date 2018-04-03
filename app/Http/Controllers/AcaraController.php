@@ -108,8 +108,6 @@ class AcaraController extends Controller
             $galat = array_add($galat, '3', 'error3');
         }
 
-        /*dd($pengecekan2, $request->tamu_undangan, $galat);*/
-
         /*jika array galat mempunyai error yang pertama*/
         if (array_has($galat, '1')) {
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
@@ -227,12 +225,59 @@ class AcaraController extends Controller
         //
         $start = Carbon::parse(($request->start_date), 'Asia/Jakarta');
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
+
+
+        /*validasi untuk pengecekan ruangan pada range waktu tertentu agar tidak bentrok*/
+        $pengecekan = Acara::query()
+            ->where('nama_ruangan', '=', $request->nama_ruang)
+            ->where(function ($query) use ($start, $end){
+                $query->whereBetween('start_date', [$start, $end])
+                    ->orWhereBetween('end_date', [$start, $end])
+                    ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
+                    ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end]);
+            })
+            ->get();
+        $cek = count($pengecekan);
+
+        /*validasi untuk pengecekan email pada range waktu tertentu agar tidak bentrok*/
+        $pengecekan2 = Tamu::query()
+            ->join('acaras', 'tamus.id_acara', '=', 'acaras.id_acara')
+            ->where(function ($query) use ($start, $end){
+                $query->whereBetween('acaras.start_date', [$start, $end])
+                    ->orWhereBetween('acaras.end_date', [$start, $end])
+                    ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
+                    ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
+            })
+            ->where('tamus.email', '=', $request->tamu_undangan)
+            ->get();
+        $cek2 = count($pengecekan2);
+
+        /*array sementara untuk menyimpan error*/
+        $galat = [];
+
+        /*ini validasi jika menambahkan jadwal kurang dari hari ini*/
         if ($start < Carbon::today()){
-            return redirect('admin/acara/'.$id.'/edit')->with(session()->flash('dateError', ''));
-        } else {
+            $galat = array_add($galat, '1', 'error1');
+        } elseif($cek > 0) { /*ini validasi untuk waktu dan ruangan*/
+            $galat = array_add($galat, '2', 'error2');
+        } elseif ($cek2 > 0){ /*ini validasi untuk waktu dan email*/
+            $galat = array_add($galat, '3', 'error3');
+        }
+
+        /*jika array galat mempunyai error yang pertama*/
+        if (array_has($galat, '1')) {
+            return redirect('admin/acara/'.$id.'/edit')->with(session()->flash('dateError', ''))
+                ->withInput();
+        } elseif (array_has($galat, '2')) { /*jika array galat mempunyai error yang kedua*/
+            return redirect('admin/acara/'.$id.'/edit')->with(session()->flash('RuanganError', ''))
+                ->withInput();
+        } elseif (array_has($galat, '3')) { /*jika array galat mempunyai error yang ketiga*/
+            return redirect('admin/acara/'.$id.'/edit')->with(session()->flash('EmailError', ''))
+                ->withInput();
+        } else { /*jika tidak ada error maka proses store akan dilanjutkan*/
             $validasi = $request->validate([
                 'nama_acara' => ['required', 'max:25', new Uppercase],
-                'tamu_undangan' => ['required', 'email'],
+                'tamu_undangan.*' => ['required', 'email'],
                 'nama_ruang' => ['required'],
                 'id_gedung' => ['required'],
                 'start_date' => ['required']
@@ -241,14 +286,20 @@ class AcaraController extends Controller
 
             $acara = Acara::find($id);
             $acara->nama_event = $request->nama_acara;
-            $acara->tamu_undangan = $request->tamu_undangan;
             $acara->start_date = $start;
             $acara->end_date = $end;
             $acara->id_gedung = $request->id_gedung;
             $acara->nama_ruangan = $request->nama_ruang;
             $acara->save();
 
+            foreach ($request->tamu_undangan as $data){
+                $tamu = new Tamu;
+                $tamu->id_acara = $acara->id_acara;
+                $tamu->email = $data;
+                $tamu->save();
+            }
 
+            /*kalau update google pake method ini ga bisa, jadi harus pake object/eloquent*/
             /*$event->update([
                 'name' => $request->nama_acara,
                 'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),

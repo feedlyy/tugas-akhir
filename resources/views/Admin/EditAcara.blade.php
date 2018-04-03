@@ -21,7 +21,31 @@
             $().ready(function (e) {
                 swal({
                     title: "Warning!",
-                    text: "Tanggal mulai acara tidak boleh kurang dari hari ini",
+                    text: "Tanggal mulai salah, mohon pilih kembali",
+                    icon: "warning",
+                    button: false,
+                    timer: 3000
+                });
+            })
+        </script>
+    @elseif(session()->has('RuanganError'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Ruangan telah terdaftar, mohon pilih kembali",
+                    icon: "warning",
+                    button: false,
+                    timer: 3000
+                });
+            })
+        </script>
+    @elseif(session()->has('EmailError'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Tamu Undangan telah terdaftar, mohon pilih kembali",
                     icon: "warning",
                     button: false,
                     timer: 3000

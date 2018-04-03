@@ -145,8 +145,9 @@
                     </div>
                     <div class="modal-body">
                         {{--inputan disini hanya menerima bentukan .xlsx, .xls, .csv--}}
-                        {{--<input name="file" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="fileSelect" runat="server" />--}}
-                        {!! Form::file('file', array('class' => 'form-control')) !!}
+                        {{--<input name="file" type="file" accept="" ID="fileSelect" runat="server" />--}}
+                        <label>Hanya File data_staff.xlsx</label>
+                        {!! Form::file('file', array('class' => 'form-control', 'accept' => '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel')) !!}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
