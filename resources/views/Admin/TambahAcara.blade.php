@@ -29,12 +29,24 @@
                 });
             })
         </script>
-        @elseif(session()->has('dateTimeError'))
+        @elseif(session()->has('RuanganError'))
         <script>
             $().ready(function (e) {
                 swal({
                     title: "Warning!",
-                    text: "Ruangan/Tamu Undangan telah terdaftar, mohon pilih kembali",
+                    text: "Ruangan telah terdaftar, mohon pilih kembali",
+                    icon: "warning",
+                    button: false,
+                    timer: 3000
+                });
+            })
+        </script>
+    @elseif(session()->has('EmailError'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Tamu Undangan telah terdaftar, mohon pilih kembali",
                     icon: "warning",
                     button: false,
                     timer: 3000

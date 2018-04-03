@@ -49,6 +49,18 @@
                 });
             })
         </script>
+    @elseif(session()->has('gagal'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Data Gagal Di Import",
+                    icon: "warning",
+                    button: false,
+                    timer: 2000
+                });
+            })
+        </script>
     @endif
 
     <script>
@@ -83,8 +95,12 @@
                     <thead>
                     <tr>
                         <th>ID Staff</th>
+                        <th>ID Status</th>
+                        <th>NIP</th>
                         <th>Nama Staff</th>
                         <th>Email</th>
+                        <th>Alamat</th>
+                        <th>No Hp</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -92,8 +108,12 @@
                         @foreach($staff as $data)
                             <tr>
                                 <td>{{ $data->id_staff }}</td>
+                                <td>{{ $data->id_status }}</td>
+                                <td>{{ $data->nip }}</td>
                                 <td>{{ $data->nama_staff }}</td>
                                 <td>{{ $data->email }}</td>
+                                <td>{{ $data->alamat }}</td>
+                                <td>{{ $data->no_hp }}</td>
                                 <td>
                                     {!! Form::open(['route' => ['staff.destroy', $data->id_staff ], 'method' => 'delete', 'class' => 'hapus']) !!}
                                     <a href="{{ route('staff.edit', $data->id_staff ) }}">
@@ -112,7 +132,8 @@
             </div>
         </div>
 
-        <form method="post" action="{{ url('admin/importExcel') }}" enctype="multipart/form-data">
+        {{--<form method="post" action="{{ url('admin/importExcel') }}" enctype="multipart/form-data">--}}
+        {!! Form::open(array('route' => 'import', 'method' => 'POST', 'files' => 'true')) !!}
             {{ csrf_field() }}
         <div class="modal fade" id="modal-default">
             <div class="modal-dialog">
@@ -124,18 +145,21 @@
                     </div>
                     <div class="modal-body">
                         {{--inputan disini hanya menerima bentukan .xlsx, .xls, .csv--}}
-                        <input name="file" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="fileSelect" runat="server" />
+                        {{--<input name="file" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" ID="fileSelect" runat="server" />--}}
+                        {!! Form::file('file', array('class' => 'form-control')) !!}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary pull-right">Import</button>
+                        {!! Form::submit('Import', ['class' => 'btn btn-primary pull-right']) !!}
+
                     </div>
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
         </div>
-        </form>
+        {!! Form::close() !!}
+        {{--</form>--}}
         <!-- /.modal -->
     </div>
 

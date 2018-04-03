@@ -89,13 +89,17 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label>Ruangan Sebelumnya</label>
+                    <input value="{{ $acara->nama_ruangan }}" disabled>
+                </div>
                 {{--nama ruangan--}}
                 <div class="form-group">
                     <label>Nama Ruangan</label>
                     <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
                         @foreach($ruangan as $data)
-                            <option <?php if($data->nama_ruangan == $acara->nama_ruangan){echo "selected";} ?> id="nama_ruang"
+                            <option <?php if($data->nama_ruangan = $acara->nama_ruangan){echo "selected";} ?> id="a"
                             ></option>
                         @endforeach
                     </select>

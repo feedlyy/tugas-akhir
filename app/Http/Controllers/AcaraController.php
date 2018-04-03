@@ -38,8 +38,6 @@ class AcaraController extends Controller
             ->with('acara', $acara)
             ->with('query2', $query2)
             ->with('query', $query);
-
-
     }
 
     /**
@@ -55,6 +53,7 @@ class AcaraController extends Controller
         return view('Admin.TambahAcara')
             ->with('gedung', $gedung)
             ->with('ruangan', $ruangan);
+
     }
 
     /**
@@ -86,7 +85,6 @@ class AcaraController extends Controller
 
         /*validasi untuk pengecekan email pada range waktu tertentu agar tidak bentrok*/
         $pengecekan2 = Tamu::query()
-            ->where('email', '=', $request->tamu_undangan)
             ->join('acaras', 'tamus.id_acara', '=', 'acaras.id_acara')
             ->where(function ($query) use ($start, $end){
                 $query->whereBetween('acaras.start_date', [$start, $end])
@@ -94,6 +92,7 @@ class AcaraController extends Controller
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
             })
+            ->where('tamus.email', '=', $request->tamu_undangan)
             ->get();
         $cek2 = count($pengecekan2);
 
@@ -103,18 +102,23 @@ class AcaraController extends Controller
         /*ini validasi jika menambahkan jadwal kurang dari hari ini*/
         if ($start < Carbon::today()){
             $galat = array_add($galat, '1', 'error1');
-        } elseif($cek > 0 || $cek2 > 0) { /*dan ini validasi untuk waktu dan ruangan serta email*/
+        } elseif($cek > 0) { /*ini validasi untuk waktu dan ruangan*/
             $galat = array_add($galat, '2', 'error2');
+        } elseif ($cek2 > 0){ /*ini validasi untuk waktu dan email*/
+            $galat = array_add($galat, '3', 'error3');
         }
 
-        return json_encode($pengecekan2);
+        /*dd($pengecekan2, $request->tamu_undangan, $galat);*/
 
         /*jika array galat mempunyai error yang pertama*/
         if (array_has($galat, '1')) {
             return redirect('admin/acara/create')->with(session()->flash('dateError', ''))
                 ->withInput();
         } elseif (array_has($galat, '2')) { /*jika array galat mempunyai error yang kedua*/
-            return redirect('admin/acara/create')->with(session()->flash('dateTimeError', ''))
+            return redirect('admin/acara/create')->with(session()->flash('RuanganError', ''))
+                ->withInput();
+        } elseif (array_has($galat, '3')) { /*jika array galat mempunyai error yang ketiga*/
+            return redirect('admin/acara/create')->with(session()->flash('EmailError', ''))
                 ->withInput();
         } else { /*jika tidak ada error maka proses store akan dilanjutkan*/
 

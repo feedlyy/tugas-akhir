@@ -172,6 +172,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Spatie\GoogleCalendar\GoogleCalendarServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
