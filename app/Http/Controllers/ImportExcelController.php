@@ -18,14 +18,21 @@ class ImportExcelController extends Controller
                 $result = $reader->toObject();
                 if (!empty($result) && $result->count()){
                     foreach ($result as $key => $value){
-                        $staff = new Staff;
-                        $staff->id_status = $value->id_status;
-                        $staff->nip = $value->nip;
-                        $staff->nama_staff = $value->nama_staff;
-                        $staff->email = $value->email;
-                        $staff->alamat = $value->alamat;
-                        $staff->no_hp = $value->no_hp;
-                        $staff->save();
+                        $cek = Staff::query()
+                            ->where('nip', '=', $value->nip)
+                            ->get();
+                        $hitung = count($cek);
+                        if ($hitung == 0) {
+                            $staff = new Staff;
+                            $staff->id_status = $value->id_status;
+                            $staff->nip = $value->nip;
+                            $staff->nama_staff = $value->nama_staff;
+                            $staff->email = $value->email;
+                            $staff->alamat = $value->alamat;
+                            $staff->no_hp = $value->no_hp;
+                            $staff->save();
+                        }
+
                     }
                 }
             })->get();

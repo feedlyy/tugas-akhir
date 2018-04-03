@@ -95,12 +95,12 @@
                     <thead>
                     <tr>
                         <th>ID Staff</th>
-                        <th>ID Status</th>
+                        {{--<th>ID Status</th>--}}
                         <th>NIP</th>
                         <th>Nama Staff</th>
-                        <th>Email</th>
+                        {{--<th>Email</th>
                         <th>Alamat</th>
-                        <th>No Hp</th>
+                        <th>No Hp</th>--}}
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -108,12 +108,12 @@
                         @foreach($staff as $data)
                             <tr>
                                 <td>{{ $data->id_staff }}</td>
-                                <td>{{ $data->id_status }}</td>
+                                {{--<td>{{ $data->id_status }}</td>--}}
                                 <td>{{ $data->nip }}</td>
                                 <td>{{ $data->nama_staff }}</td>
-                                <td>{{ $data->email }}</td>
+                                {{--<td>{{ $data->email }}</td>
                                 <td>{{ $data->alamat }}</td>
-                                <td>{{ $data->no_hp }}</td>
+                                <td>{{ $data->no_hp }}</td>--}}
                                 <td>
                                     {!! Form::open(['route' => ['staff.destroy', $data->id_staff ], 'method' => 'delete', 'class' => 'hapus']) !!}
                                     <a href="{{ route('staff.edit', $data->id_staff ) }}">
