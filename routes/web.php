@@ -12,14 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('homepage');
 });
 
 Auth::routes();
 
+Route::get('jadwal', 'HomePageController@jadwal');
+Route::get('visi', 'HomePageController@visi');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home2', 'AdminViewHandleController@tes')->name('home2');
+
+/*Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home2', 'AdminViewHandleController@tes')->name('home2');*/
 
 
 Route::prefix('admin')->group(function (){
