@@ -23,7 +23,7 @@ Route::get('/home2', 'AdminViewHandleController@tes')->name('home2');
 
 
 Route::prefix('admin')->group(function (){
-   Route::middleware('auth')->group(function (){
+   Route::middleware('auth')->group(function (){    
     Route::get('', 'AdminViewHandleController@tampilan')->name('tampilan');
     Route::resources([
        'gedung' => 'GedungController',
