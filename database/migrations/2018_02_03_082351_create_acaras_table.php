@@ -21,11 +21,12 @@ class CreateAcarasTable extends Migration
             $table->dateTime('end_date');
             $table->string('id_gedung');
             $table->string('nama_ruangan');
-            $table->string('penanggung_jawab');
+            $table->integer('penanggung_jawab')->unsigned();
 
 
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
             $table->foreign('nama_ruangan')->references('nama_ruangan')->on('ruangans')->onDelete('CASCADE');
+            $table->foreign('penanggung_jawab')->references('id_admin')->on('admins')->onDelete('CASCADE');
 
             $table->timestamps();
         });

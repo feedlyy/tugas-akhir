@@ -54,14 +54,15 @@
             <strong><i class="fa fa-users margin-r-5"></i>Tamu Undangan</strong>
 
             <p class="text-muted">
-                {{ $query }}
+                {{--{{ $query }}--}}
+                {{ implode(', ', $tampungEmail) }}
             </p>
 
             <hr>
 
             <strong><i class="fa fa-user-plus margin-r-5"></i>Penanggung Jawab</strong>
 
-            <p class="text-muted">{{ $acara->penanggung_jawab }}</p>
+            <p class="text-muted">{{ array_first($tampung) }}</p>
 
         </div>
         <!-- /.box-body -->

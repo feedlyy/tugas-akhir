@@ -132,9 +132,27 @@
                 {{--tamu undangan--}}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Tamu Undangan</label>
-                    <select class="form-control select2" multiple="multiple" name="tamu_undangan[]">
-                        <option></option>
+                    <select id="select" class="form-control select2" multiple="multiple" name="tamu_undangan[]">
+                        {{--<option></option>--}}
+                        @foreach($tamu as $key)
+                            <option value="{{ $key->email }}" selected>{{ $key->email }}</option>
+                        @endforeach
                     </select>
+                </div>
+                    <div class="col-md-4" id="cekVokasi">
+                        {!! Form::label('Staff Vokasi') !!}
+                        &nbsp
+                        {!! Form::checkbox('vokasi', $string) !!}
+                    </div>
+                <div class="col-md-4">
+                    {!! Form::label('Staff Departemen '.ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin)) !!}
+                    &nbsp
+                    {!! Form::checkbox('departemen', '') !!}
+                </div>
+                <div class="col-md-4">
+                    {!! Form::label('Staff Prodi '.ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin)) !!}
+                    &nbsp
+                    {!! Form::checkbox('prodi', 'value nya masukin disini') !!}
                 </div>
 
             </div>
@@ -169,6 +187,7 @@
             });
         });
 
+
         $(".select2").select2({
             tags: true,
             tokenSeparators: [',', ' '],
@@ -195,6 +214,28 @@
                 type:'get',
                 dataType: 'json',
                 success: function(response) {
+                    //alert(response); // show [object, Object]
+
+                    var $select = $('#ruang');
+
+                    $select.find('option').remove();
+                    $.each(response,function(key, value)
+                    {
+                        $select.append('<option ' + response[key].nama_ruangan + '>' + response[key].nama_ruangan + '</option>'); // return empty
+
+                    });
+                }
+            });
+        });
+
+        $(document).ready(function(){
+            var selected_gedung_type = $('#id_gedung').val();
+
+            $.ajax({
+                url : "/nama/" + selected_gedung_type,
+                type:'get',
+                dataType: 'json',
+                success: function(response) {
 
 
                     //alert(response); // show [object, Object]
@@ -210,5 +251,12 @@
                 }
             });
         });
+        
+        /*$(document).ready(function () {
+            if (("vokasi").val() == ("#select").val())
+            {
+                $("#cekVokasi").hide();
+            }
+        });*/
     </script>
 @endsection

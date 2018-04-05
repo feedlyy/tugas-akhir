@@ -9,4 +9,5 @@ class Tamu extends Model
     //
     protected $table = 'tamus';
     protected $primaryKey = 'id_tamu';
+    protected $guarded = '';
 }

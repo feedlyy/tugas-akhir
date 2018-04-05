@@ -112,7 +112,6 @@
                     </select>
                 </div>
 
-
                 {{--nama ruangan--}}
                 <div class="form-group">
                     <label>Nama Ruangan</label>
