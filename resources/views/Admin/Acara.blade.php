@@ -62,7 +62,7 @@
     </script>
 
     <div class="container putih">
-        <h2 style="">List acara {{\Illuminate\Support\Facades\Auth::user()->nama_admin}}</h2>
+        <h2 style="">List acara</h2>
         <a href="{{ url('admin/acara/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Acara</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
@@ -72,19 +72,17 @@
                             <th>ID Acara</th>
                             <th>Nama Acara</th>
                             <th>Tanggal</th>
-                            {{--<th>Waktu</th>--}}
                             <th>Action</th>
                         </tr>
                         </thead>
-                        @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                        @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen == null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($acara as $data)
                             <tr>
                                 <td>{{ $data->id_acara }}</td>
                                 <td>{{ $data->nama_event }}</td>
                                 <td>{{ $data->start_date }}</td>
-                                {{--<td>{{ $data->alarm }}</td>--}}
                                 <td>
-                                    @if($data->penanggung_jawab == 1)
+                                    @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
                                         {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                         <a href="{{ route('acara.edit', $data->id_acara) }}">
                                             {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
@@ -102,15 +100,14 @@
                                 </td>
                             </tr>
                             @endforeach
-                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
-                            @foreach($query as $data)
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
+                            @foreach($acara as $data)
                                 <tr>
                                     <td>{{ $data->id_acara }}</td>
                                     <td>{{ $data->nama_event }}</td>
                                     <td>{{ $data->start_date }}</td>
-                                    {{--<td>{{ $data->alarm }}</td>--}}
                                     <td>
-                                        @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->id_admin)
+                                        @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
                                             {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                             <a href="{{ route('acara.edit', $data->id_acara) }}">
                                                 {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
@@ -128,15 +125,14 @@
                                     </td>
                                 </tr>
                             @endforeach
-                                @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 3)
-                                    @foreach($query2 as $data)
+                                @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi != null)
+                                    @foreach($acara as $data)
                                         <tr>
                                             <td>{{ $data->id_acara }}</td>
                                             <td>{{ $data->nama_event }}</td>
                                             <td>{{ $data->start_date }}</td>
-                                            {{--<td>{{ $data->alarm }}</td>--}}
                                             <td>
-                                                @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->id_admin)
+                                                @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
                                                     {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                                     <a href="{{ route('acara.edit', $data->id_acara) }}">
                                                         {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}

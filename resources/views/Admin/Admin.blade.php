@@ -71,7 +71,6 @@
                     <tr>
                         <th>ID Admin</th>
                         <th>Nama Admin</th>
-                        <th>ID Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>

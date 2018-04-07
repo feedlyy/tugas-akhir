@@ -14,11 +14,11 @@ class CreateProdisTable extends Migration
     public function up()
     {
         Schema::create('prodis', function (Blueprint $table) {
-            $table->increments('id_prodi');
-            $table->string('nama_prodi')->unique();
-            $table->integer('id_fakultas')->unsigned();
-            $table->integer('id_departemen')->unsigned();
-            /*$table->integer('id_admin')->unsigned();*/
+            $table->string('id_prodi');
+            $table->primary('id_prodi');
+            $table->string('nama_prodi');
+            $table->string('id_fakultas');
+            $table->string('id_departemen');
 
             $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas')->onDelete('CASCADE');
             $table->foreign('id_departemen')->references('id_departemen')->on('departemens')->onDelete('CASCADE');

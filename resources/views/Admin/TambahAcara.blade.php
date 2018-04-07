@@ -56,7 +56,7 @@
     @endif
 
     <!-- general form elements -->
-    <div class="box box-primary">
+    <div class="box" style="background-color: #ffffff; border-top: #ffffff !important;">
         <div class="box-header with-border">
             <h3 class="box-title">Tambah Acara</h3>
         </div>
@@ -129,7 +129,7 @@
 
                 {{--Staff Fakultas--}}
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Staff Fakultas</label>
+                    <label for="exampleInputEmail1">Staff Fakultas(Optional)</label>
                     <select class="form-control select2" multiple="multiple" name="fakultas[]">
                         @foreach($fakultas as $data)
                             <option value="{{ $data->email }}">{{ $data->email }}</option>
@@ -139,37 +139,33 @@
 
                 {{--Staff Departemen--}}
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Staff Departemen</label>
+                    <label for="exampleInputEmail1">Staff Departemen(Optional)</label>
                     <select class="form-control select2" multiple="multiple" name="departemen[]">
-                        @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                        @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen == null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($departemen as $data)
                                 <option value="{{ $data->email }}">{{ $data->email }}</option>
                             @endforeach
-                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
+                        @else
                             @foreach($departemenTerkait as $data)
                                 <option value="{{ $data->email }}">{{ $data->email }}</option>
                             @endforeach
-                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 3)
-                            @foreach($departemenKhusus as $data)
-                                <option value="{{ $data->email }}">{{ $data->email }}</option>
-                            @endforeach
-                        @endif
+                            @endif
                     </select>
                 </div>
 
                 {{--Staff Prodi--}}
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Staff Prodi</label>
+                    <label for="exampleInputEmail1">Staff Prodi(Optional)</label>
                     <select class="form-control select2" multiple="multiple" name="prodi[]">
-                        @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                        @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen == null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($prodi as $data)
                                 <option value="{{ $data->email }}">{{ $data->email }}</option>
                             @endforeach
-                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($prodiTerkait as $data)
                                 <option value="{{ $data->email }}">{{ $data->email }}</option>
                             @endforeach
-                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 3)
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi != null)
                             @foreach($prodiKhusus as $data)
                                 <option value="{{ $data->email }}">{{ $data->email }}</option>
                             @endforeach

@@ -149,7 +149,7 @@
                 </div>
                 <div class="pull-left info">
                     @auth
-                        Admin {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin) }}
+                        {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin) }}
                     @endauth
 
 
@@ -160,7 +160,7 @@
             <ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>
                 @auth
-                    @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                    @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen == null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                         <li class="treeview">
                             <a href="{{ url('admin/admin') }}">
                                 <i class="fa fa-user-plus"></i> <span>Admin</span>
@@ -191,7 +191,7 @@
                                 <i class="fa fa-calendar"></i> <span>Kalender Vokasi</span>
                             </a>
                         </li>
-                    @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
+                    @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                         <li class="treeview">
                             <a href="{{ url('admin/admin') }}">
                                 <i class="fa fa-user-plus"></i> <span>Admin</span>
@@ -277,7 +277,7 @@
                 <div class="box-body box-profile">
 
 
-                    <h3 class="profile-username text-center">Selamat Datang Admin {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin) }}</h3>
+                    <h3 class="profile-username text-center">Selamat Datang {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin) }}</h3>
                     <br>
                     <img class="profile-user-img img-responsive img-circle" src="{{ url('image/ugm.png') }}" alt="User profile picture">
                     <br>

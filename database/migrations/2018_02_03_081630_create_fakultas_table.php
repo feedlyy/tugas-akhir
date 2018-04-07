@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStatusesTable extends Migration
+class CreateFakultasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('statuses', function (Blueprint $table) {
-            $table->increments('id_status');
-            $table->string('nama_status');
-
+        Schema::create('fakultas', function (Blueprint $table) {
+            $table->string('id_fakultas');
+            $table->primary('id_fakultas');
+            $table->string('nama_fakultas');
             $table->timestamps();
+
+            /*$table->foreign('id_admin')->references('id_admin')->on('admins')->onDelete('CASCADE');*/
         });
     }
 
@@ -28,6 +30,6 @@ class CreateStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statuses');
+        Schema::dropIfExists('fakultas');
     }
 }

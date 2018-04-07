@@ -13,13 +13,12 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         $this->call([
-            StatusTableSeeder::class,
-            AdminTableSeeder::class,
-            GedungTableSeeder::class,
-            RuanganTableSeeder::class,
             FakultasTableSeeder::class,
             DepartemenTableSeeder::class,
             ProdiTableSeeder::class,
+            AdminTableSeeder::class,
+            GedungTableSeeder::class,
+            RuanganTableSeeder::class,
         ]);
     }
 }
