@@ -124,24 +124,59 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Tamu Undangan</label>
                     <select class="form-control select2" multiple="multiple" name="tamu_undangan[]">
-                        <option></option>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    {!! Form::label('Staff Vokasi') !!}
-                    &nbsp
-                    {!! Form::checkbox('vokasi', $string) !!}
+
+                {{--Staff Fakultas--}}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Staff Fakultas</label>
+                    <select class="form-control select2" multiple="multiple" name="fakultas[]">
+                        @foreach($fakultas as $data)
+                            <option value="{{ $data->email }}">{{ $data->email }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="col-md-4">
-                    {!! Form::label('Staff Departemen '.ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin)) !!}
-                    &nbsp
-                    {!! Form::checkbox('departemen', '') !!}
+
+                {{--Staff Departemen--}}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Staff Departemen</label>
+                    <select class="form-control select2" multiple="multiple" name="departemen[]">
+                        @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                            @foreach($departemen as $data)
+                                <option value="{{ $data->email }}">{{ $data->email }}</option>
+                            @endforeach
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
+                            @foreach($departemenTerkait as $data)
+                                <option value="{{ $data->email }}">{{ $data->email }}</option>
+                            @endforeach
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 3)
+                            @foreach($departemenKhusus as $data)
+                                <option value="{{ $data->email }}">{{ $data->email }}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
-                <div class="col-md-4">
-                    {!! Form::label('Staff Prodi '.ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin)) !!}
-                    &nbsp
-                    {!! Form::checkbox('prodi', 'value nya masukin disini') !!}
+
+                {{--Staff Prodi--}}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Staff Prodi</label>
+                    <select class="form-control select2" multiple="multiple" name="prodi[]">
+                        @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                            @foreach($prodi as $data)
+                                <option value="{{ $data->email }}">{{ $data->email }}</option>
+                            @endforeach
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
+                            @foreach($prodiTerkait as $data)
+                                <option value="{{ $data->email }}">{{ $data->email }}</option>
+                            @endforeach
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 3)
+                            @foreach($prodiKhusus as $data)
+                                <option value="{{ $data->email }}">{{ $data->email }}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
+
 
             </div>
             <!-- /.box-body -->

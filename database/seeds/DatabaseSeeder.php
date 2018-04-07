@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
             AdminTableSeeder::class,
             GedungTableSeeder::class,
             RuanganTableSeeder::class,
+            FakultasTableSeeder::class,
+            DepartemenTableSeeder::class,
+            ProdiTableSeeder::class,
         ]);
     }
 }

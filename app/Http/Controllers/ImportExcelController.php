@@ -29,7 +29,9 @@ class ImportExcelController extends Controller
                             $hitung = count($cek);
                             if ($hitung == 0) {
                                 $staff = new Staff;
-                                $staff->id_status = $value->id_status;
+                                $staff->id_fakultas = $value->id_fakultas;
+                                $staff->id_departemen = $value->id_departemen;
+                                $staff->id_prodi = $value->id_prodi;
                                 $staff->nip = $value->nip;
                                 $staff->nama_staff = $value->nama_staff;
                                 $staff->email = $value->email;

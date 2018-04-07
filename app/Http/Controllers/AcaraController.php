@@ -52,26 +52,58 @@ class AcaraController extends Controller
 
         $ruangan = Ruangan::all();
         $gedung = Gedung::all();
-        $vokasi = Staff::query()
-            ->select('email')->get();
 
-        /*di pecah seperti ini karna untuk hasil checkbox itu return nya
-        bentuk string, maka di pecah jadi bentuk normal tanpa [] atau ""*/
+        /*get semua staff fakultas*/
+        $fakultas = Staff::query()
+            ->select('email')
+            ->where('id_fakultas', '=', 'vokasi')
+            ->where('id_departemen', '=', null)
+            ->where('id_departemen', '=', null)->get();
 
-        /*ini untuk checkbox vokasi*/
-        $string = '';
-        foreach ($vokasi as $data){
-            if (empty($string)){
-                $string = $data->email;
-            } else {
-                $string = $string . " " . $data->email;
-            }
-        }
-       /* dd($string, $vokasi);*/
+        $departemen = Staff::query()
+            ->select('email')
+            ->where('id_fakultas', '=', 'vokasi')
+            ->where('id_departemen', '!=', null)
+            ->where('id_prodi', '=', null)->get();
+
+        $prodi = Staff::query()
+            ->where('id_fakultas', '!=', null)
+            ->where('id_departemen', '!=', null)
+            ->where('id_prodi', '!=', null)->get();
+
+        $departemenTerkait = Staff::query()
+            ->select('email')
+            ->where('id_fakultas', '=', 'vokasi')
+            ->where('id_departemen', '=', Auth::user()->nama_admin)
+            ->where('id_prodi', '=', null)->get();
+
+        $prodiTerkait = Staff::query()
+            ->join('departemens', 'stafs.id_departemen', '=', 'departemens.nama_departemen')
+            ->select('stafs.email')
+            ->where('stafs.id_fakultas', '!=', null)
+            ->where('stafs.id_departemen', '=', Auth::user()->nama_admin)
+            ->where('stafs.id_prodi', '!=', null)->get();
+
+        $departemenKhusus = Staff::query()
+            ->join('departemens', 'stafs.id_departemen', '=', 'departemens.nama_departemen')
+            ->where('stafs.id_departemen', '=', 'departemen.nama_departemen')
+            ->select('stafs.email')->get();
+
+        $prodiKhusus = Staff::query()
+            ->select('email')
+            ->where('id_fakultas', '!=', null)
+            ->where('id_departemen', '!=', null)
+            ->where('id_prodi', '=', Auth::user()->nama_admin)->get();
 
         return view('Admin.TambahAcara')
+            ->with('fakultas', $fakultas)
+            ->with('departemen', $departemen)
+            ->with('prodi', $prodi)
+            ->with('departemenTerkait', $departemenTerkait)
+            ->with('prodiTerkait', $prodiTerkait)
+            ->with('departemenKhusus', $departemenKhusus)
+            ->with('prodiKhusus', $prodiKhusus)
             ->with('gedung', $gedung)
-            ->with('string', $string)
             ->with('ruangan', $ruangan);
 
 
@@ -85,11 +117,47 @@ class AcaraController extends Controller
      */
     public function store(Request $request)
     {
-//        dd(explode(' ', $request->vokasi), count(explode(' ', $request->vokasi)));
-
-
         $start = Carbon::parse(($request->start_date), 'Asia/Jakarta');
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
+
+
+        $arrayTamu = [];
+        /*menyimpan email dari inputan tamu undangan*/
+        if (!empty($request->tamu_undangan))
+        {
+            foreach ($request->tamu_undangan as $data){
+                /*ini untuk menampung hasil dari inputan tamu_undangan*/
+                array_push($arrayTamu,$data);
+            }
+        }
+
+        /*menyimpan email dari inputan staff fakultas*/
+        if (!empty($request->fakultas))
+        {
+            foreach ($request->fakultas as $data){
+                /*ini untuk menampung hasil dari inputan tamu_undangan*/
+                array_push($arrayTamu,$data);
+            }
+        }
+
+        /*menyimpan email dari inputan staff departemen*/
+        if (!empty($request->departemen))
+        {
+            foreach ($request->departemen as $data){
+                /*ini untuk menampung hasil dari inputan tamu_undangan*/
+                array_push($arrayTamu,$data);
+            }
+        }
+
+        /*menyimpan email dari inputan staff prodi*/
+        if (!empty($request->prodi))
+        {
+            foreach ($request->prodi as $data){
+                /*ini untuk menampung hasil dari inputan tamu_undangan*/
+                array_push($arrayTamu,$data);
+            }
+        }
+
 
         $validasi = $request->validate([
             'nama_acara' => ['required', 'max:25', new Uppercase],
@@ -120,7 +188,7 @@ class AcaraController extends Controller
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
             })
-            ->where('tamus.email', '=', $request->tamu_undangan)
+            ->where('tamus.email', '=', $arrayTamu)
             ->get();
         $cek2 = count($pengecekan2);
 
@@ -136,7 +204,7 @@ class AcaraController extends Controller
             $galat = array_add($galat, '3', 'error3');
         }
 
-        /*dd($galat);*/
+
 
         /*jika array galat mempunyai error yang pertama*/
         if (array_has($galat, '1')) {
@@ -150,34 +218,7 @@ class AcaraController extends Controller
                 ->withInput();
         } else { /*jika tidak ada error maka proses store akan dilanjutkan*/
 
-        /*berarti logikanya di store ini ada 2 kali fungsi
-        pertama fungsi store ke db
-        kedua create event ke eventcalendar nya*/
 
-
-            /*ini untuk menyimpan semua inputan tamu, baik dari inputan atau
-            checkbox*/
-            $arrayTamu = [];
-            /*menyimpan email dari inputan*/
-            if (!empty($request->tamu_undangan))
-            {
-                foreach ($request->tamu_undangan as $data){
-                    /*ini untuk menampung hasil dari inputan tamu_undangan*/
-                    array_push($arrayTamu,$data);
-                }
-            }
-
-
-            /*jadi foreach 3 kali*/
-
-            /*menyimpan email dari checkbox vokasi*/
-            if (!empty($request->vokasi))
-            {
-                foreach (explode(' ', $request->vokasi) as $hasil){
-                    /*ini menampung hasil dari checkbox vokasi*/
-                    array_push($arrayTamu,$hasil);
-                }
-            }
 
         /*fungsi store google calendar*/
         $event = Event::create([
@@ -265,7 +306,6 @@ class AcaraController extends Controller
             ->with('acara', $acara)
             ->with('tampungEmail', $tampungEmail)
             ->with('tampung', $tampung);
-            /*->with('filterPenanggungJawab', $filterPenanggungJawab);*/
     }
 
     /**
@@ -281,27 +321,10 @@ class AcaraController extends Controller
         $ruangan = Ruangan::all();
         $acara = Acara::find($id);
         $tamu = Tamu::where('id_acara', $id)->select('email')->get();
-        $vokasi = Staff::query()
-            ->select('email')->get();
 
-        /*di pecah seperti ini karna untuk hasil checkbox itu return nya
-        bentuk string, maka di pecah jadi bentuk normal tanpa [] atau ""*/
 
-        /*ini untuk checkbox vokasi*/
-        $string = '';
-        foreach ($vokasi as $data){
-            if (empty($string)){
-                $string = $data->email;
-            } else {
-                $string = $string . " " . $data->email;
-            }
-        }
-
-       /* echo json_encode($tamu);
-        die();*/
 
         return view('Admin.EditAcara')
-            ->with('string', $string)
             ->with('tamu', $tamu)
             ->with('gedung', $gedung)
             ->with('ruangan', $ruangan)
@@ -322,7 +345,6 @@ class AcaraController extends Controller
         $start = Carbon::parse(($request->start_date), 'Asia/Jakarta');
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
 
-        /*dd(explode(' ', $request->vokasi), Tamu::all('email'));*/
 
 
         $validasi = $request->validate([
@@ -333,10 +355,8 @@ class AcaraController extends Controller
             'start_date' => ['required']
         ]);
 
-         /*jika tidak ada error maka proses store akan dilanjutkan*/
 
-            /*ini untuk menyimpan semua inputan tamu, baik dari inputan atau
-                        checkbox*/
+
             $arrayTamu = [];
             /*menyimpan email dari inputan*/
             if (!empty($request->tamu_undangan))
@@ -347,16 +367,6 @@ class AcaraController extends Controller
                 }
             }
 
-            /*jadi foreach 3 kali*/
-
-            /*menyimpan email dari checkbox vokasi*/
-            if (!empty($request->vokasi))
-            {
-                foreach (explode(' ', $request->vokasi) as $hasil){
-                    /*ini menampung hasil dari checkbox vokasi*/
-                    array_push($arrayTamu,$hasil);
-                }
-            }
 
             $acara = Acara::find($id);
             $acara->nama_event = $request->nama_acara;
@@ -369,22 +379,11 @@ class AcaraController extends Controller
 
             /*bagian sini yang mash blm bener*/
 
-            /*Tamu::where('id_acara', $id)
-                ->whereNotIn('email', $arrayTamu)
-                ->delete();
-
-            foreach($arrayTamu as $key) {
-                Tamu::firstOrCreate(
-                    ['id_acara' => $id, 'email' => $key]
-                );
-            }*/
-        /*foreach ($arrayTamu as $hasil){
-            $tamu = Tamu::updateOrCreate(
-                ['id_acara' => $id],
-                $hasil
-            );
-        }*/
-
+                foreach ($request->tamu_undangan as $key){
+                    $tamu = Tamu::query()->find($id);
+                    $tamu->email = $key;
+                    $tamu->save();
+                }
 
 
 
@@ -398,7 +397,7 @@ class AcaraController extends Controller
             $event->name = $request->nama_acara;
             $event->startDateTime = $start;
             $event->endDateTime = $end;
-            foreach ($arrayTamu as $Emailnya){
+            foreach ($request->tamu_undangan as $Emailnya){
                 $event->addAttendee(['email' => $Emailnya]);
             }
             $event->save();

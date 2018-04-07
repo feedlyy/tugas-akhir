@@ -133,26 +133,10 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Tamu Undangan</label>
                     <select id="select" class="form-control select2" multiple="multiple" name="tamu_undangan[]">
-                        {{--<option></option>--}}
                         @foreach($tamu as $key)
                             <option value="{{ $key->email }}" selected>{{ $key->email }}</option>
                         @endforeach
                     </select>
-                </div>
-                    <div class="col-md-4" id="cekVokasi">
-                        {!! Form::label('Staff Vokasi') !!}
-                        &nbsp
-                        {!! Form::checkbox('vokasi', $string) !!}
-                    </div>
-                <div class="col-md-4">
-                    {!! Form::label('Staff Departemen '.ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin)) !!}
-                    &nbsp
-                    {!! Form::checkbox('departemen', '') !!}
-                </div>
-                <div class="col-md-4">
-                    {!! Form::label('Staff Prodi '.ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin)) !!}
-                    &nbsp
-                    {!! Form::checkbox('prodi', 'value nya masukin disini') !!}
                 </div>
 
             </div>

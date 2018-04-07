@@ -60,6 +60,7 @@
 
             <hr>
 
+
             <strong><i class="fa fa-user-plus margin-r-5"></i>Penanggung Jawab</strong>
 
             <p class="text-muted">{{ array_first($tampung) }}</p>

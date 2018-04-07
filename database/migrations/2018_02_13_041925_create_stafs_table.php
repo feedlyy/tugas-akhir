@@ -15,14 +15,19 @@ class CreateStafsTable extends Migration
     {
         Schema::create('stafs', function (Blueprint $table) {
             $table->increments('id_staff');
-            $table->integer('id_status')->unsigned();
+            $table->string('id_fakultas')->nullable();
+            $table->string('id_departemen')->nullable();
+            $table->string('id_prodi')->nullable();
             $table->integer('nip')->unsigned();
             $table->string('nama_staff');
             $table->string('email');
             $table->string('alamat');
             $table->char('no_hp', 20);
 
-            $table->foreign('id_status')->references('id_status')->on('statuses')->onDelete('CASCADE');
+            /*$table->foreign('id_status')->references('id_status')->on('statuses')->onDelete('CASCADE');*/
+            $table->foreign('id_fakultas')->references('nama_fakultas')->on('fakultas')->onDelete('CASCADE');
+            $table->foreign('id_departemen')->references('nama_departemen')->on('departemens')->onDelete('CASCADE');
+            $table->foreign('id_prodi')->references('nama_prodi')->on('prodis')->onDelete('CASCADE');
 
 
             $table->timestamps();
