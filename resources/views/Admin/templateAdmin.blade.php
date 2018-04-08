@@ -187,6 +187,20 @@
                             </a>
                         </li>
                         <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-user-circle"></i>
+                                <span>User</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ url('admin/fakultas') }}"><i class="fa fa-circle-o"></i> Fakultas</a></li>
+                                <li><a href="{{ url('admin/departemen') }}"><i class="fa fa-circle-o"></i> Departemen</a></li>
+                                <li><a href="{{ url('admin/prodi') }}"><i class="fa fa-circle-o"></i> Prodi</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
                             <a href="{{ route('kalender') }}">
                                 <i class="fa fa-calendar"></i> <span>Kalender Vokasi</span>
                             </a>
@@ -218,6 +232,20 @@
                             </a>
                         </li>
                         <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-user-circle"></i>
+                                <span>User</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ url('admin/fakultas') }}"><i class="fa fa-circle-o"></i> Fakultas</a></li>
+                                <li><a href="{{ url('admin/departemen') }}"><i class="fa fa-circle-o"></i> Departemen</a></li>
+                                <li><a href="{{ url('admin/prodi') }}"><i class="fa fa-circle-o"></i> Prodi</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
                             <a href="{{ route('kalender') }}">
                                 <i class="fa fa-calendar"></i> <span>Kalender Vokasi</span>
                             </a>
@@ -242,6 +270,20 @@
                             <a href="{{ url('admin/ruangan') }}">
                                 <i class="fa fa-building-o"></i> <span>Ruangan</span>
                             </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-user-circle"></i>
+                                <span>User</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ url('admin/fakultas') }}"><i class="fa fa-circle-o"></i> Fakultas</a></li>
+                                <li><a href="{{ url('admin/departemen') }}"><i class="fa fa-circle-o"></i> Departemen</a></li>
+                                <li><a href="{{ url('admin/prodi') }}"><i class="fa fa-circle-o"></i> Prodi</a></li>
+                            </ul>
                         </li>
                         <li class="treeview">
                             <a href="{{ route('kalender') }}">
@@ -303,6 +345,12 @@
     $('ul.sidebar-menu a').filter(function () {
         return this.href == url;
     }).parent().addClass('active');
+
+    // untuk bagian tree view nya
+    $('ul.treeview-menu a').filter(function() {
+        return this.href == url;
+    }).closest('.treeview').addClass('active');
+
 
 
 </script>

@@ -157,8 +157,11 @@ class AcaraController extends Controller
 
 
         $validasi = $request->validate([
-            'nama_acara' => ['required', 'max:25', new Uppercase],
+            'nama_acara' => ['required', 'max:50', new Uppercase],
             'tamu_undangan.*' => ['email'],
+            'fakultas.*' => ['email',],
+            'departemen.*' => ['email'],
+            'prodi.*' => ['email'],
             'nama_ruang' => ['required'],
             'id_gedung' => ['required'],
             'start_date' => ['required'],
@@ -188,6 +191,8 @@ class AcaraController extends Controller
             ->where('tamus.email', '=',$arrayTamu)
             ->get();
         $cek2 = count($pengecekan2);
+
+
 
         /*array sementara untuk menyimpan error*/
         $galat = [];
@@ -245,11 +250,19 @@ class AcaraController extends Controller
         $acara->save();
 
 
-            foreach ($arrayTamu as $record){
-                $tamu = new Tamu;
-                $tamu->id_acara = $acara->id_acara;
-                $tamu->email = $record;
-                $tamu->save();
+
+            /*ini email tamu tidak berada di antara array tamu, maka delete*/
+            Tamu::whereNotIn('email', $arrayTamu)->where('id_acara', $acara->id_acara)->delete();
+            foreach ($arrayTamu as $key){
+                /*ketika kolom email yang ada di db tamu sama dengan arrayTamu, hitung jumlahnya*/
+                $jmlTamu = Tamu::where('email', $key)->where('id_acara', $acara->id_acara)->count();
+                /*ketika jumlahnya 0 atau data nya belum ada, maka lakukan insert*/
+                if($jmlTamu == 0) {
+                    $tamu = new Tamu;
+                    $tamu->id_acara = $acara->id_acara;
+                    $tamu->email = $key;
+                    $tamu->save();
+                }
             }
 
         return redirect('admin/acara')->with(session()->flash('status', ''));
@@ -437,7 +450,7 @@ class AcaraController extends Controller
             $acara->save();
 
 
-            /*bagian sini yang mash blm bener*/
+
             Tamu::whereNotIn('email', $arrayTamu)->where('id_acara', $id)->delete();
             foreach ($arrayTamu as $key){
                 $jmlTamu = Tamu::where('email', $key)->where('id_acara', $id)->count();
