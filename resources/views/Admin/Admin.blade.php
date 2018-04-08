@@ -77,15 +77,16 @@
                     @foreach($admin as $data)
                         {{--view table di sini di bikin custom, jika yang login fakultas(id_status == 1)
                         maka tampilkan seluruh data--}}
-                        @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
+                        @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+                        \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
+                        \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             <tr>
                                 <td>{{ $data->id_admin }}</td>
                                 <td>{{ $data->nama_admin }}</td>
-                                <td>{{ $data->id_status }}</td>
                                 <td>
                                     {{--jika ketemu dengan data yang id_status nya 1/fakultas
                                     karna dia super admin dia ga akan bisa di hapus--}}
-                                    @if($data->id_status == 1)
+                                    @if($data->id_fakultas != null && $data->id_departemen == null && $data->id_prodi == null)
                                     <a href="{{ route('admin.edit', $data->id_admin) }}">
                                         {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
                                     </a>
@@ -104,17 +105,16 @@
                             </tr>
                             {{--custom view table ini hanya akan menampilkan data yang memiliki kesamaan parent_id
                             antara data2 parent_id yang ada dengan admin yang login saat itu--}}
-                        @elseif($data->parent_id == \Illuminate\Support\Facades\Auth::user()->id_admin)
+                        @elseif($data->id_departemen == \Illuminate\Support\Facades\Auth::user()->id_departemen)
                         <tr>
                             <td>{{ $data->id_admin }}</td>
                             <td>{{ $data->nama_admin }}</td>
-                            <td>{{ $data->id_status }}</td>
                             <td>
                                 {{--otomatis kan yang login departemennya
                                 departemen tidak dapat menghapus departemen itu sendiri karna bukan kebijakan
                                 departemen untuk menghapus departemen, melainkan kebijakan fakultas
                                 departemen hanya dapat edit/hapus prodinya saja / edit dirinya sendiri--}}
-                                @if($data->id_status == 2)
+                                @if($data->id_fakultas != null && $data->id_departemen != null && $data->id_prodi == null)
                                 <a href="{{ route('admin.edit', $data->id_admin) }}">
                                     {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
                                 </a>

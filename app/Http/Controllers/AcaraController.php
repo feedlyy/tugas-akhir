@@ -448,11 +448,6 @@ class AcaraController extends Controller
                 }
             }
 
-//            /*bagian sini yang mash blm bener*/
-//                foreach ($request->tamu_undangan as $key){
-//                    Tamu::firstOrCreate(['email' => $key, 'id_acara' => $id]);
-//                }
-
 
 
             /*kalau update google pake method ini ga bisa, jadi harus pake object/eloquent*/
