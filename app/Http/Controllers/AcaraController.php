@@ -185,7 +185,7 @@ class AcaraController extends Controller
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
             })
-            ->where('tamus.email', '=', $arrayTamu)
+            ->where('tamus.email', '=',$arrayTamu)
             ->get();
         $cek2 = count($pengecekan2);
 
@@ -200,6 +200,7 @@ class AcaraController extends Controller
         } elseif ($cek2 > 0){ /*ini validasi untuk waktu dan email*/
             $galat = array_add($galat, '3', 'error3');
         }
+
 
 
 

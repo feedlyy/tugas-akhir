@@ -55,7 +55,7 @@
     @endif
 
     <!-- general form elements -->
-    <div class="box box-primary">
+    <div class="box" style="background-color: #ffffff; border-top: #ffffff !important;">
         <div class="box-header with-border">
             <h3 class="box-title">Edit Acara</h3>
         </div>

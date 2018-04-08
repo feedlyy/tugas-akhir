@@ -29,3 +29,9 @@ table.dataTable td {
 .jarak{
     margin-right: 6%;
 }
+
+/*style buat show*/
+.show{
+    font-weight: normal;
+    margin-bottom: 1%;
+}

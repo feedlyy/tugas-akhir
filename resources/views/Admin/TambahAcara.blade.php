@@ -122,7 +122,7 @@
 
                 {{--tamu undangan--}}
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Tamu Undangan</label>
+                    <label for="exampleInputEmail1">Tamu Undangan<h6>Jika lebih dari satu, pisahkan dengan enter atau koma</h6></label>
                     <select class="form-control select2" multiple="multiple" name="tamu_undangan[]">
                     </select>
                 </div>

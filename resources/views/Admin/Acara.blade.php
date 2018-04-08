@@ -69,18 +69,20 @@
                     <table id="example1" class="table table-bordered table-striped responsive">
                         <thead>
                         <tr>
-                            <th>ID Acara</th>
                             <th>Nama Acara</th>
-                            <th>Tanggal</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Tempat</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen == null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($acara as $data)
                             <tr>
-                                <td>{{ $data->id_acara }}</td>
                                 <td>{{ $data->nama_event }}</td>
                                 <td>{{ $data->start_date }}</td>
+                                <td>{{ $data->end_date }}</td>
+                                <td>{{ $data->nama_ruangan }}</td>
                                 <td>
                                     @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
                                         {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
@@ -103,9 +105,10 @@
                         @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($acara as $data)
                                 <tr>
-                                    <td>{{ $data->id_acara }}</td>
                                     <td>{{ $data->nama_event }}</td>
                                     <td>{{ $data->start_date }}</td>
+                                    <td>{{ $data->end_date }}</td>
+                                    <td>{{ $data->nama_ruangan }}</td>
                                     <td>
                                         @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
                                             {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
@@ -128,9 +131,10 @@
                                 @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi != null)
                                     @foreach($acara as $data)
                                         <tr>
-                                            <td>{{ $data->id_acara }}</td>
                                             <td>{{ $data->nama_event }}</td>
                                             <td>{{ $data->start_date }}</td>
+                                            <td>{{ $data->end_date }}</td>
+                                            <td>{{ $data->nama_ruangan }}</td>
                                             <td>
                                                 @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
                                                     {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}

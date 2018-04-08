@@ -75,7 +75,7 @@
                     </tr>
                     </thead>
                     @foreach($admin as $data)
-                        {{--view table di sini di bikin custom, jika yang login fakultas(id_status == 1)
+                        {{--view table di sini di bikin custom, jika yang login fakultas
                         maka tampilkan seluruh data--}}
                         @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                         \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
@@ -84,8 +84,7 @@
                                 <td>{{ $data->id_admin }}</td>
                                 <td>{{ $data->nama_admin }}</td>
                                 <td>
-                                    {{--jika ketemu dengan data yang id_status nya 1/fakultas
-                                    karna dia super admin dia ga akan bisa di hapus--}}
+                                    {{--jika ada admin fakultas maka tidak dapat dihapus--}}
                                     @if($data->id_fakultas != null && $data->id_departemen == null && $data->id_prodi == null)
                                     <a href="{{ route('admin.edit', $data->id_admin) }}">
                                         {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
@@ -103,8 +102,7 @@
                                 </td>
 
                             </tr>
-                            {{--custom view table ini hanya akan menampilkan data yang memiliki kesamaan parent_id
-                            antara data2 parent_id yang ada dengan admin yang login saat itu--}}
+                            {{--ketika admin departemen yang masuk--}}
                         @elseif($data->id_departemen == \Illuminate\Support\Facades\Auth::user()->id_departemen)
                         <tr>
                             <td>{{ $data->id_admin }}</td>

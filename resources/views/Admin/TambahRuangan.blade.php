@@ -31,7 +31,7 @@
     @endif
 
     <!-- general form elements -->
-    <div class="box box-primary" id="app">
+    <div class="box" id="app" style="background-color: #ffffff; border-top: #ffffff !important;">
         <div class="box-header with-border">
             <h3 class="box-title">Tambah Ruangan</h3>
         </div>
