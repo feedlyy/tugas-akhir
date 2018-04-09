@@ -186,6 +186,7 @@
 
         $(".select2").select2({
             tags: true,
+            theme: "classic",
             tokenSeparators: [',', ' '],
             createTag: function (params) {
                 // Don't offset to create a tag if there is no @ symbol
