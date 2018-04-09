@@ -53,6 +53,30 @@
                 });
             })
         </script>
+    @elseif(session()->has('date2Error'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Tanggal mulai tidak dapat lebih dari tanggal berakhir, mohon pilih kembali",
+                    icon: "warning",
+                    button: false,
+                    timer: 3000
+                });
+            })
+        </script>
+    @elseif(session()->has('tamuError'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Wajib mengisi tamu. Baik dari Tamu Undangan atau Staff",
+                    icon: "warning",
+                    button: false,
+                    timer: 3000
+                });
+            })
+        </script>
     @endif
 
     <!-- general form elements -->
@@ -104,7 +128,7 @@
                 {{--id gedung--}}
                 <div class="form-group">
                     <label>ID Gedung</label>
-                    <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung" onchange="ifGedung()">
+                    <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung">
                         <option disabled selected="selected">Pilih Gedung</option>
                         @foreach($gedung as $data)
                             <option>{{ $data->id_gedung }}</option>

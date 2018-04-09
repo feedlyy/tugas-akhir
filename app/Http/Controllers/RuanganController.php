@@ -126,7 +126,7 @@ class RuanganController extends Controller
         //
             /*bikin validasi*/
             $validasi = $request->validate([
-                'id_ruangan' => ['required', 'max:255', new Kapital]
+                'id_ruangan' => ['required', 'max:255', new Kapital, 'unique:ruangans']
             ]);
 
             $ruangan = Ruangan::find($id);

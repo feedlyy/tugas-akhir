@@ -52,6 +52,18 @@
                 });
             })
         </script>
+    @elseif(session()->has('date2Error'))
+        <script>
+            $().ready(function (e) {
+                swal({
+                    title: "Warning!",
+                    text: "Tanggal mulai tidak dapat lebih dari tanggal berakhir, mohon pilih kembali",
+                    icon: "warning",
+                    button: false,
+                    timer: 3000
+                });
+            })
+        </script>
     @endif
 
     <!-- general form elements -->

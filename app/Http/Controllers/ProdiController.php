@@ -50,14 +50,14 @@ class ProdiController extends Controller
             \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
         {
             $validasi = $request->validate([
-                'id_prodi' => ['required'],
-                'nama_prodi' => ['required'],
+                'id_prodi' => ['required', 'unique:prodis'],
+                'nama_prodi' => ['required', 'unique:prodis,nama_prodi'],
                 'selectdepartemen' => ['required']
             ]);
         } else { /*jika bukan fakultas maka tidak diperlukan validasi select*/
             $validasi = $request->validate([
-                'id_prodi' => ['required'],
-                'nama_prodi' => ['required']
+                'id_prodi' => ['required', 'unique:prodis'],
+                'nama_prodi' => ['required', 'unique:prodis,nama_prodi']
             ]);
         }
 

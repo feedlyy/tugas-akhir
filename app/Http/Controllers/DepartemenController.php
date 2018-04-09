@@ -42,8 +42,8 @@ class DepartemenController extends Controller
     {
         //
         $validasi = $request->validate([
-           'id_departemen' => ['required'],
-           'nama_departemen' => ['required']
+           'id_departemen' => ['required', 'unique:departemens'],
+           'nama_departemen' => ['required', 'unique:departemens,nama_departemen']
         ]);
 
         $departemen = new Departemen;

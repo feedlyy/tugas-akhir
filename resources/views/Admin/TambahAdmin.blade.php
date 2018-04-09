@@ -52,45 +52,45 @@
                     <label for="exampleInputEmail1">Password</label>
                     <input type="password" name="password" class="form-control" id="" placeholder="">
                 </div>
+                @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+                    \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
+                    \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                 <div class="form-group">
-                    <label>ID Status</label>
-                    @if(\Illuminate\Support\Facades\Auth::user()->id_status == 1)
-                    <select id="status" class="form-control select2" style="width: 100%;" name="selectstatus" onchange="ifProdi()">
+                    <label>ID Departemen</label>
+                    <select id="departemen" class="form-control select2" style="width: 100%;" name="selectdepartemen">
                         <option disabled selected="selected">Pilih Status</option>
-                        @foreach($status as $data)
-                            @if($data->id_status == 1)
-                                <option hidden>{{ $data->id_status}}</option>
+                        @foreach($departemen as $data)
+                            @if($data->id_fakultas != null && $data->id_departemen == null && $data->id_prodi == null)
+                                <option hidden>{{ $data->id_fakultas }}</option>
                             @else
-                            <option value="{{ $data->id_status }}">{{ $data->id_status }}</option>
+                            <option value="{{ $data->id_departemen }}">{{ $data->nama_departemen }}</option>
                             @endif
                         @endforeach
                     </select>
-                    @elseif(\Illuminate\Support\Facades\Auth::user()->id_status == 2)
-                        <select class="form-control select2" style="width: 100%;" name="selectstatus">
-                            <option disabled selected="selected">Pilih Status</option>
-                            @foreach($status as $data)
-                                @if($data->id_status == 1 || $data->id_status == 2)
-                                    <option hidden>{{ $data->id_status}}</option>
-                                @else
-                                <option>{{ $data->id_status }}</option>
-                                @endif
+                </div>
+                @endif
+                @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+                    \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
+                    \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
+                    <div class="form-group">
+                        <label>Pilih Prodi (Jika Tambah Prodi)</label>
+                        <select id="prodi" class="form-control select2" style="width: 100%;" name="selectprodi">
+                            <option disabled selected="selected">Pilih Prodi</option>
+                        </select>
+                    </div>
+                @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+                    \Illuminate\Support\Facades\Auth::user()->id_departemen != null &&
+                    \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
+                    <div class="form-group">
+                        <label>Pilih Prodi</label>
+                        <select class="form-control select2" style="width: 100%;" name="selectprodi2">
+                            <option disabled selected="selected">Pilih Prodi</option>
+                            @foreach($prodi as $data)
+                                <option value="{{ $data->id_prodi }}">{{ $data->nama_prodi }}</option>
                             @endforeach
                         </select>
-                    @endif
-                    <h6>1 = Fakultas, 2 = Departemen, 3 = Prodi</h6>
-                </div>
-                <div class="form-group">
-                    <label>Pilih Departemen (Jika Tambah Prodi)</label>
-                        <select id="departemen" class="form-control select2" style="width: 100%;" name="selectdepartemen" disabled>
-                            <option disabled selected="selected">Pilih Departemen</option>
-                            @foreach($admin as $data)
-                                @if($data->id_status == 2)
-                                <option value="{{ $data->id_admin }}">{{ $data->nama_admin }}</option>
-                                    @else
-                                @endif
-                            @endforeach
-                        </select>
-                </div>
+                    </div>
+                @endif
             </div>
 
             <!-- /.box-body -->
@@ -101,17 +101,31 @@
     </div>
 
     <script>
-            /*fungsi javascript
-            jika value pada select status = 3 (prodi) maka
-            inputan select departemen yang tadi nya disabled akan diubah menjadi false
-            selain value = 3 maka select departemen akan disabled(true)*/
-            function ifProdi() {
-                if (document.getElementById('status').value == 3){
-                    document.getElementById('departemen').disabled = false;
-                } else {
-                    document.getElementById('departemen').disabled = true;
-                }
-            }
 
+
+            $('#departemen').change(function(){
+
+
+                var selected_departemen_type = $(this).val();
+
+                $.ajax({
+                    url : "/prodi/" + selected_departemen_type,
+                    type:'get',
+                    dataType: 'json',
+                    success: function(response) {
+
+
+                        //alert(response); // show [object, Object]
+
+                        var $select = $('#prodi');
+
+                        $select.find('option').remove();
+                        $.each(response,function(key, value)
+                        {
+                            $select.append('<option ' + response[key].id_prodi + '>' + response[key].id_prodi + '</option>'); // return empty
+                        });
+                    }
+                });
+            });
     </script>
 @endsection

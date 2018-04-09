@@ -167,6 +167,11 @@ class AcaraController extends Controller
             'start_date' => ['required'],
         ]);
 
+        if ($arrayTamu == null){
+            return redirect('admin/acara/create')
+                ->with(session()->flash('tamuError', ''));
+        }
+
         /*validasi untuk pengecekan ruangan pada range waktu tertentu agar tidak bentrok*/
         $pengecekan = Acara::query()
             ->where('nama_ruangan', '=', $request->nama_ruang)
@@ -193,9 +198,8 @@ class AcaraController extends Controller
         $cek2 = count($pengecekan2);
 
 
-
-        /*array sementara untuk menyimpan error*/
         $galat = [];
+
 
         /*ini validasi jika menambahkan jadwal kurang dari hari ini*/
         if ($start < Carbon::today()){
@@ -369,8 +373,6 @@ class AcaraController extends Controller
         }
 
 
-
-
         $validasi = $request->validate([
             'nama_acara' => ['required', 'max:25', new Uppercase],
             'tamu_undangan.*' => ['email'],
@@ -422,6 +424,8 @@ class AcaraController extends Controller
             $galat = array_add($galat, '2', 'error2');
         } elseif ($cek2 > 0){ /*ini validasi untuk waktu dan email*/
             $galat = array_add($galat, '3', 'error3');
+        } elseif($start > $end) { /*validasi jika tanggal mulai lebih dari tanggal berakhirnya*/
+            $galat = array_add($galat, '4', 'error4');
         }
 
 
@@ -435,6 +439,9 @@ class AcaraController extends Controller
                 ->withInput();
         } elseif (array_has($galat, '3')) { /*jika array galat mempunyai error yang ketiga*/
             return redirect('admin/acara/'. $id .'/edit')->with(session()->flash('EmailError', ''))
+                ->withInput();
+        } elseif (array_has($galat, '4')) { /*jika array galat memuat error yang keempat*/
+            return redirect('admin/acara/'. $id .'/edit')->with(session()->flash('date2Error', ''))
                 ->withInput();
         }
 

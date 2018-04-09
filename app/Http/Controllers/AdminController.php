@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Departemen;
+use App\Prodi;
 use App\Rules\Lowercase;
 use Illuminate\Http\Request;
 use App\Admin;
@@ -34,11 +36,11 @@ class AdminController extends Controller
     public function create()
     {
         //
-        $status = Status::all();
-        $admin = Admin::all();
+        $departemen = Departemen::all();
+        $prodi = Prodi::all();
         return view('Admin.TambahAdmin')
-            ->with('admin', $admin)
-            ->with('status', $status);
+            ->with('departemen', $departemen)
+            ->with('prodi', $prodi);
     }
 
     /**
@@ -50,42 +52,49 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         //
-            $validasi = $request->validate([
-                'nama_admin' => ['required', new Lowercase, 'unique:admins,nama_admin'],
-                'password' => ['required'],
-                'selectstatus' => ['required']
-            ]);
+            if (\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+                \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
+                \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
+            {
+                $validasi = $request->validate([
+                    'nama_admin' => ['required', new Lowercase, 'unique:admins,nama_admin'],
+                    'password' => ['required'],
+                    'selectdepartemen' => ['required'],
+                    'selectprodi' => ['required']
+                ]);
+            } elseif (\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+                \Illuminate\Support\Facades\Auth::user()->id_departemen != null &&
+                \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
+            {
+                $validasi = $request->validate([
+                    'nama_admin' => ['required', new Lowercase, 'unique:admins,nama_admin'],
+                    'password' => ['required'],
+                    'selectprodi2' => ['required']
+                ]);
+            }
+
 
             $admin = new Admin;
             /*penjelasan $admin->id_admin(ini yang ada di kolom table)
             sedangkan $request->id_admin(ini name yang ada di input view nya)
             kebetulan dibikin sama name nya*/
             /*$admin->id_admin = $request->id_admin;*/
-
-
             $admin->nama_admin = $request->nama_admin;
             $admin->password = bcrypt($request->password);
-            $admin->id_status = $request->selectstatus;
-
-            /*ini adalah konsep linked list yang diajarkan faldy
-            jadi dimana terdapat parent_id untuk pengganti id_departemen/id_prodi yang
-            seharusnya ada di table admin
-            jadi dengan adanya linked list, dapat menentukan admin ini bagian dari siapa
-            contoh: vokasi memiliki id_admin 1 dan parent_id null
-            nanti ketika menambahkan departemen baru, misal tedi dengan id_admin 2
-            maka parent_id tedi akan menjadi 1(karena tedi merupakan fakultas vokasi)
-            dan begitu pula jika menambahkan prodi, misal komsi
-            maka komsi akan memiliki parent_id = 2. karena komsi merupakan departemen tedi
-            dan seterusnya*/
-
-            if (Auth::user()->id_status == 1){
-                if ($request->selectstatus == 2){
-                    $admin->parent_id = Auth::user()->id_admin;
-                } elseif($request->selectstatus == 3){
-                    $admin->parent_id = $request->selectdepartemen;
-                }
-            } else{
-                $admin->parent_id = Auth::user()->id_admin;
+            if (\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+                \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
+                \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
+            {
+                $admin->id_fakultas = Auth::user()->id_fakultas;
+                $admin->id_departemen = $request->selectdepartemen;
+                $admin->id_prodi = $request->selectprodi;
+            } elseif (\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+                \Illuminate\Support\Facades\Auth::user()->id_departemen != null &&
+                \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
+            {
+                $admin->id_fakultas = Auth::user()->id_fakultas;
+                $admin->id_departemen = Auth::user()->id_departemen;
+                $admin->id_prodi = $request->selectprodi2;
             }
 
             $admin->save();
