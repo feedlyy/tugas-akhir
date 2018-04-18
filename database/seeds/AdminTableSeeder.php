@@ -15,20 +15,20 @@ class AdminTableSeeder extends Seeder
         //
         DB::table('admins')->insert([
             'id_fakultas' => 'vokasi',
-            'nama_admin' => 'admin vokasi',
+            'nama_admin' => 'vokasi',
             'password' => bcrypt('vokasi'),
         ]);
         DB::table('admins')->insert([
             'id_fakultas' => 'vokasi',
             'id_departemen' => 'tedi',
-            'nama_admin' => 'admin tedi',
+            'nama_admin' => 'tedi',
             'password' => bcrypt('tedi'),
         ]);
         DB::table('admins')->insert([
             'id_fakultas' => 'vokasi',
             'id_departemen' => 'tedi',
             'id_prodi' => 'komsi',
-            'nama_admin' => 'admin komsi',
+            'nama_admin' => 'komsi',
             'password' => bcrypt('komsi'),
         ]);
     }

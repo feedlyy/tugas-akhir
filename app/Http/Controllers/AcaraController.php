@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Acara;
 use App\Admin;
+use App\Fakultas;
 use App\Prodi;
 use App\Rules\Uppercase;
 use Carbon\CarbonInterval;
@@ -45,63 +46,8 @@ class AcaraController extends Controller
         $ruangan = Ruangan::all();
         $gedung = Gedung::all();
 
-        /*get semua staff fakultas*/
-        $fakultas = Staff::query()
-            ->select('email')
-            ->where('id_fakultas', '=', 'vokasi')
-            ->where('id_departemen', '=', null)
-            ->where('id_departemen', '=', null)->get();
-
-        /*get semua staff departemen*/
-        $departemen = Staff::query()
-            ->select('email')
-            ->where('id_fakultas', '=', 'vokasi')
-            ->where('id_departemen', '!=', null)
-            ->where('id_prodi', '=', null)->get();
-
-        /*get semua staff prodi*/
-        $prodi = Staff::query()
-            ->select('email')
-            ->where('id_fakultas', '!=', null)
-            ->where('id_departemen', '!=', null)
-            ->where('id_prodi', '!=', null)->get();
-
-        /*get semua staff departemen terkait, jika yg login departemen*/
-        $departemenTerkait = Staff::query()
-            ->select('email')
-            ->where('id_fakultas', '=', 'vokasi')
-            ->where('id_departemen', '=', Auth::user()->id_departemen)
-            ->where('id_prodi', '=', null)->get();
-
-        /*get semua staff prodi terkait, jika yang login departemen*/
-        $prodiTerkait = Staff::query()
-            ->join('departemens', 'stafs.id_departemen', '=', 'departemens.id_departemen')
-            ->select('stafs.email')
-            ->where('stafs.id_fakultas', '!=', null)
-            ->where('stafs.id_departemen', '=', Auth::user()->id_departemen)
-            ->where('stafs.id_prodi', '!=', null)->get();
-
-        /*get semua staff departemen khusus, jika yang login prodi*/
-        /*$departemenKhusus = Staff::query()
-            ->select('email')
-            ->where('id_fakultas', '!=', null)
-            ->where('id_departemen', '!=', Auth::user()->id_departemen)
-            ->where('id_prodi', '=', Auth::user()->id_prodi)->get();*/
-
-        /*get semua staff prodi khusus, jika yang login prodi*/
-        $prodiKhusus = Staff::query()
-            ->select('email')
-            ->where('id_fakultas', '!=', null)
-            ->where('id_departemen', '!=', null)
-            ->where('id_prodi', '=', Auth::user()->id_prodi)->get();
 
         return view('Admin.TambahAcara')
-            ->with('fakultas', $fakultas)
-            ->with('departemen', $departemen)
-            ->with('prodi', $prodi)
-            ->with('departemenTerkait', $departemenTerkait)
-            ->with('prodiTerkait', $prodiTerkait)
-            ->with('prodiKhusus', $prodiKhusus)
             ->with('gedung', $gedung)
             ->with('ruangan', $ruangan);
     }
@@ -117,6 +63,11 @@ class AcaraController extends Controller
         $start = Carbon::parse(($request->start_date), 'Asia/Jakarta');
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
 
+        $fakultas = Staff::query()
+            ->select('email')
+            ->where('id_fakultas', '=', 'vokasi')/*
+            ->where('id_departemen', '=', null)
+            ->where('id_departemen', '=', null)*/->get();
 
         $arrayTamu = [];
         /*menyimpan email dari inputan tamu undangan*/
@@ -129,48 +80,47 @@ class AcaraController extends Controller
         }
 
         /*menyimpan email dari inputan staff fakultas*/
-        if (!empty($request->fakultas))
+        if (!empty($request->summary1))
         {
-            foreach ($request->fakultas as $data){
+            foreach ($request->summary1 as $data){
                 /*ini untuk menampung hasil dari inputan tamu_undangan*/
-                array_push($arrayTamu,$data);
+                array_push($arrayTamu, $data);
             }
         }
 
         /*menyimpan email dari inputan staff departemen*/
-        if (!empty($request->departemen))
+        if (!empty($request->summary2))
         {
-            foreach ($request->departemen as $data){
+            foreach ($request->summary2 as $data){
                 /*ini untuk menampung hasil dari inputan tamu_undangan*/
-                array_push($arrayTamu,$data);
+                array_push($arrayTamu, $data);
             }
         }
 
         /*menyimpan email dari inputan staff prodi*/
-        if (!empty($request->prodi))
+        if (!empty($request->summary3))
         {
-            foreach ($request->prodi as $data){
+            foreach ($request->summary3 as $data){
                 /*ini untuk menampung hasil dari inputan tamu_undangan*/
-                array_push($arrayTamu,$data);
+                array_push($arrayTamu, $data);
             }
         }
+
+
+
 
 
         $validasi = $request->validate([
             'nama_acara' => ['required', 'max:50', new Uppercase],
             'tamu_undangan.*' => ['email'],
-            'fakultas.*' => ['email',],
-            'departemen.*' => ['email'],
-            'prodi.*' => ['email'],
+            'summary1.*' => ['email'],
+            'summary2.*' => ['email'],
+            'summary3.*' => ['email'],
             'nama_ruang' => ['required'],
             'id_gedung' => ['required'],
             'start_date' => ['required'],
         ]);
 
-        if ($arrayTamu == null){
-            return redirect('admin/acara/create')
-                ->with(session()->flash('tamuError', ''));
-        }
 
         /*validasi untuk pengecekan ruangan pada range waktu tertentu agar tidak bentrok*/
         $pengecekan = Acara::query()
@@ -210,8 +160,7 @@ class AcaraController extends Controller
             $galat = array_add($galat, '3', 'error3');
         }
 
-
-
+        /*dd($galat);*/
 
         /*jika array galat mempunyai error yang pertama*/
         if (array_has($galat, '1')) {
@@ -259,10 +208,28 @@ class AcaraController extends Controller
             Tamu::whereNotIn('email', $arrayTamu)->where('id_acara', $acara->id_acara)->delete();
             foreach ($arrayTamu as $key){
                 /*ketika kolom email yang ada di db tamu sama dengan arrayTamu, hitung jumlahnya*/
-                $jmlTamu = Tamu::where('email', $key)->where('id_acara', $acara->id_acara)->count();
+                $jmlTamu = Tamu::query()->
+                where('email', $key)->where('id_acara', $acara->id_acara)->count();
                 /*ketika jumlahnya 0 atau data nya belum ada, maka lakukan insert*/
                 if($jmlTamu == 0) {
                     $tamu = new Tamu;
+
+                    /*ini untuk mencari id fakultas,departemen, maupun prodi
+                    dari table staff. agar setiap email mempunyai identitas nya dan dapat
+                    di insertkan ke database Tamu*/
+                    $select = Staff::query()
+                        ->select('id_fakultas', 'id_departemen', 'id_prodi')
+                        ->where('email', $key)
+                        ->get();
+
+                    /*ketika hasilnya di dapatkan maka akan di store ke db tamu sesuai
+                    dengan id nya*/
+                    foreach ($select as $hasil){
+                        $tamu->id_fakultas = $hasil->id_fakultas;
+                        $tamu->id_departemen = $hasil->id_departemen;
+                        $tamu->id_prodi = $hasil->id_prodi;
+                    }
+
                     $tamu->id_acara = $acara->id_acara;
                     $tamu->email = $key;
                     $tamu->save();
@@ -335,11 +302,48 @@ class AcaraController extends Controller
         $gedung = Gedung::all();
         $ruangan = Ruangan::all();
         $acara = Acara::find($id);
-        $tamu = Tamu::where('id_acara', $id)->select('email')->get();
 
+        /*get email dari tamu undangan*/
+        $tamu = Tamu::query()
+            ->select('email')
+            ->where('id_acara', $id)
+            ->where('id_fakultas', '=', null)
+            ->where('id_departemen', '=', null)
+            ->where('id_prodi', '=', null)
+            ->get();
+
+        /*get email dari fakultas*/
+        $fakultas = Tamu::query()
+            ->select('email', 'id_fakultas', 'id_departemen', 'id_prodi')
+            ->where('id_acara', $id)
+            ->where('id_fakultas', '!=', null)
+            ->where('id_departemen', '=', null)
+            ->where('id_prodi', '=', null)
+            ->get();
+
+        /*get email dari departemen*/
+        $departemen = Tamu::query()
+            ->select('email', 'id_fakultas', 'id_departemen', 'id_prodi')
+            ->where('id_acara', $id)
+            ->where('id_fakultas', '!=', null)
+            ->where('id_departemen', '!=', null)
+            ->where('id_prodi', '=', null)
+            ->get();
+
+        /*get email dari prodi*/
+        $prodi = Tamu::query()
+            ->select('email', 'id_fakultas', 'id_departemen', 'id_prodi')
+            ->where('id_acara', $id)
+            ->where('id_fakultas', '!=', null)
+            ->where('id_departemen', '!=', null)
+            ->where('id_prodi', '!=', null)
+            ->get();
 
 
         return view('Admin.EditAcara')
+            ->with('fakultas', $fakultas)
+            ->with('departemen', $departemen)
+            ->with('prodi', $prodi)
             ->with('tamu', $tamu)
             ->with('gedung', $gedung)
             ->with('ruangan', $ruangan)
@@ -369,6 +373,33 @@ class AcaraController extends Controller
             foreach ($request->tamu_undangan as $data){
                 /*ini untuk menampung hasil dari inputan tamu_undangan*/
                 array_push($arrayTamu,$data);
+            }
+        }
+
+        /*menyimpan email dari inputan staff fakultas*/
+        if (!empty($request->summary1))
+        {
+            foreach ($request->summary1 as $data){
+                /*ini untuk menampung hasil dari inputan tamu_undangan*/
+                array_push($arrayTamu, $data);
+            }
+        }
+
+        /*menyimpan email dari inputan staff departemen*/
+        if (!empty($request->summary2))
+        {
+            foreach ($request->summary2 as $data){
+                /*ini untuk menampung hasil dari inputan tamu_undangan*/
+                array_push($arrayTamu, $data);
+            }
+        }
+
+        /*menyimpan email dari inputan staff prodi*/
+        if (!empty($request->summary3))
+        {
+            foreach ($request->summary3 as $data){
+                /*ini untuk menampung hasil dari inputan tamu_undangan*/
+                array_push($arrayTamu, $data);
             }
         }
 
@@ -409,7 +440,7 @@ class AcaraController extends Controller
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
             })
-            ->where('tamus.email', '=', $arrayTamu)
+            ->whereIn('tamus.email', $arrayTamu)
             ->whereNotIn('tamus.email', $simpenanTamu)
             ->get();
         $cek2 = count($pengecekan2);
@@ -427,8 +458,6 @@ class AcaraController extends Controller
         } elseif($start > $end) { /*validasi jika tanggal mulai lebih dari tanggal berakhirnya*/
             $galat = array_add($galat, '4', 'error4');
         }
-
-
 
         /*jika array galat mempunyai error yang pertama*/
         if (array_has($galat, '1')) {
@@ -464,6 +493,21 @@ class AcaraController extends Controller
                 if($jmlTamu == 0) {
                     $tamu = new Tamu;
                     $tamu->id_acara = $id;
+                    /*ini untuk mencari id fakultas,departemen, maupun prodi
+                    dari table staff. agar setiap email mempunyai identitas nya dan dapat
+                    di insertkan ke database Tamu*/
+                    $select = Staff::query()
+                        ->select('id_fakultas', 'id_departemen', 'id_prodi')
+                        ->where('email', $key)
+                        ->get();
+
+                    /*ketika hasilnya di dapatkan maka akan di store ke db tamu sesuai
+                    dengan id nya*/
+                    foreach ($select as $hasil){
+                        $tamu->id_fakultas = $hasil->id_fakultas;
+                        $tamu->id_departemen = $hasil->id_departemen;
+                        $tamu->id_prodi = $hasil->id_prodi;
+                    }
                     $tamu->email = $key;
                     $tamu->save();
                 }
@@ -481,7 +525,7 @@ class AcaraController extends Controller
             $event->name = $request->nama_acara;
             $event->startDateTime = $start;
             $event->endDateTime = $end;
-            foreach ($request->tamu_undangan as $Emailnya){
+            foreach ($arrayTamu as $Emailnya){
                 $event->addAttendee(['email' => $Emailnya]);
             }
             $event->save();

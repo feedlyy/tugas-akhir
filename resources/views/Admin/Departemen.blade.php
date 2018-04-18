@@ -87,6 +87,9 @@
                             <td>{{ $data->id_fakultas }}</td>
                             <td>
                                 {!! Form::open(['route' => ['departemen.destroy', $data->id_departemen], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                <a href="{{ route('departemen.edit', $data->id_departemen) }}">
+                                    {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                </a>
                                 {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
                                 {!! Form::close() !!}
                             </td>

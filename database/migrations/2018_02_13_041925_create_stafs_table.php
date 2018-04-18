@@ -18,7 +18,7 @@ class CreateStafsTable extends Migration
             $table->string('id_fakultas')->nullable();
             $table->string('id_departemen')->nullable();
             $table->string('id_prodi')->nullable();
-            $table->integer('nip')->unsigned();
+            $table->string('nip');
             $table->string('nama_staff');
             $table->string('email');
             $table->string('alamat');

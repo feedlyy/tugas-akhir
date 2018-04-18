@@ -83,13 +83,13 @@ class ProdiTableSeeder extends Seeder
             'id_fakultas' => 'vokasi',
             'id_departemen' => 'thv',
             'id_prodi' => 'agroindustri',
-            'nama_prodi' => 'agroindustri'
+            'nama_prodi' => 'Agroindustri'
         ]);
         DB::table('prodis')->insert([
             'id_fakultas' => 'vokasi',
             'id_departemen' => 'thv',
             'id_prodi' => 'pengelolaan hutan',
-            'nama_prodi' => 'pengelolaan hutan'
+            'nama_prodi' => 'Pengelolaan Hutan'
         ]);
 
         //dtb

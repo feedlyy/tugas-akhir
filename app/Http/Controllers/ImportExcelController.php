@@ -13,16 +13,17 @@ class ImportExcelController extends Controller
     //
 
     public function importExcel(Request $request){
-        if ($request->hasFile('file') != 'data_staff.xlsx'){
+        /*if ($request->hasFile('file') != 'data_staff.xlsx'){
             return redirect('admin/staff')->with(session()->flash('gagal', ''));
-        } else {
+        } else {*/
             if ($request->hasFile('file')){
                 $path = $request->file('file')->getRealPath();
                 $excel = Excel::load($path, function ($reader){
                     $result = $reader->toObject();
                     if (!empty($result) && $result->count()){
                         foreach ($result as $key => $value){
-                            try{$cek = Staff::query()
+                            try{
+                                $cek = Staff::query()
                                 ->where('nip', '=', $value->nip)
                                 ->where('nama_staff', '=', $value->nama_staff)
                                 ->get();
@@ -43,12 +44,11 @@ class ImportExcelController extends Controller
                             {
 
                             }
-
                         }
                     }
                 })->get();
             }
-        }
+
 
 
         return redirect('admin/staff')->with(session()->flash('import', ''));

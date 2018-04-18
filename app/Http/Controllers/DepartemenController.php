@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Departemen;
+use App\Rules\Lowercase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,6 +76,9 @@ class DepartemenController extends Controller
     public function edit($id)
     {
         //
+        $departemen = Departemen::query()->find($id);
+        return view('Admin.EditDepartemen')->with('departemen', $departemen);
+
     }
 
     /**
@@ -87,6 +91,17 @@ class DepartemenController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validasi = $request->validate([
+           'id_departemen' => ['required', new Lowercase],
+           'nama_departemen' => ['required', 'unique:departemens,nama_departemen']
+        ]);
+
+        $departemen = Departemen::query()->find($id);
+        $departemen->id_departemen = $request->id_departemen;
+        $departemen->nama_departemen = $request->nama_departemen;
+        $departemen->save();
+
+        return redirect('admin/departemen')->with(session()->flash('update', ''));
     }
 
     /**

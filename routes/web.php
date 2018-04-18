@@ -49,7 +49,14 @@ Route::prefix('admin')->group(function (){
 Route::get('nama/{id_gedung}', 'GetNamaController@getNamaRuang');
 
 /*fungsi ajax untuk select prodi*/
-Route::get('prodi/{departemen}', 'GetProdiController@GetProdi');
+/*Route::get('departemen/{fakultas}', 'GetNamaController@getDepartemen');*/
 
+/*fungsi ajax untuk get semua email vokasi*/
+Route::get('getFakultas/{fakultas}', 'GetNamaController@getSummary');
 
+/*fungsi ajax untuk get semua email departemen*/
+Route::get('getDepartemen/{departemen}', 'GetNamaController@getSummary2');
+
+/*fungsi ajax untuk get semua email prodi*/
+Route::get('getProdi/{prodi}', 'GetNamaController@getSummary3');
 
