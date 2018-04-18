@@ -135,7 +135,7 @@
                     <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
                         @foreach($ruangan as $data)
-                            <option <?php if($data->nama_ruangan = $acara->nama_ruangan){echo "selected";} ?> id="a"
+                            <option <?php if($data->nama_ruangan = $acara->nama_ruangan){echo "selected";} ?>
                             ></option>
                         @endforeach
                     </select>
@@ -147,12 +147,13 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Staff Fakultas</label>
                             <select class="form-control select2 contoh" id="fakultas" multiple="multiple" name="fakultas[]">
-                                @foreach($fakultas as $key)
-                                    @if($key == true)
-                                        <option value="vokasi" selected>Vokasi</option>
+                                @foreach($tampungFakultas as $key => $value)
+                                    @if($value == 'selected')
+                                        <option value="{{ $key }}" selected>{{ $key }}</option>
+                                    @else
+                                        <option value="{{ $key }}">{{ $key }}</option>
                                     @endif
                                 @endforeach
-                                    <option value="vokasi">Vokasi</option>
                             </select>
                         </div>
                     </div>
@@ -174,19 +175,13 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Staff Departemen</label>
                             <select class="form-control select2 contoh" id="departemen" multiple="multiple" name="departemen[]">
-                                @foreach($departemen as $key)
-                                    @if($key == true)
-                                        <option value="{{ $key->id_departemen }}" selected>{{ ucfirst($key->id_departemen) }}</option>
+                                @foreach($tampungDepartemen as $key => $value)
+                                    @if($value == 'selected')
+                                        <option value="{{ $key }}" selected>{{ $key }}</option>
+                                    @else
+                                        <option value="{{ $key }}">{{ $key }}</option>
                                     @endif
                                 @endforeach
-                                    <option value="dbsmb">DBMSB</option>
-                                    <option value="deb">DEB</option>
-                                    <option value="dtb">DTB</option>
-                                    <option value="dtm">DTM</option>
-                                    <option value="likes">LIKES</option>
-                                    <option value="sipil">SIPIL</option>
-                                    <option value="tedi">TEDI</option>
-                                    <option value="thv">THV</option>
                             </select>
                         </div>
                     </div>
@@ -208,37 +203,13 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Staff Prodi</label>
                             <select class="form-control select2" id="prodi" multiple="multiple" name="prodi[]">
-                                @foreach($prodi as $key)
-                                    @if($key == true)
-                                        <option value="{{ $key->id_prodi }}" selected>{{ ucfirst($key->id_prodi) }}</option>
+                                @foreach($tampungProdi as $key => $value)
+                                    @if($value == 'selected')
+                                        <option value="{{ $key }}" selected>{{ $key }}</option>
+                                    @else
+                                        <option value="{{ $key }}">{{ $key }}</option>
                                     @endif
                                 @endforeach
-                                    <option value="agroindustri">Agroindustri</option>
-                                    <option value="akutansi">Akutansi</option>
-                                    <option value="d4 alat berat">Teknik Pengelolaan dan Perawatan Alat Berat</option>
-                                    <option value="d4 kebidanan">Kebidanan</option>
-                                    <option value="d4 sipil">Teknik Pengelolaan dan Pemeliharaan Infrastruktur Sipil</option>
-                                    <option value="d4 tekjar">Teknologi Rekayasa Internet</option>
-                                    <option value="ekonomi terapan">Ekonomi Terapan</option>
-                                    <option value="elektro">Teknologi Listrik</option>
-                                    <option value="elins">Teknologi Instrumentasi</option>
-                                    <option value="geomatika">Teknik Geomatika</option>
-                                    <option value="inggris">Bahasa Inggris</option>
-                                    <option value="jepang">Bahasa Jepang</option>
-                                    <option value="kearsipan">Kearsipan</option>
-                                    <option value="keswan">Kesehatan Hewan</option>
-                                    <option value="komsi">Ilmu Komputer dan Sistem Informasi</option>
-                                    <option value="korea">Bahasa Korea</option>
-                                    <option value="manajemen">Manajemen</option>
-                                    <option value="mandarin">Bahasa Mandarin</option>
-                                    <option value="dtm">Teknik Mesin</option>
-                                    <option value="metins">Metrologi dan Instrumentasi</option>
-                                    <option value="parwi">Kepariwisataan</option>
-                                    <option value="pejesig">Penginderaan Jauh dan Sistem Informasi Geografi</option>
-                                    <option value="pengelolaan hutan">Pengelolaan Hutan</option>
-                                    <option value="perancis">Bahasa Perancis</option>
-                                    <option value="rekmed">Rekam Medis</option>
-                                    <option value="sipil">Teknik Sipil</option>
                             </select>
                         </div>
                     </div>

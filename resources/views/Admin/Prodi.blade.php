@@ -66,9 +66,8 @@
         {{--jika yang login fakultas--}}
         @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
         \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
-        \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
-            <a href="{{ url('admin/prodi/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Prodi</button></a>
-        @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+        \Illuminate\Support\Facades\Auth::user()->id_prodi == null ||
+        \Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
         \Illuminate\Support\Facades\Auth::user()->id_departemen != null &&
         \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
             <a href="{{ url('admin/prodi/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Prodi</button></a>
@@ -94,6 +93,9 @@
                             <td>{{ $data->id_departemen }}</td>
                             <td>
                                 {!! Form::open(['route' => ['prodi.destroy', $data->id_prodi], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                <a href="{{ route('prodi.edit', $data->id_prodi) }}">
+                                    {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                </a>
                                 {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
                                 {!! Form::close() !!}
                             </td>

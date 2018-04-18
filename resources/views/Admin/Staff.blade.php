@@ -144,9 +144,12 @@
                         <h4 class="modal-title">Import Excel</h4>
                     </div>
                     <div class="modal-body">
+                        <div class="col-md-12">
+                            <label>Format Excel</label>
+                            <img class="img-responsive" src="{{ url('image/1.png') }}">
+                        </div>
                         {{--inputan disini hanya menerima bentukan .xlsx, .xls, .csv--}}
                         {{--<input name="file" type="file" accept="" ID="fileSelect" runat="server" />--}}
-                        <label>Hanya File data_staff.xlsx</label>
                         {!! Form::file('file', array('class' => 'form-control', 'accept' => '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel')) !!}
                     </div>
                     <div class="modal-footer">

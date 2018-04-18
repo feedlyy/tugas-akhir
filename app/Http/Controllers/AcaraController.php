@@ -303,6 +303,19 @@ class AcaraController extends Controller
         $ruangan = Ruangan::all();
         $acara = Acara::find($id);
 
+        $tampungFakultas = ['vokasi' => 'not'];
+
+        $tampungDepartemen = ['dbsmb' => 'not',
+            'deb' => 'not', 'dtb' => 'not', 'dtm' => 'not', 'likes' => 'not', 'sipil' => 'not',
+            'tedi' => 'not', 'thv' => 'not'];
+
+        $tampungProdi = ['agroindustri' => 'not', 'akutansi' => 'not', 'd4 alat berat' => 'not',
+            'd4 kebidanan' => 'not', 'd4 sipil' => 'not', 'd4 tekjar' => 'not',
+            'ekonomi terapan' => 'not', 'elektro' => 'not', 'elins' => 'not',
+            'geomatika' => 'not', 'keswan' => 'not', 'komsi' => 'not', 'manajemen' => 'not',
+            'mesin' => 'not', 'metins' => 'not', 'pejesig' => 'not', 'pengelolaan hutan' => 'not',
+            'rekmed' => 'not', 'sipil' => 'not'];
+
         /*get email dari tamu undangan*/
         $tamu = Tamu::query()
             ->select('email')
@@ -339,8 +352,39 @@ class AcaraController extends Controller
             ->where('id_prodi', '!=', null)
             ->get();
 
+        /*untuk memfilter id fakultas mana saja yang terselected*/
+        foreach ($tampungFakultas as $data => $value){
+            foreach ($fakultas as $hasil){
+                if ($data == $hasil->id_fakultas){
+                    $tampungFakultas[$data] = 'selected';
+                }
+            }
+        }
+
+        /*untuk memfilter id departemen mana saja yang terselected*/
+        foreach ($tampungDepartemen as $data => $value){
+            foreach ($departemen as $hasil){
+                if ($data == $hasil->id_departemen){
+                  $tampungDepartemen[$data] = 'selected';
+                }
+            }
+        }
+
+        /*untuk memfilter id prodi mana saja yang terselected*/
+        foreach ($tampungProdi as $data => $value){
+            foreach ($prodi as $hasil){
+                if ($data == $hasil->id_prodi){
+                    $tampungProdi[$data] = 'selected';
+                }
+            }
+        }
+
+
 
         return view('Admin.EditAcara')
+            ->with('tampungFakultas', $tampungFakultas)
+            ->with('tampungDepartemen', $tampungDepartemen)
+            ->with('tampungProdi', $tampungProdi)
             ->with('fakultas', $fakultas)
             ->with('departemen', $departemen)
             ->with('prodi', $prodi)

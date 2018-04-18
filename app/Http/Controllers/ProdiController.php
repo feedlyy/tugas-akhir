@@ -103,6 +103,22 @@ class ProdiController extends Controller
     public function edit($id)
     {
         //
+        $prodi = Prodi::query()->find($id);
+        $departemen = Prodi::query()
+            ->select('id_departemen')
+            ->where('id_prodi', $id)
+            ->get();
+
+
+
+        $tampung = ['dbsmb', 'deb', 'dtb', 'dtm', 'likes', 'sipil', 'tedi', 'thv'];
+
+        /*dd($tampung);*/
+
+        return view('Admin.EditProdi')
+            ->with('tampung', $tampung)
+            ->with('departemen', $departemen)
+            ->with('prodi', $prodi);
     }
 
     /**
