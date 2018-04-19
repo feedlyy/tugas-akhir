@@ -84,7 +84,7 @@
                                 <td>{{ $data->end_date }}</td>
                                 <td>{{ $data->nama_ruangan }}</td>
                                 <td>
-                                    @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
+                                    @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                         {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                         <a href="{{ route('acara.edit', $data->id_acara) }}">
                                             {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
@@ -110,7 +110,7 @@
                                     <td>{{ $data->end_date }}</td>
                                     <td>{{ $data->nama_ruangan }}</td>
                                     <td>
-                                        @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
+                                        @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                             {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                             <a href="{{ route('acara.edit', $data->id_acara) }}">
                                                 {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
@@ -136,7 +136,7 @@
                                             <td>{{ $data->end_date }}</td>
                                             <td>{{ $data->nama_ruangan }}</td>
                                             <td>
-                                                @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->nama_admin)
+                                                @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                                     {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                                     <a href="{{ route('acara.edit', $data->id_acara) }}">
                                                         {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}

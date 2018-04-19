@@ -15,4 +15,6 @@ class GetProdiController extends Controller
             ->where('id_departemen', $departemen)->get();
         return json_encode($prodi);
     }
+
+
 }

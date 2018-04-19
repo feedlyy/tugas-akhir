@@ -18,7 +18,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        /*'id_admin', */'nama_admin', 'password', 'id_status',
+        'username', 'password', 'id_status',
     ];
 
     /**

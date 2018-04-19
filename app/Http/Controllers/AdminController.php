@@ -37,7 +37,7 @@ class AdminController extends Controller
     {
         //
         $departemen = Departemen::all();
-        $prodi = Prodi::all();
+        $prodi = Prodi::all()->where('id_departemen', Auth::user()->id_departemen);
         return view('Admin.TambahAdmin')
             ->with('departemen', $departemen)
             ->with('prodi', $prodi);
@@ -57,17 +57,16 @@ class AdminController extends Controller
                 \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
             {
                 $validasi = $request->validate([
-                    'nama_admin' => ['required', new Lowercase, 'unique:admins,nama_admin'],
+                    'username' => ['required', new Lowercase, 'unique:admins,username'],
                     'password' => ['required'],
-                    'selectdepartemen' => ['required'],
-                    'selectprodi' => ['required']
+                    'selectdepartemen' => ['required']
                 ]);
             } elseif (\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                 \Illuminate\Support\Facades\Auth::user()->id_departemen != null &&
                 \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
             {
                 $validasi = $request->validate([
-                    'nama_admin' => ['required', new Lowercase, 'unique:admins,nama_admin'],
+                    'username' => ['required', new Lowercase, 'unique:admins,username'],
                     'password' => ['required'],
                     'selectprodi2' => ['required']
                 ]);
@@ -79,8 +78,10 @@ class AdminController extends Controller
             sedangkan $request->id_admin(ini name yang ada di input view nya)
             kebetulan dibikin sama name nya*/
             /*$admin->id_admin = $request->id_admin;*/
-            $admin->nama_admin = $request->nama_admin;
+            $admin->username = $request->username;
             $admin->password = bcrypt($request->password);
+
+            /*jika yang menambahkan dari admin fakultas, maka request nya akan seperti ini*/
             if (\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                 \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
                 \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
@@ -88,18 +89,19 @@ class AdminController extends Controller
                 $admin->id_fakultas = Auth::user()->id_fakultas;
                 $admin->id_departemen = $request->selectdepartemen;
                 $admin->id_prodi = $request->selectprodi;
+
+                /*jika yang menambahkan dari admin departemen, maka request nya seperti ini*/
             } elseif (\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                 \Illuminate\Support\Facades\Auth::user()->id_departemen != null &&
                 \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
             {
                 $admin->id_fakultas = Auth::user()->id_fakultas;
-                $admin->id_departemen = Auth::user()->id_departemen;
+                $admin->id_departemen = Auth::user()->id_departemen; /*id departemen langsung disesuaikan sesuai dengan id_departemen admin saat login*/
                 $admin->id_prodi = $request->selectprodi2;
             }
 
             $admin->save();
             return redirect('admin/admin')->with(session()->flash('status', ''));
-
 
 
 

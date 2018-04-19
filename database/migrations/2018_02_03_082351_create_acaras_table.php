@@ -26,7 +26,7 @@ class CreateAcarasTable extends Migration
 
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
             $table->foreign('nama_ruangan')->references('nama_ruangan')->on('ruangans')->onDelete('CASCADE');
-            $table->foreign('penanggung_jawab')->references('nama_admin')->on('admins')->onDelete('CASCADE');
+            $table->foreign('penanggung_jawab')->references('username')->on('admins')->onDelete('CASCADE');
 
             $table->timestamps();
         });

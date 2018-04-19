@@ -103,7 +103,7 @@
                     <div class='col-md-5'>
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker6'>
-                                <input type='text' class="form-control" name="start_date"/>
+                                <input type='text' class="form-control" name="start_date" value="{{ old('start_date') }}"/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -113,7 +113,7 @@
                     <div class='col-md-5'>
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker7'>
-                                <input type='text' class="form-control" name="end_date"/>
+                                <input type='text' class="form-control" name="end_date" value="{{ old('end_date') }}"/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -127,7 +127,7 @@
                 <br>
                 {{--id gedung--}}
                 <div class="form-group">
-                    <label>ID Gedung</label>
+                    <label>Gedung</label>
                     <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung">
                         <option disabled selected="selected">Pilih Gedung</option>
                         @foreach($gedung as $data)
@@ -138,7 +138,7 @@
 
                 {{--nama ruangan--}}
                 <div class="form-group">
-                    <label>Nama Ruangan</label>
+                    <label>Ruangan</label>
                     <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
                     </select>

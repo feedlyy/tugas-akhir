@@ -63,7 +63,15 @@
 
     <div class="container putih">
         <h2 style="">List Admin</h2>
-        <a href="{{ url('admin/admin/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Admin</button></a>
+        @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
+        \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
+        \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
+            <a href="{{ url('admin/admin/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Admin Prodi</button></a>
+            <a href="{{ url('admin/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Admin Departemen</button></a>
+        @else
+            <a href="{{ url('admin/admin/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Admin Prodi</button></a>
+        @endif
+
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
                 <table id="example1" class="table table-bordered table-striped responsive">
@@ -82,7 +90,7 @@
                         \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             <tr>
                                 <td>{{ $data->id_admin }}</td>
-                                <td>{{ $data->nama_admin }}</td>
+                                <td>{{ $data->username }}</td>
                                 <td>
                                     {{--jika ada admin fakultas maka tidak dapat dihapus--}}
                                     @if($data->id_fakultas != null && $data->id_departemen == null && $data->id_prodi == null)
@@ -106,7 +114,7 @@
                         @elseif($data->id_departemen == \Illuminate\Support\Facades\Auth::user()->id_departemen)
                         <tr>
                             <td>{{ $data->id_admin }}</td>
-                            <td>{{ $data->nama_admin }}</td>
+                            <td>{{ $data->username }}</td>
                             <td>
                                 {{--otomatis kan yang login departemennya
                                 departemen tidak dapat menghapus departemen itu sendiri karna bukan kebijakan

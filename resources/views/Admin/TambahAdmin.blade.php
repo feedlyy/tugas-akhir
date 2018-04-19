@@ -34,7 +34,7 @@
     <!-- general form elements -->
     <div class="box" style="background-color: #ffffff; border-top: #ffffff !important;">
         <div class="box-header with-border">
-            <h3 class="box-title">Tambah Admin</h3>
+            <h3 class="box-title">Tambah Admin Prodi</h3>
         </div>
         <div class="box-header">
             <a class="fa fa-arrow-left" href="{{ route('admin.index') }}"><span style="font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif; font-size: small;">&nbspKembali ke list admin</span></a>
@@ -45,13 +45,15 @@
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Admin</label>
-                    <input type="text" name="nama_admin" class="form-control" id="" placeholder="" value="{{ old('nama_admin') }}">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" name="username" class="form-control" id="" placeholder="" value="{{ old('username') }}">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Password</label>
                     <input type="password" name="password" class="form-control" id="" placeholder="">
                 </div>
+
+                {{--kalau yang login fakultas, ada pilihan untuk departemen--}}
                 @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                     \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
                     \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
@@ -60,24 +62,18 @@
                     <select id="departemen" class="form-control select2" style="width: 100%;" name="selectdepartemen">
                         <option disabled selected="selected">Pilih Status</option>
                         @foreach($departemen as $data)
-                            @if($data->id_fakultas != null && $data->id_departemen == null && $data->id_prodi == null)
-                                <option hidden>{{ $data->id_fakultas }}</option>
-                            @else
                             <option value="{{ $data->id_departemen }}">{{ $data->nama_departemen }}</option>
-                            @endif
                         @endforeach
                     </select>
                 </div>
-                @endif
-                @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
-                    \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
-                    \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                     <div class="form-group">
-                        <label>Pilih Prodi (Jika Tambah Prodi)</label>
+                        <label>Pilih Prodi</label>
                         <select id="prodi" class="form-control select2" style="width: 100%;" name="selectprodi">
-                            <option disabled selected="selected">Pilih Prodi</option>
+                            <option selected="selected">Pilih Prodi</option>
                         </select>
                     </div>
+
+                    {{--jika yang login sebagai departemen--}}
                 @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                     \Illuminate\Support\Facades\Auth::user()->id_departemen != null &&
                     \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
@@ -86,7 +82,7 @@
                         <select class="form-control select2" style="width: 100%;" name="selectprodi2">
                             <option disabled selected="selected">Pilih Prodi</option>
                             @foreach($prodi as $data)
-                                <option value="{{ $data->id_prodi }}">{{ $data->nama_prodi }}</option>
+                                    <option value="{{ $data->id_prodi }}">{{ $data->nama_prodi }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -199,7 +199,7 @@ class AcaraController extends Controller
         $acara->end_date = $end;
         $acara->id_gedung = $request->id_gedung;
         $acara->nama_ruangan = $request->nama_ruang;
-        $acara->penanggung_jawab = Auth::user()->nama_admin;
+        $acara->penanggung_jawab = Auth::user()->username;
         $acara->save();
 
 
@@ -259,14 +259,14 @@ class AcaraController extends Controller
         lalu select nama admin nya*/
         $penanggungJawab = Admin::query()
             ->join('acaras', 'admins.id_admin', '=', 'acaras.penanggung_jawab')
-            ->select('admins.nama_admin')
+            ->select('admins.username')
             ->get();
 
         /*karena hasilnya berupa array(lebih dari satu dan sama) dan karna butuh nya cuma satu
         maka cukup ambil nilai array pertamanya*/
         $tampung = [];
         foreach ($penanggungJawab as $data){
-            array_push($tampung, $data->nama_admin);
+            array_push($tampung, $data->username);
         }
 
         $email = Tamu::query()

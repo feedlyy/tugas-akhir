@@ -114,7 +114,7 @@
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                            {{ \Illuminate\Support\Facades\Auth::user()->nama_admin }} <span class="caret"></span>
+                            {{ \Illuminate\Support\Facades\Auth::user()->username }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu">
@@ -149,7 +149,7 @@
                 </div>
                 <div class="pull-left info">
                     @auth
-                        {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin) }}
+                        {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->username) }}
                     @endauth
 
 
@@ -319,7 +319,7 @@
                 <div class="box-body box-profile">
 
 
-                    <h3 class="profile-username text-center">Selamat Datang {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->nama_admin) }}</h3>
+                    <h3 class="profile-username text-center">Selamat Datang {{ ucfirst(\Illuminate\Support\Facades\Auth::user()->username) }}</h3>
                     <br>
                     <img class="profile-user-img img-responsive img-circle" src="{{ url('image/ugm.png') }}" alt="User profile picture">
                     <br>

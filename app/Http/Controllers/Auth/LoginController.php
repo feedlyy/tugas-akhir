@@ -35,7 +35,7 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'nama_admin';
+        return 'username';
     }
 
     protected $redirectTo = '/admin';

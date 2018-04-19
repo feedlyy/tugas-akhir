@@ -38,6 +38,8 @@ Route::prefix('admin')->group(function (){
         'departemen' => 'DepartemenController',
         'prodi' => 'ProdiController'
     ]);
+    Route::get('create', 'AddAdmin@create');
+    Route::post('addDepartemen', 'AddAdmin@store')->name('addDepartemen');
     Route::get('kalender', 'KalenderController@kalender')->name('kalender');
 
     /*ini untuk post data dari import excel*/
@@ -49,7 +51,7 @@ Route::prefix('admin')->group(function (){
 Route::get('nama/{id_gedung}', 'GetNamaController@getNamaRuang');
 
 /*fungsi ajax untuk select prodi*/
-/*Route::get('departemen/{fakultas}', 'GetNamaController@getDepartemen');*/
+Route::get('prodi/{departemen}', 'GetProdiController@GetProdi');
 
 /*fungsi ajax untuk get semua email vokasi*/
 Route::get('getFakultas/{fakultas}', 'GetNamaController@getSummary');
