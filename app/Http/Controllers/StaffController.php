@@ -29,11 +29,9 @@ class StaffController extends Controller
     public function create()
     {
         //
-        $status = Status::all();
         $staff = Staff::all();
         return view('Admin.TambahStaff')
-            ->with('staff', $staff)
-            ->with('status', $status);
+            ->with('staff', $staff);
     }
 
     /**
@@ -46,7 +44,6 @@ class StaffController extends Controller
     {
         //
         $validasi = $request->validate([
-            'id_status' => ['required', 'numeric'],
             'nip' => ['required', 'unique:stafs,nip', 'integer'],
             'nama_staff' => ['required', 'string', new Uppercase],
             'email_staff' => ['required', 'email'],
@@ -55,7 +52,6 @@ class StaffController extends Controller
         ]);
 
         $staff = new Staff;
-        $staff->id_status = $request->id_status;
         $staff->nip = $request->nip;
         $staff->nama_staff = $request->nama_staff;
         $staff->email = $request->email_staff;

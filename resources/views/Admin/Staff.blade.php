@@ -88,10 +88,11 @@
     <div class="container putih">
         <h2 style="">List Staff</h2>
         {{--<a href="{{ url('admin/staff/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Staff</button></a>--}}
+        <a href="{{ url('admin/ExportExcel') }}" class="fa fa-plus btn btn-adn">Export Excel</a>
         <button data-toggle="modal" data-target="#modal-default" class="fa fa-plus btn btn-success">Import Excel</button>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
-                <table summary="This table shows how to create responsive tables using Datatables' extended functionality" class="table table-bordered table-hover dt-responsive">
+                <table id="example1" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID Staff</th>
@@ -133,7 +134,7 @@
         </div>
 
         {{--<form method="post" action="{{ url('admin/importExcel') }}" enctype="multipart/form-data">--}}
-        {!! Form::open(array('route' => 'import', 'method' => 'POST', 'files' => 'true')) !!}
+        {!! Form::open(array('url' => 'admin/importExcel', 'method' => 'POST', 'files' => 'true')) !!}
             {{ csrf_field() }}
         <div class="modal fade" id="modal-default">
             <div class="modal-dialog">
@@ -144,7 +145,7 @@
                         <h4 class="modal-title">Import Excel</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="col-md-12">
+                        <div>
                             <label>Format Excel</label>
                             <img class="img-responsive" src="{{ url('image/1.png') }}">
                         </div>
@@ -155,7 +156,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                         {!! Form::submit('Import', ['class' => 'btn btn-primary pull-right']) !!}
-
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -167,10 +167,11 @@
         <!-- /.modal -->
     </div>
 
-    {{--<script src="{{ url('dataTables/js/jquery.min.js') }}"></script>--}}
-
 
     <script>
-        $('table').DataTable();
+        /*javascript untuk table nya*/
+        $(document).ready( function () {
+            $('#example1').DataTable();
+        } );
     </script>
 @endsection

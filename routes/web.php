@@ -42,8 +42,13 @@ Route::prefix('admin')->group(function (){
     Route::post('addDepartemen', 'AddAdmin@store')->name('addDepartemen');
     Route::get('kalender', 'KalenderController@kalender')->name('kalender');
 
+    /*ini untuk export excel*/
+    Route::get('ExportExcel', 'ImportExcelController@export')->name('export');
+
     /*ini untuk post data dari import excel*/
     Route::post('importExcel', 'ImportExcelController@importExcel')->name('import');
+
+
    });
 });
 
