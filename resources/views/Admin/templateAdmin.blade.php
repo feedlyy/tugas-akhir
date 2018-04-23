@@ -168,7 +168,7 @@
                         </li>
                         <li class="treeview">
                             <a href="{{ url('admin/staff') }}">
-                                <i class="fa fa-user"></i> <span>Staff</span>
+                                <i class="fa fa-user"></i> <span>Staf</span>
                             </a>
                         </li>
                         <li class="treeview">
@@ -189,7 +189,7 @@
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-user-circle"></i>
-                                <span>User</span>
+                                <span>Sekolah Vokasi</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -213,7 +213,7 @@
                         </li>
                         <li class="treeview">
                             <a href="{{ url('admin/staff') }}">
-                                <i class="fa fa-user-o"></i> <span>Staff</span>
+                                <i class="fa fa-user-o"></i> <span>Staf</span>
                             </a>
                         </li>
                         <li class="treeview">
@@ -234,7 +234,7 @@
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-user-circle"></i>
-                                <span>User</span>
+                                <span>Sekolah Vokasi</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -253,7 +253,7 @@
                         @else
                         <li class="treeview">
                             <a href="{{ url('admin/staff') }}">
-                                <i class="fa fa-user"></i> <span>Staff</span>
+                                <i class="fa fa-user"></i> <span>Staf</span>
                             </a>
                         </li>
                         <li class="treeview">
@@ -274,7 +274,7 @@
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-user-circle"></i>
-                                <span>User</span>
+                                <span>Sekolah Vokasi</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>

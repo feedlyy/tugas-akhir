@@ -76,16 +76,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
         ],
-
-        /*'gedungs' => [
-          'driver' => 'eloquent',
-          'model' => App\Gedung::class,
-        ],*/
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*

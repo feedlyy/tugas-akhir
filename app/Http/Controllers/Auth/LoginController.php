@@ -39,23 +39,7 @@ class LoginController extends Controller
     }
 
     protected $redirectTo = '/admin';
-
-//    public function authenticated(Request $request, $user)
-//    {
-//
-//        if (Auth::user() == true && Auth::user()->id_status == 1)
-//        {
-//            return redirect()->route('fakultas');
-//        }elseif (Auth::user() == true && Auth::user()->id_status == 2)
-//        {
-//            return redirect()->route('departemen');
-//        }elseif (Auth::user() == true && Auth::user()->id_status == 3)
-//        {
-//            return redirect()->route('prodi');
-//        }
-//        return redirect('/login');
-//    }
-
+    
     /**
      * Create a new controller instance.
      *

@@ -108,8 +108,6 @@ class AcaraController extends Controller
 
 
 
-
-
         $validasi = $request->validate([
             'nama_acara' => ['required', 'max:50', new Uppercase],
             'tamu_undangan.*' => ['email'],
