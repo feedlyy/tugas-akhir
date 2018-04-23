@@ -22,7 +22,6 @@ class CreateProdisTable extends Migration
 
             $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas')->onDelete('CASCADE');
             $table->foreign('id_departemen')->references('id_departemen')->on('departemens')->onDelete('CASCADE');
-            /*$table->foreign('id_admin')->references('id_admin')->on('admins')->onDelete('CASCADE');*/
             $table->timestamps();
         });
     }

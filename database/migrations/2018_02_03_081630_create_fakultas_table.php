@@ -18,8 +18,6 @@ class CreateFakultasTable extends Migration
             $table->primary('id_fakultas');
             $table->string('nama_fakultas');
             $table->timestamps();
-
-            /*$table->foreign('id_admin')->references('id_admin')->on('admins')->onDelete('CASCADE');*/
         });
     }
 

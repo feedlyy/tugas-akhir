@@ -18,7 +18,6 @@ class CreateDepartemensTable extends Migration
             $table->primary('id_departemen');
             $table->string('nama_departemen');
             $table->string('id_fakultas');
-           /* $table->integer('id_admin')->unsigned();*/
 
             $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas')->onDelete('CASCADE');
             $table->timestamps();
