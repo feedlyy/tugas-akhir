@@ -67,3 +67,5 @@ Route::get('getDepartemen/{departemen}', 'GetNamaController@getSummary2');
 /*fungsi ajax untuk get semua email prodi*/
 Route::get('getProdi/{prodi}', 'GetNamaController@getSummary3');
 
+Route::get('oauth', ['as' => 'oauthCallback', 'uses' => 'AcaraController@oauth']);
+

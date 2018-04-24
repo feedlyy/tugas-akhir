@@ -18,8 +18,30 @@ use App\Gedung;
 use App\Tamu;
 use App\Staff;
 
+use Google_Client;
+use Google_Service_Calendar;
+use Google_Service_Calendar_Event;
+use Google_Service_Calendar_EventDateTime;
+use Google_Service_Calendar_EventAttendee;
+
+use Spatie\GoogleCalendar\GoogleCalendarServiceProvider;
+
 class AcaraController extends Controller
 {
+
+    protected $client;
+
+    public function __construct()
+    {
+        $client = new Google_Client();
+        $client->setAuthConfig('client_secret.json');
+        $client->addScope(Google_Service_Calendar::CALENDAR);
+
+        $guzzleClient = new \GuzzleHttp\Client(array('curl' => array(CURLOPT_SSL_VERIFYPEER => false)));
+        $client->setHttpClient($guzzleClient);
+        $this->client = $client;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,6 +61,24 @@ class AcaraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function oauth()
+    {
+        session_start();
+
+        $rurl = action('AcaraController@oauth');
+        $this->client->setRedirectUri($rurl);
+        if (!isset($_GET['code'])) {
+            $auth_url = $this->client->createAuthUrl();
+            $filtered_url = filter_var($auth_url, FILTER_SANITIZE_URL);
+            return redirect($filtered_url);
+        } else {
+            $this->client->authenticate($_GET['code']);
+            $_SESSION['access_token'] = $this->client->getAccessToken();
+            return redirect('/admin');
+        }
+    }
+
     public function create()
     {
         //
@@ -175,23 +215,53 @@ class AcaraController extends Controller
 
 
         /*fungsi store google calendar*/
-        $event = Event::create([
-            'name' => $request->nama_acara,
-            'startDateTime' => $start,
-            'endDateTime' => $end,
-            'location' => $request->nama_ruang,
-        ]);
-            foreach ($arrayTamu as $Emailnya){
-                $event->addAttendee(['email' => $Emailnya]);
-            }
-        $event->save();
+            /*$event = Event::create([
+                'name' => $request->nama_acara,
+                'description' => 'A chance to hear more about Google\'s developer products.',
+                'startDateTime' => $start,
+                'endDateTime' => $end,
+                'location' => $request->nama_ruang,
+            ]);*/
 
+            session_start();
+            if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+                $this->client->setAccessToken($_SESSION['access_token']);
+                $service = new Google_Service_Calendar($this->client);
+
+                $calendarId = 'primary';
+                $event = new Google_Service_Calendar_Event([
+                    'summary' => $request->nama_acara,
+                    'start' => ['dateTime' => Carbon::parse(($request->start_date), 'Asia/Jakarta')->toRfc3339String()],
+                    'end' => ['dateTime' => Carbon::parse(($request->end_date), 'Asia/Jakarta')->toRfc3339String()],
+                    'reminders' => array(
+                        'useDefault' => FALSE,
+                        'overrides' => array(
+                            array('method' => 'email', 'minutes' => 60),
+                            array('method' => 'popup', 'minutes' => 60),
+                            array('method' => 'email', 'minutes' => 24 * 60),
+                            array('method' => 'popup', 'minutes' => 24 * 60),
+                        ),
+                    ),
+                ]);
+                foreach ($arrayTamu as $emailnya)
+                {
+                    $attendee = new Google_Service_Calendar_EventAttendee();
+                    $attendee->setEmail($emailnya);
+                    $attendee_arr[]= $attendee;
+                }
+                $event->setAttendees($attendee_arr);
+                $optParams = Array(
+                    'sendNotifications' => true,
+                );
+
+                $results = $service->events->insert($calendarId, $event, $optParams);
+            }
         /*ini store ke db*/
         $acara = new Acara;
         /*event_id_google_calendar ini untuk menyimpan event_id tiap acara
         di google calendar dan menyimpannya di db.
         jadi koneksi untuk ke google calendar nya*/
-        $acara->event_id_google_calendar = $event->id;
+        $acara->event_id_google_calendar = $results->getId();
         $acara->nama_event = $request->nama_acara;
         $acara->start_date = $start;
         $acara->end_date = $end;
@@ -407,7 +477,6 @@ class AcaraController extends Controller
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
 
 
-
         $arrayTamu = [];
         /*menyimpan email dari inputan*/
         if (!empty($request->tamu_undangan))
@@ -563,14 +632,42 @@ class AcaraController extends Controller
                 'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
                 'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
             ]);*/
-            $event = Event::find($acara->event_id_google_calendar);
-            $event->name = $request->nama_acara;
-            $event->startDateTime = $start;
-            $event->endDateTime = $end;
-            foreach ($arrayTamu as $Emailnya){
-                $event->addAttendee(['email' => $Emailnya]);
+        session_start();
+        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+            $this->client->setAccessToken($_SESSION['access_token']);
+            $service = new Google_Service_Calendar($this->client);
+
+            // retrieve the event from the API.
+            $event = $service->events->get('primary', $acara->event_id_google_calendar);
+
+            $event->setSummary($request->nama_acara);
+            $event->setLocation($request->nama_ruang);
+
+            //start time
+            $mulai = new Google_Service_Calendar_EventDateTime();
+            $mulai->setDateTime($start->toRfc3339String());
+            $event->setStart($mulai);
+
+            //end time
+            $berakhir = new Google_Service_Calendar_EventDateTime();
+            $berakhir->setDateTime($end->toRfc3339String());
+            $event->setEnd($berakhir);
+
+            //attendees
+            foreach ($arrayTamu as $emailnya)
+            {
+                $tamunya = new Google_Service_Calendar_EventAttendee();
+                $tamunya->setEmail($emailnya);
+                $tamunya_arr[]= $tamunya;
             }
-            $event->save();
+            $event->setAttendees($tamunya_arr);
+
+            /*ini untuk setting send notifikasinya*/
+            $optParams = Array(
+                'sendNotifications' => true,
+            );
+            $updatedEvent = $service->events->update('primary', $event->getId(), $event, $optParams);
+        }
 
             return redirect('admin/acara')->with(session()->flash('update', ''));
 
@@ -594,8 +691,13 @@ class AcaraController extends Controller
         /*ini merujuk ke column event_id_google_calendar
         yang isinya adalah event_id tiap acara
         ketika mendapatkan id nya maka di google calendar pun bisa di hapus*/
-        $event = Event::find($acara->event_id_google_calendar);
-        $event->delete();
+        session_start();
+        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+            $this->client->setAccessToken($_SESSION['access_token']);
+            $service = new Google_Service_Calendar($this->client);
+
+            $service->events->delete('primary', $acara->event_id_google_calendar);
+        }
 
         return redirect('admin/acara')->with(session()->flash('hapus', ''));
     }

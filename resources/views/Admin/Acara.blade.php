@@ -69,6 +69,7 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
+                            <th>No</th>
                             <th>Nama Acara</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -79,6 +80,7 @@
                         @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen == null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($acara as $data)
                             <tr>
+                                <td>{{ $data->id_acara }}</td>
                                 <td>{{ $data->nama_event }}</td>
                                 <td>{{ $data->start_date }}</td>
                                 <td>{{ $data->end_date }}</td>
@@ -105,6 +107,7 @@
                         @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($acara as $data)
                                 <tr>
+                                    <td>{{ $data->id_acara }}</td>
                                     <td>{{ $data->nama_event }}</td>
                                     <td>{{ $data->start_date }}</td>
                                     <td>{{ $data->end_date }}</td>
@@ -131,6 +134,7 @@
                                 @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi != null)
                                     @foreach($acara as $data)
                                         <tr>
+                                            <td>{{ $data->id_acara }}</td>
                                             <td>{{ $data->nama_event }}</td>
                                             <td>{{ $data->start_date }}</td>
                                             <td>{{ $data->end_date }}</td>
