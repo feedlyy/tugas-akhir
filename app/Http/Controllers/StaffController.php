@@ -105,7 +105,7 @@ class StaffController extends Controller
             'hp' => ['required', 'numeric', 'digits_between:10,13']
         ]);
 
-        $staff = Staff::find($id);
+        $staff = Staff::query()->find($id);
         $staff->nama_staff = $request->nama_staff;
         $staff->email = $request->email_staff;
         $staff->alamat = $request->alamat;

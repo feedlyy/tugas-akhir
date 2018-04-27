@@ -213,16 +213,6 @@ class AcaraController extends Controller
         } else { /*jika tidak ada error maka proses store akan dilanjutkan*/
 
 
-
-        /*fungsi store google calendar*/
-            /*$event = Event::create([
-                'name' => $request->nama_acara,
-                'description' => 'A chance to hear more about Google\'s developer products.',
-                'startDateTime' => $start,
-                'endDateTime' => $end,
-                'location' => $request->nama_ruang,
-            ]);*/
-
             session_start();
             if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
                 $this->client->setAccessToken($_SESSION['access_token']);
@@ -243,6 +233,8 @@ class AcaraController extends Controller
                         ),
                     ),
                 ]);
+
+
                 foreach ($arrayTamu as $emailnya)
                 {
                     $attendee = new Google_Service_Calendar_EventAttendee();
@@ -255,6 +247,8 @@ class AcaraController extends Controller
                 );
 
                 $results = $service->events->insert($calendarId, $event, $optParams);
+            } else {
+                return redirect()->route('oauthCallback');
             }
         /*ini store ke db*/
         $acara = new Acara;
@@ -369,7 +363,7 @@ class AcaraController extends Controller
         //
         $gedung = Gedung::all();
         $ruangan = Ruangan::all();
-        $acara = Acara::find($id);
+        $acara = Acara::query()->find($id);
 
         $tampungFakultas = ['vokasi' => 'not'];
 
@@ -588,7 +582,7 @@ class AcaraController extends Controller
         ///
         /// end awas
 
-            $acara = Acara::find($id);
+            $acara = Acara::query()->find($id);
             $acara->nama_event = $request->nama_acara;
             $acara->start_date = $start;
             $acara->end_date = $end;
@@ -624,14 +618,6 @@ class AcaraController extends Controller
                 }
             }
 
-
-
-            /*kalau update google pake method ini ga bisa, jadi harus pake object/eloquent*/
-            /*$event->update([
-                'name' => $request->nama_acara,
-                'startDateTime' => Carbon::parse($start, 'Asia/Jakarta'),
-                'endDateTime' => Carbon::parse($end, 'Asia/Jakarta'),
-            ]);*/
         session_start();
         if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
             $this->client->setAccessToken($_SESSION['access_token']);
@@ -667,6 +653,8 @@ class AcaraController extends Controller
                 'sendNotifications' => true,
             );
             $updatedEvent = $service->events->update('primary', $event->getId(), $event, $optParams);
+        } else {
+            return redirect()->route('oauthCallback');
         }
 
             return redirect('admin/acara')->with(session()->flash('update', ''));

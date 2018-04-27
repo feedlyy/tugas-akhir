@@ -63,7 +63,7 @@ class ImportExcelController extends Controller
                     }
                 })->get();
             }
-        return redirect('admin/staff')->with(session()->flash('import', ''));
+        return redirect('admin/staff');
     }
 
     public function export()

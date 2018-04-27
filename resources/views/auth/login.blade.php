@@ -48,7 +48,7 @@
 
 
                                 <a data-toggle="modal" data-target="#modal-default" class="fa fa-plus btn btn-danger">
-                                    Lupa Password
+                                    Lupa Password?
                                 </a>
                             </div>
                         </div>
