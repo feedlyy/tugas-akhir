@@ -88,21 +88,21 @@ class DepartemenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-        $validasi = $request->validate([
-           'id_departemen' => ['required', new Lowercase],
-           'nama_departemen' => ['required', 'unique:departemens,nama_departemen']
-        ]);
+        public function update(Request $request, $id)
+        {
+            //
+            $validasi = $request->validate([
+               'id_departemen' => ['required', new Lowercase],
+               'nama_departemen' => ['required', 'unique:departemens,nama_departemen']
+            ]);
 
-        $departemen = Departemen::query()->find($id);
-        $departemen->id_departemen = $request->id_departemen;
-        $departemen->nama_departemen = $request->nama_departemen;
-        $departemen->save();
+            $departemen = Departemen::query()->find($id);
+            $departemen->id_departemen = $request->id_departemen;
+            $departemen->nama_departemen = $request->nama_departemen;
+            $departemen->save();
 
-        return redirect('admin/departemen')->with(session()->flash('update', ''));
-    }
+            return redirect('admin/departemen')->with(session()->flash('update', ''));
+        }
 
     /**
      * Remove the specified resource from storage.

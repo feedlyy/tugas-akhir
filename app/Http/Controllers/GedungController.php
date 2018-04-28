@@ -74,8 +74,6 @@ class GedungController extends Controller
         $request->session()->flash('status', 'Data Berhasil Di Input');
 
         return redirect('admin/gedung');
-
-
     }
 
     /**

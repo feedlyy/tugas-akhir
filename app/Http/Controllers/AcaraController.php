@@ -75,7 +75,7 @@ class AcaraController extends Controller
         } else {
             $this->client->authenticate($_GET['code']);
             $_SESSION['access_token'] = $this->client->getAccessToken();
-            return redirect('/admin');
+            return redirect('admin');
         }
     }
 
@@ -214,7 +214,7 @@ class AcaraController extends Controller
 
 
             session_start();
-            if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+            if (isset($_SESSION['access_token']) && $_SESSION['access_token'] && $_SESSION['access_token']['created'] + $_SESSION['access_token']['expires_in'] > Carbon::now()->timestamp) {
                 $this->client->setAccessToken($_SESSION['access_token']);
                 $service = new Google_Service_Calendar($this->client);
 
@@ -619,7 +619,7 @@ class AcaraController extends Controller
             }
 
         session_start();
-        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+        if (isset($_SESSION['access_token']) && $_SESSION['access_token'] && $_SESSION['access_token']['created'] + $_SESSION['access_token']['expires_in'] > Carbon::now()->timestamp) {
             $this->client->setAccessToken($_SESSION['access_token']);
             $service = new Google_Service_Calendar($this->client);
 
