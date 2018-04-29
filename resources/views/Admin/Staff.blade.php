@@ -118,12 +118,12 @@
                                 <td>
                                     {!! Form::open(['route' => ['staff.destroy', $data->id_staff ], 'method' => 'delete', 'class' => 'hapus']) !!}
                                     <a href="{{ route('staff.edit', $data->id_staff ) }}">
-                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                        {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                     </a>
                                     <a href="{{ route('staff.show', $data->id_staff) }}">
-                                        {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                        {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
                                     </a>
-                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                    {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
                                     {!! Form::close() !!}
                                 </td>
                             </tr>

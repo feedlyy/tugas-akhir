@@ -21,10 +21,24 @@
                     <dd class="show">{{ $acara->id_gedung }}</dd>
                     <dt>Ruangan</dt>
                     <dd class="show">{{ $acara->nama_ruangan }}</dd>
-                    <dt>Tamu Undangan</dt>
-                    <dd class="show">{{ implode(', ', $tampungEmail) }}</dd>
+                    @if($tampungEmail2 != null)
+                        <dt>Staf Fakultas</dt>
+                        <dd class="show">{{ implode(', ', $tampungEmail2) }}</dd>
+                    @endif
+                    @if($tampungEmail3 != null)
+                        <dt>Staf Departemen</dt>
+                        <dd class="show">{{ implode(', ', $tampungEmail3) }}</dd>
+                    @endif
+                    @if($tampungEmail4 != null)
+                        <dt>Staf Prodi</dt>
+                        <dd class="show">{{ implode(', ', $tampungEmail4) }}</dd>
+                    @endif
+                    @if($tampungEmail1 != null)
+                        <dt>Tamu Undangan</dt>
+                        <dd class="show">{{ implode(', ', $tampungEmail1) }}</dd>
+                    @endif
                     <dt>Penanggung Jawab</dt>
-                    <dd class="show">{{ $acara->penanggung_jawab }}</dd>
+                    <dd class="show">Admin {{ $acara->penanggung_jawab }}</dd>
                 </dl>
             </div>
         <!-- /.box-body -->

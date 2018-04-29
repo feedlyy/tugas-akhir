@@ -33,28 +33,29 @@
             <input type="hidden" name="_method" value="PATCH">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Nama</label>
                     <input type="text" name="nama_staff" class="form-control" id="" placeholder="" value="{{ $staff->nama_staff }}">
                 </div>
-            </div>
-            <div class="box-body">
-                <div class="form-group">
+
+
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Email</label>
                     <input type="email" name="email_staff" class="form-control" id="" placeholder="" value="{{ $staff->email }}">
                 </div>
-            </div>
-            <div class="box-body">
-                <div class="form-group">
+
+
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Alamat</label>
                     <input type="text" name="alamat" class="form-control" id="" placeholder="" value="{{ $staff->alamat }}">
                 </div>
-            </div>
-            <div class="box-body">
-                <div class="form-group">
+
+
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Nomor Hp</label>
                     <input type="text" name="hp" class="form-control" id="" placeholder="" value="{{ $staff->no_hp }}">
                 </div>
+
             </div>
             <!-- /.box-body -->
             <div class="box-footer">

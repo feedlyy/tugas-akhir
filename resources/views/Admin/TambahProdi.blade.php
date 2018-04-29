@@ -36,15 +36,15 @@
                 @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                 \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
                 \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
-                    <div class="form-group">
+                    <div class="form-group empatlima">
                         <label for="exampleInputEmail1">ID prodi</label>
                         <input type="text" name="id_prodi" class="form-control" id="" placeholder="" value="{{ old('id_prodi') }}" autofocus required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group empatlima">
                         <label for="exampleInputEmail1">Nama Prodi</label>
                         <input type="text" name="nama_prodi" class="form-control" id="" placeholder="" value="{{ old('nama_prodi') }}" autofocus required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group empatlima">
                         <label>ID Departemen</label>
                         <select class="form-control" style="width: 100%;" name="selectdepartemen">
                             <option disabled selected="selected">Pilih Departemen</option>
@@ -55,11 +55,11 @@
                     </div>
                     {{--kalau yang login departemen--}}
                 @else
-                    <div class="form-group">
+                    <div class="form-group empatlima">
                         <label for="exampleInputEmail1">ID prodi</label>
                         <input type="text" name="id_prodi" class="form-control" id="" placeholder="" value="{{ old('id_prodi') }}" autofocus required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group empatlima">
                         <label for="exampleInputEmail1">Nama Prodi</label>
                         <input type="text" name="nama_prodi" class="form-control" id="" placeholder="" value="{{ old('nama_prodi') }}" autofocus required>
                     </div>

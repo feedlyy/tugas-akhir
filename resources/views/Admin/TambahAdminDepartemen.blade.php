@@ -32,16 +32,16 @@
         <form role="form" method="post" action="{{ route('addDepartemen') }}">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Username</label>
                     <input type="text" name="username" class="form-control" id="" placeholder="" value="{{ old('username') }}">
                 </div>
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Password</label>
                     <input type="password" name="password" class="form-control" id="" placeholder="">
                 </div>
 
-                    <div class="form-group">
+                    <div class="form-group empatlima">
                         <label>ID Departemen</label>
                         <select id="departemen" class="form-control select2" style="width: 100%;" name="selectdepartemen">
                             <option disabled selected="selected">Pilih Status</option>

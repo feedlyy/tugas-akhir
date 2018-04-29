@@ -32,13 +32,13 @@
         <form role="form" method="post" action="{{ route('gedung.store') }}">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">ID Gedung</label>
                     <input type="text" name="id_gedung" class="form-control" id="" placeholder="" value="{{ old('id_gedung') }}" autofocus required>
                 </div>
             </div>
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Nama Gedung</label>
                     <input type="text" name="gedung" class="form-control" id="" placeholder="" value="{{ old('gedung') }}" autofocus required>
                 </div>

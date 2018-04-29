@@ -95,16 +95,16 @@
                                     {{--jika ada admin fakultas maka tidak dapat dihapus--}}
                                     @if($data->id_fakultas != null && $data->id_departemen == null && $data->id_prodi == null)
                                     <a href="{{ route('admin.edit', $data->id_admin) }}">
-                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                        {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                     </a>
                                     @else
                                         {{--selain itu jika ketemu data lain maka dia bisa edit atau
                                         hapus--}}
                                         {!! Form::open(['route' => ['admin.destroy', $data->id_admin], 'method' => 'delete', 'class' => 'hapus']) !!}
                                         <a href="{{ route('admin.edit', $data->id_admin) }}">
-                                            {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                            {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                         </a>
-                                        {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
+                                        {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
                                         {!! Form::close() !!}
                                         @endif
                                 </td>
@@ -122,14 +122,14 @@
                                 departemen hanya dapat edit/hapus prodinya saja / edit dirinya sendiri--}}
                                 @if($data->id_fakultas != null && $data->id_departemen != null && $data->id_prodi == null)
                                 <a href="{{ route('admin.edit', $data->id_admin) }}">
-                                    {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                    {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                 </a>
                                     @else
                                     {!! Form::open(['route' => ['admin.destroy', $data->id_admin], 'method' => 'delete', 'class' => 'hapus']) !!}
                                     <a href="{{ route('admin.edit', $data->id_admin) }}">
-                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                        {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                     </a>
-                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger hapus']) !!}
+                                    {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
                                     {!! Form::close() !!}
                                 @endif
                             </td>

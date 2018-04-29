@@ -92,41 +92,39 @@
         <form role="form" method="post" action="{{ route('acara.store') }}">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Nama Acara</label>
                     <input type="text" name="nama_acara" class="form-control" id="" placeholder="" value="{{ old('nama_acara') }}">
                 </div>
 
             <!-- Date -->
-                <label>Datetime</label>
-                <div class="form-group">
+                    <div class="row">
                     <div class='col-md-5'>
-                        <div class="form-group">
+                        <label>Waktu Mulai</label>
                             <div class='input-group date' id='datetimepicker6'>
                                 <input type='text' class="form-control" name="start_date" value="{{ old('start_date') }}"/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
-                        </div>
+
                     </div>
+
+
                     <div class='col-md-5'>
-                        <div class="form-group">
+                        <label>Waktu Berakhir</label>
                             <div class='input-group date' id='datetimepicker7'>
                                 <input type='text' class="form-control" name="end_date" value="{{ old('end_date') }}"/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.form group -->
 
-                <br>
+                    </div>
+                    </div>
                 <br>
                 {{--id gedung--}}
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label>Gedung</label>
                     <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung">
                         <option disabled selected="selected">Pilih Gedung</option>
@@ -137,7 +135,7 @@
                 </div>
 
                 {{--nama ruangan--}}
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label>Ruangan</label>
                     <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
@@ -237,7 +235,7 @@
                 </div>
 
                 {{--tamu undangan--}}
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Tamu Undangan<h6>Jika lebih dari satu, pisahkan dengan enter atau koma</h6></label>
                     <select class="form-control select2" multiple="multiple" name="tamu_undangan[]">
                     </select>

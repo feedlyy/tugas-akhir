@@ -69,10 +69,10 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th>Id</th>
                             <th>Nama Acara</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th>Waktu Mulai</th>
+                            <th>Waktu Berakhir</th>
                             <th>Tempat</th>
                             <th>Action</th>
                         </tr>
@@ -89,12 +89,12 @@
                                     @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                         {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                         <a href="{{ route('acara.edit', $data->id_acara) }}">
-                                            {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                            {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                         </a>
                                         <a href="{{ route('acara.show', $data->id_acara) }}">
-                                            {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                            {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
                                         </a>
-                                        {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                        {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
                                         {!! Form::close() !!}
                                     @else
                                         <a href="{{ route('acara.show', $data->id_acara) }}">
@@ -116,16 +116,16 @@
                                         @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                             {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                             <a href="{{ route('acara.edit', $data->id_acara) }}">
-                                                {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                                {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                             </a>
                                             <a href="{{ route('acara.show', $data->id_acara) }}">
-                                                {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                                {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
                                             </a>
-                                            {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                            {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
                                             {!! Form::close() !!}
                                         @else
                                             <a href="{{ route('acara.show', $data->id_acara) }}">
-                                                {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                                {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
                                             </a>
                                         @endif
                                     </td>
@@ -143,16 +143,16 @@
                                                 @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                                     {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                                     <a href="{{ route('acara.edit', $data->id_acara) }}">
-                                                        {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                                        {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                                     </a>
                                                     <a href="{{ route('acara.show', $data->id_acara) }}">
-                                                        {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                                        {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
                                                     </a>
-                                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                                    {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
                                                     {!! Form::close() !!}
                                                 @else
                                                     <a href="{{ route('acara.show', $data->id_acara) }}">
-                                                        {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                                        {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
                                                     </a>
                                                 @endif
                                             </td>
@@ -162,8 +162,6 @@
                     </table>
             </div>
         </div>
-    </div>
-    <div>
     </div>
 
     <script>

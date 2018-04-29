@@ -333,22 +333,67 @@ class AcaraController extends Controller
 
         $email = Tamu::query()
             ->where('id_acara', $id)
+            ->where('id_fakultas', null)
+            ->where('id_departemen', null)
+            ->where('id_fakultas', null)
             ->select('email')->get();
 
-        $tampungEmail = [];
+        $emailfakultas = Tamu::query()
+            ->select('email')
+            ->where('id_acara', $id)
+            ->where('id_fakultas', '!=',null)
+            ->where('id_departemen', null)
+            ->where('id_prodi', null)
+            ->get();
+
+        $emaildepartemen = Tamu::query()
+            ->select('email')
+            ->where('id_acara', $id)
+            ->where('id_fakultas', '!=', null)
+            ->where('id_departemen', '!=', null)
+            ->where('id_prodi', null)
+            ->get();
+
+        $emailprodi = Tamu::query()
+            ->select('email')
+            ->where('id_acara', $id)
+            ->where('id_fakultas', '!=', null)
+            ->where('id_departemen', '!=', null)
+            ->where('id_fakultas', '!=', null)
+            ->get();
+
+        /*tampung email dari luar*/
+        $tampungEmail1 = [];
         foreach ($email as $hasil){
-            array_push($tampungEmail, $hasil->email);
+            array_push($tampungEmail1, $hasil->email);
         }
-        /*return json_encode(implode(',&nbsp', $tampungEmail));*/
 
+        /*tampung email dari fakultas*/
+        $tampungEmail2 = [];
+        foreach ($emailfakultas as $hasil2){
+            array_push($tampungEmail2, $hasil2->email);
+        }
 
+        /*tampung email dari departemen*/
+        $tampungEmail3 = [];
+        foreach ($emaildepartemen as $hasil3){
+            array_push($tampungEmail3, $hasil3->email);
+        }
 
+        /*tampung email dari prodi*/
+        $tampungEmail4 = [];
+        foreach ($emailprodi as $hasil4){
+            array_push($tampungEmail4, $hasil4->email);
+        }
 
 
         return view('Admin.ShowAcara')
             ->with('query', $query)
             ->with('acara', $acara)
-            ->with('tampungEmail', $tampungEmail)
+            ->with('tampungEmail1', $tampungEmail1)
+            ->with('tampungEmail2', $tampungEmail2)
+            ->with('tampungEmail3', $tampungEmail3)
+            ->with('tampungEmail4', $tampungEmail4)
             ->with('tampung', $tampung);
     }
 

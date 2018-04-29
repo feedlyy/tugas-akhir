@@ -44,11 +44,11 @@
         <form role="form" method="post" action="{{ route('admin.store') }}">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Username</label>
                     <input type="text" name="username" class="form-control" id="" placeholder="" value="{{ old('username') }}">
                 </div>
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Password</label>
                     <input type="password" name="password" class="form-control" id="" placeholder="">
                 </div>
@@ -57,7 +57,7 @@
                 @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                     \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
                     \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label>ID Departemen</label>
                     <select id="departemen" class="form-control select2" style="width: 100%;" name="selectdepartemen">
                         <option disabled selected="selected">Pilih Status</option>
@@ -66,7 +66,7 @@
                         @endforeach
                     </select>
                 </div>
-                    <div class="form-group">
+                    <div class="form-group empatlima">
                         <label>Pilih Prodi</label>
                         <select id="prodi" class="form-control select2" style="width: 100%;" name="selectprodi">
                             <option selected="selected">Pilih Prodi</option>
@@ -77,7 +77,7 @@
                 @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null &&
                     \Illuminate\Support\Facades\Auth::user()->id_departemen != null &&
                     \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
-                    <div class="form-group">
+                    <div class="form-group empatlima">
                         <label>Pilih Prodi</label>
                         <select class="form-control select2" style="width: 100%;" name="selectprodi2">
                             <option disabled selected="selected">Pilih Prodi</option>

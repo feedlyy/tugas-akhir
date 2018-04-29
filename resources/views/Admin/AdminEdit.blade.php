@@ -34,13 +34,13 @@
             {{ csrf_field() }}
             <h4>Ganti Password</h4>
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Password Baru</label>
                     <input type="password" name="password_baru" class="form-control" id="" placeholder="" value="">
                 </div>
             </div>
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Konfirmasi Password Baru</label>
                     <input type="password" name="konfirm_password" class="form-control" id="" placeholder="" value="">
                 </div>

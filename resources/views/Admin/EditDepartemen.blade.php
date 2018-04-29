@@ -33,13 +33,13 @@
             <input type="hidden" name="_method" value="PATCH">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Id Departemen</label>
                     <input type="text" name="id_departemen" class="form-control" id="" placeholder="" value="{{ $departemen->id_departemen }}">
                 </div>
             </div>
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Nama Departemen</label>
                     <input type="text" name="nama_departemen" class="form-control" id="" placeholder="" value="{{ $departemen->nama_departemen }}">
                 </div>

@@ -33,13 +33,13 @@
             <input type="hidden" name="_method" value="PATCH">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Id Prodi</label>
                     <input type="text" name="id_prodi" class="form-control" id="" placeholder="" value="{{ $prodi->id_prodi }}">
                 </div>
 
 
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Id Departemen</label>
                     <select class="form-control" style="width: 100%;" name="id_departemen">
                         @foreach($tampung as $data)
@@ -53,7 +53,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">Nama Prodi</label>
                     <input type="text" name="nama_prodi" class="form-control" id="" placeholder="" value="{{ $prodi->nama_prodi }}">
                 </div>

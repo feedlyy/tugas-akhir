@@ -44,11 +44,11 @@
             {{ csrf_field() }}
 
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group empatlima">
                     <label for="exampleInputEmail1">ID Ruangan</label>
                     <input v-model="pesan" type="text" name="id_ruangan" class="form-control" id="" placeholder="" value="{{ old('id_ruangan') }}" autofocus required>
                 </div>
-                <div class="form-group">
+                <div class="form-group empatlima">
                         <label>ID Gedung</label>
                             <select class="form-control select2" style="width: 100%;" name="selectgedung">
                                 <option disabled selected="selected">Pilih Gedung</option>

@@ -83,23 +83,12 @@
                             <td>{{ $data->id_ruangan }}</td>
                             <td>{{ $data->id_gedung }} - {{ \App\Gedung::find($data->id_gedung)->nama_gedung }}</td>
                             <td>{{ $data->nama_ruangan }}</td>
-                            {{--<td>{{ $data->id_gedung }} - {{ $data->id_ruangan }}</td>--}}
-                            {{--<form method="post" action="{{ route('ruangan.destroy', $data->id_ruangan) }}">
-                                <input type="hidden" name="_method" value="DELETE">
-                                {{ csrf_field() }}
-                                <td>
-                                    <a href="{{ route('ruangan.edit', $data->id_ruangan) }}">
-                                       <input type="button" class="btn btn-warning" value="Edit">
-                                    </a>
-                                    <input type="submit" value="Hapus" class="btn btn-danger">
-                                </td>
-                            </form>--}}
                             <td>
                                 {!! Form::open(['route' => ['ruangan.destroy', $data->id], 'method' => 'delete', 'class' => 'hapus']) !!}
                                 <a href="{{ route('ruangan.edit', $data->id) }}">
-                                    {!! Form::button('Edit', ['class' => 'btn btn-warning']) !!}
+                                    {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
                                 </a>
-                                {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                                {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>
