@@ -77,11 +77,12 @@
                 <table id="example1" class="table table-bordered table-striped responsive">
                     <thead>
                     <tr>
-                        <th>ID Admin</th>
+                        <th>No</th>
                         <th>Nama Admin</th>
                         <th>Action</th>
                     </tr>
                     </thead>
+                    <?php $i = 1;?>
                     @foreach($admin as $data)
                         {{--view table di sini di bikin custom, jika yang login fakultas
                         maka tampilkan seluruh data--}}
@@ -89,7 +90,7 @@
                         \Illuminate\Support\Facades\Auth::user()->id_departemen == null &&
                         \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             <tr>
-                                <td>{{ $data->id_admin }}</td>
+                                <td><?php echo $i;?></td>
                                 <td>{{ $data->username }}</td>
                                 <td>
                                     {{--jika ada admin fakultas maka tidak dapat dihapus--}}
@@ -113,7 +114,7 @@
                             {{--ketika admin departemen yang masuk--}}
                         @elseif($data->id_departemen == \Illuminate\Support\Facades\Auth::user()->id_departemen)
                         <tr>
-                            <td>{{ $data->id_admin }}</td>
+                            <td><?php echo $i;?></td>
                             <td>{{ $data->username }}</td>
                             <td>
                                 {{--otomatis kan yang login departemennya
@@ -135,6 +136,7 @@
                             </td>
                         </tr>
                         @endif
+                        <?php $i++;?>
                     @endforeach
                 </table>
             </div>

@@ -129,9 +129,14 @@
                     <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung">
                         <option disabled selected="selected">Pilih Gedung</option>
                         @foreach($gedung as $data)
-                            <option>{{ $data->id_gedung }}</option>
+                            <option value="{{ $data->id_gedung }}">{{ $data->nama_gedung }}</option>
+                            {{--<option>{{ $data->id_gedung }}</option>--}}
                         @endforeach
                     </select>
+                </div>
+
+                <div class="form-group empatlima">
+                    <input type="hidden" value="" name="getgedung" id="getgedung">
                 </div>
 
                 {{--nama ruangan--}}
@@ -269,6 +274,9 @@
                 });
             });
 
+            $('#id_gedung').change(function () {
+                $('#getgedung').val($('#id_gedung option:selected').text())
+            });
 
             $(".select2").select2({
                 tags: true,

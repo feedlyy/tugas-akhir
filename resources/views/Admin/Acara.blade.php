@@ -69,7 +69,7 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>No</th>
                             <th>Nama Acara</th>
                             <th>Waktu Mulai</th>
                             <th>Waktu Berakhir</th>
@@ -77,10 +77,11 @@
                             <th>Action</th>
                         </tr>
                         </thead>
+                        <?php $i = 1?>
                         @if(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen == null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($acara as $data)
                             <tr>
-                                <td>{{ $data->id_acara }}</td>
+                                <td><?php echo $i;?></td>
                                 <td>{{ $data->nama_event }}</td>
                                 <td>{{ $data->start_date }}</td>
                                 <td>{{ $data->end_date }}</td>
@@ -107,7 +108,7 @@
                         @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($acara as $data)
                                 <tr>
-                                    <td>{{ $data->id_acara }}</td>
+                                    <td><?php echo $i;?></td>
                                     <td>{{ $data->nama_event }}</td>
                                     <td>{{ $data->start_date }}</td>
                                     <td>{{ $data->end_date }}</td>
@@ -134,7 +135,7 @@
                                 @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi != null)
                                     @foreach($acara as $data)
                                         <tr>
-                                            <td>{{ $data->id_acara }}</td>
+                                            <td><?php echo $i;?></td>
                                             <td>{{ $data->nama_event }}</td>
                                             <td>{{ $data->start_date }}</td>
                                             <td>{{ $data->end_date }}</td>
@@ -157,6 +158,7 @@
                                                 @endif
                                             </td>
                                         </tr>
+                                        <?php $i++;?>
                                     @endforeach
                         @endif
                     </table>

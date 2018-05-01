@@ -70,16 +70,17 @@
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>ID Ruangan</th>
                         <th>ID Gedung</th>
                         <th>Nama Ruangan</th>
                         <th>Action</th>
                     </tr>
                     </thead>
+                    <?php $i = 1;?>
                     @foreach($ruangan as $data)
                         <tr>
-                            <td>{{ $data->id }}</td>
+                            <td><?php echo $i;?></td>
                             <td>{{ $data->id_ruangan }}</td>
                             <td>{{ $data->id_gedung }} - {{ \App\Gedung::find($data->id_gedung)->nama_gedung }}</td>
                             <td>{{ $data->nama_ruangan }}</td>
@@ -92,6 +93,7 @@
                                 {!! Form::close() !!}
                             </td>
                         </tr>
+                        <?php $i++?>
                     @endforeach
                 </table>
             </div>

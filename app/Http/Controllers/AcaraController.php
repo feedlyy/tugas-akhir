@@ -221,6 +221,7 @@ class AcaraController extends Controller
                 $calendarId = 'primary';
                 $event = new Google_Service_Calendar_Event([
                     'summary' => $request->nama_acara,
+                    'location' => $request->getgedung.', ruang '.$request->nama_ruang,
                     'start' => ['dateTime' => Carbon::parse(($request->start_date), 'Asia/Jakarta')->toRfc3339String()],
                     'end' => ['dateTime' => Carbon::parse(($request->end_date), 'Asia/Jakarta')->toRfc3339String()],
                     'reminders' => array(
@@ -672,7 +673,7 @@ class AcaraController extends Controller
             $event = $service->events->get('primary', $acara->event_id_google_calendar);
 
             $event->setSummary($request->nama_acara);
-            $event->setLocation($request->nama_ruang);
+            $event->setLocation($request->getgedung.', ruang '.$request->nama_ruang);
 
             //start time
             $mulai = new Google_Service_Calendar_EventDateTime();

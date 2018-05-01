@@ -106,9 +106,10 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php $i = 1;?>
                         @foreach($staff as $data)
                             <tr>
-                                <td>{{ $data->id_staff }}</td>
+                                <td><?php echo $i;?></td>
                                 {{--<td>{{ $data->id_status }}</td>--}}
                                 <td>{{ $data->nip }}</td>
                                 <td>{{ $data->nama_staff }}</td>
@@ -127,6 +128,7 @@
                                     {!! Form::close() !!}
                                 </td>
                             </tr>
+                            <?php $i++;?>
                         @endforeach
                     </tbody>
                 </table>

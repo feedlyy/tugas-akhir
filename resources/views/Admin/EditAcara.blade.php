@@ -114,13 +114,17 @@
                 {{--id gedung--}}
                 <div class="form-group empatlima">
                     <label>ID Gedung</label>
-                    <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung" onchange="ifGedung()">
+                    <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung">
                         <option disabled selected="selected">Pilih Gedung</option>
                         @foreach($gedung as $data)
-                            <option <?php if($data->id_gedung == $acara->id_gedung){echo "selected";} ?>
-                            >{{ $data->id_gedung }}</option>
+                            <option value="{{ $data->id_gedung }}" <?php if($data->id_gedung == $acara->id_gedung){echo "selected";} ?>
+                            >{{ $data->nama_gedung }}</option>
                         @endforeach
                     </select>
+                </div>
+
+                <div class="form-group empatlima">
+                    <input type="hidden" value="" name="getgedung" id="getgedung">
                 </div>
 
                 <div class="form-group">
@@ -268,6 +272,9 @@
             });
         });
 
+        $('#id_gedung').change(function () {
+            $('#getgedung').val($('#id_gedung option:selected').text())
+        });
 
         $(".select2").select2({
             tags: true,
