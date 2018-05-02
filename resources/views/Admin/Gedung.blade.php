@@ -71,15 +71,18 @@
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>No</th>
                         <th>ID Gedung</th>
                         <th>Nama Gedung</th>
                         <th>Action</th>
                     </tr>
                     </thead>
+                    <?php $i = 1;?>
                     @foreach($gedung as $data)
                         <tr>
                             {{--ini cara kalau mau liat detail per id nya--}}
                             {{--<td><a href="{{ route('gedung.show', $data->id_gedung) }}">{{ $data->id_gedung }}</td></a>--}}
+                            <td><?php echo $i?></td>
                             <td>{{ $data->id_gedung }}</td>
                             <td>{{ $data->nama_gedung }}</td>
                             <td>
@@ -90,21 +93,8 @@
                                 {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
                                 {!! Form::close() !!}
                             </td>
-                            {{--<form method="post" action="{{ route('gedung.destroy', $data->id_gedung ) }}">
-                                --}}{{--disini kenapa route nya ke hapus/destroy? karna
-                                tombol hapus yang format nya input dan type nya submit buat langsung memproses delete nya
-                                kalau pake href nanti cuma nge-link aja ga bakal nge hapus. html juga ga bisa definisiin method yang dipake
-                                dan bisa di liat di php artisan route:list
-                                disitu tertulis kalau mau hapus pake method delete
-                                makanya disini dikasih input type hidden dengan nama method dan value DELETE
-                                atau bisa pake method field--}}{{--
-                                --}}{{--<input type="hidden" name="_method" value="DELETE">--}}{{--
-                                {{ method_field('DELETE') }}
-                                {{ csrf_field() }}
-                                <input class="btn btn-danger" type="submit" value="Hapus"></a>
-                            </form>--}}
-
                         </tr>
+                        <?php $i++?>
                     @endforeach
                 </table>
             </div>

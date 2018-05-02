@@ -333,11 +333,12 @@ class AcaraController extends Controller
         }
 
         $email = Tamu::query()
+            ->select('email')
             ->where('id_acara', $id)
             ->where('id_fakultas', null)
             ->where('id_departemen', null)
             ->where('id_fakultas', null)
-            ->select('email')->get();
+            ->get();
 
         $emailfakultas = Tamu::query()
             ->select('email')
@@ -360,7 +361,7 @@ class AcaraController extends Controller
             ->where('id_acara', $id)
             ->where('id_fakultas', '!=', null)
             ->where('id_departemen', '!=', null)
-            ->where('id_fakultas', '!=', null)
+            ->where('id_prodi', '!=', null)
             ->get();
 
         /*tampung email dari luar*/
