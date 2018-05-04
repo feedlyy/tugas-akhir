@@ -312,7 +312,7 @@ class AcaraController extends Controller
     public function show($id)
     {
         //
-        $acara = Acara::find($id);
+        $acara = Acara::query()->find($id);
         $query = Acara::query()
             ->join('tamus', 'acaras.id_acara', '=', 'tamus.id_acara')
             ->select('tamus.email')
@@ -370,6 +370,7 @@ class AcaraController extends Controller
             array_push($tampungEmail1, $hasil->email);
         }
 
+
         /*tampung email dari fakultas*/
         $tampungEmail2 = [];
         foreach ($emailfakultas as $hasil2){
@@ -412,12 +413,15 @@ class AcaraController extends Controller
         $ruangan = Ruangan::all();
         $acara = Acara::query()->find($id);
 
+        /*setting default untuk vokasi not selected*/
         $tampungFakultas = ['vokasi' => 'not'];
 
+        /*setting default untuk departemen not selected*/
         $tampungDepartemen = ['dbsmb' => 'not',
             'deb' => 'not', 'dtb' => 'not', 'dtm' => 'not', 'likes' => 'not', 'sipil' => 'not',
             'tedi' => 'not', 'thv' => 'not'];
 
+        /*setting default untuk prodi not selected*/
         $tampungProdi = ['agroindustri' => 'not', 'akutansi' => 'not', 'd4 alat berat' => 'not',
             'd4 kebidanan' => 'not', 'd4 sipil' => 'not', 'd4 tekjar' => 'not',
             'ekonomi terapan' => 'not', 'elektro' => 'not', 'elins' => 'not',

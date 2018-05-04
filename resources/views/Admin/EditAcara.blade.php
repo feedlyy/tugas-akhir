@@ -123,14 +123,14 @@
                     </select>
                 </div>
 
-                <div class="form-group empatlima">
-                    <input type="hidden" value="" name="getgedung" id="getgedung">
+                <div class="form-group" style="width: 150% !important;">
+                    <input type="hidden" value="{{ $gedung[0]['nama_gedung'] }}" name="getgedung" id="getgedung">
                 </div>
 
-                <div class="form-group">
+                {{--<div class="form-group">
                     <label>Ruangan Sebelumnya</label>
                     <input value="{{ $acara->nama_ruangan }}" disabled>
-                </div>
+                </div>--}}
                 {{--nama ruangan--}}
                 <div class="form-group empatlima">
                     <label>Nama Ruangan</label>
