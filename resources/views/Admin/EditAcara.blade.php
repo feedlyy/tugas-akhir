@@ -113,7 +113,7 @@
                 <br>
                 {{--id gedung--}}
                 <div class="form-group empatlima">
-                    <label>ID Gedung</label>
+                    <label>Gedung</label>
                     <select class="form-control" id="id_gedung" style="width: 100%;" name="id_gedung">
                         <option disabled selected="selected">Pilih Gedung</option>
                         @foreach($gedung as $data)
@@ -124,22 +124,19 @@
                 </div>
 
                 <div class="form-group" style="width: 150% !important;">
-                    <input type="hidden" value="{{ $gedung[0]['nama_gedung'] }}" name="getgedung" id="getgedung">
+                    <input type="hidden" value="{{ $cekGedung[0]['nama_gedung'] }}" name="getgedung" id="getgedung">
                 </div>
 
-                {{--<div class="form-group">
-                    <label>Ruangan Sebelumnya</label>
-                    <input value="{{ $acara->nama_ruangan }}" disabled>
-                </div>--}}
                 {{--nama ruangan--}}
                 <div class="form-group empatlima">
-                    <label>Nama Ruangan</label>
+                    <label>Ruangan</label>
                     <select class="form-control" id="ruang" style="width: 100%;" name="nama_ruang">
                         <option disabled selected="selected">Pilih Ruangan</option>
-                        @foreach($ruangan as $data)
-                            <option <?php if($data->nama_ruangan = $acara->nama_ruangan){echo "selected";} ?>
-                            ></option>
-                        @endforeach
+                        {{--@foreach($ruangan as $data)
+                            @if($data->nama_ruangan == $acara->nama_ruangan)
+                                <option value="{{ $data->nama_ruangan }}" selected>{{ $data->nama_ruangan }}</option>
+                            @endif
+                        @endforeach--}}
                     </select>
                 </div>
 
@@ -306,7 +303,6 @@
                     //alert(response); // show [object, Object]
 
                     var $select = $('#ruang');
-
                     $select.find('option').remove();
                     $.each(response,function(key, value)
                     {
@@ -328,12 +324,17 @@
 
 
                     var $select = $('#ruang');
-
                     $select.find('option').remove();
                     $.each(response,function(key, value)
                     {
-                        $select.append('<option ' + response[key].nama_ruangan + '>' + response[key].nama_ruangan + '</option>'); // return empty
-
+                        /*ini untuk pengecekan jika ruangan yang saat ini digunakan atau terselect
+                        maka ajax nya append value nya jadi selected
+                        else nya tidak*/
+                        if ("{{ $ruangan[0]['nama_ruangan'] = $acara->nama_ruangan }}"){
+                            $select.append('<option ' + response[key].nama_ruangan + ' selected>' + response[key].nama_ruangan + '</option>');
+                        } else {
+                            $select.append('<option ' + response[key].nama_ruangan + '>' + response[key].nama_ruangan + '</option>');
+                        }
                     });
                 }
             });

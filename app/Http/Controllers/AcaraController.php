@@ -410,7 +410,21 @@ class AcaraController extends Controller
     {
         //
         $gedung = Gedung::all();
+        /*$ruangan = Ruangan::query()
+            ->join('acaras', 'ruangans.nama_ruangan', '=', 'acaras.nama_ruangan')
+            ->select('ruangans.nama_ruangan')
+            ->get();*/
         $ruangan = Ruangan::all();
+
+        /*return json_encode($ruangan[0]['nama_ruangan']);*/
+
+        /*ini untuk bagian text hidden yang mendapatkan gedung yang saat ini terselect
+        agar ketika melakukan update tetapi tidak update gedung nya tidak error*/
+        $cekGedung = Gedung::query()
+            ->join('acaras', 'gedungs.id_gedung', '=', 'acaras.id_gedung')
+            ->select('gedungs.nama_gedung')
+            ->get();
+
         $acara = Acara::query()->find($id);
 
         /*setting default untuk vokasi not selected*/
@@ -504,6 +518,7 @@ class AcaraController extends Controller
             ->with('tamu', $tamu)
             ->with('gedung', $gedung)
             ->with('ruangan', $ruangan)
+            ->with('cekGedung', $cekGedung)
             ->with('acara', $acara);
 
     }
