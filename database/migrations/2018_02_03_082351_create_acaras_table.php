@@ -19,10 +19,9 @@ class CreateAcarasTable extends Migration
             $table->string('nama_event');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->string('id_gedung');
-            $table->string('nama_ruangan');
-            $table->string('penanggung_jawab');
-
+            $table->string('id_gedung', 30);
+            $table->string('nama_ruangan', 50);
+            $table->string('penanggung_jawab', 100);
 
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
             $table->foreign('nama_ruangan')->references('nama_ruangan')->on('ruangans')->onDelete('CASCADE');

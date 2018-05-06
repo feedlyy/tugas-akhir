@@ -15,11 +15,11 @@ class CreateStafsTable extends Migration
     {
         Schema::create('stafs', function (Blueprint $table) {
             $table->increments('id_staff');
-            $table->string('id_fakultas')->nullable();
-            $table->string('id_departemen')->nullable();
-            $table->string('id_prodi')->nullable();
-            $table->string('nip');
-            $table->string('nama_staff');
+            $table->string('id_fakultas', 30)->nullable();
+            $table->string('id_departemen', 30)->nullable();
+            $table->string('id_prodi', 30)->nullable();
+            $table->string('nip',30);
+            $table->string('nama_staff', 100);
             $table->string('email');
             $table->string('alamat');
             $table->char('no_hp', 20);

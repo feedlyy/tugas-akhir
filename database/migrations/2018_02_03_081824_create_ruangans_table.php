@@ -15,10 +15,10 @@ class CreateRuangansTable extends Migration
     {
         Schema::create('ruangans', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('id_ruangan');
-            $table->string('id_gedung');
-            $table->string('nama_ruangan')->index();
-            $table->string('created_by');
+            $table->string('id_ruangan', 30);
+            $table->string('id_gedung', 30);
+            $table->string('nama_ruangan', 50)->index();
+            $table->string('created_by', 100);
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
             $table->foreign('created_by')->references('username')->on('admins')->onDelete('CASCADE');
 

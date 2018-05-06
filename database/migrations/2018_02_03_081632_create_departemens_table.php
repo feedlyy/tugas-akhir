@@ -14,10 +14,10 @@ class CreateDepartemensTable extends Migration
     public function up()
     {
         Schema::create('departemens', function (Blueprint $table) {
-            $table->string('id_departemen');
+            $table->string('id_departemen', 30);
             $table->primary('id_departemen');
-            $table->string('nama_departemen');
-            $table->string('id_fakultas');
+            $table->string('nama_departemen', 100);
+            $table->string('id_fakultas', 30);
 
             $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas')->onDelete('CASCADE');
             $table->timestamps();

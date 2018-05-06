@@ -16,10 +16,10 @@ class CreateTamusTable extends Migration
         Schema::create('tamus', function (Blueprint $table) {
             $table->increments('id_tamu');
             $table->integer('id_acara')->unsigned();
-            $table->string('id_fakultas')->nullable();
-            $table->string('id_departemen')->nullable();
-            $table->string('id_prodi')->nullable();
-            $table->string('email');
+            $table->string('id_fakultas', 30)->nullable();
+            $table->string('id_departemen', 30)->nullable();
+            $table->string('id_prodi', 30)->nullable();
+            $table->string('email', 100);
 
             $table->foreign('id_acara')->references('id_acara')->on('acaras')->onDelete('CASCADE');
             $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas')->onDelete('CASCADE');
