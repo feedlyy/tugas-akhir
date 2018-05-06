@@ -18,7 +18,7 @@ class Ruangan extends Model
 
 
     protected $fillable = [
-        'id_ruangan', 'nama_ruangan', 'id_gedung',
+        'id_ruangan', 'nama_ruangan', 'id_gedung', 'created_by'
     ];
 
 

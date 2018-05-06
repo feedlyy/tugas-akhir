@@ -15,14 +15,17 @@ class GedungTableSeeder extends Seeder
         DB::table('gedungs')->insert([
            'id_gedung' => 'GP',
            'nama_gedung' => 'Gedung Perpustakaan',
+            'created_by' => 'vokasi'
         ]);
         DB::table('gedungs')->insert([
            'id_gedung' => 'SV',
            'nama_gedung' => 'Sekolah Vokasi',
+            'created_by' => 'vokasi'
         ]);
         DB::table('gedungs')->insert([
             'id_gedung' => 'HY',
             'nama_gedung' => 'Herman Yohanes',
+            'created_by' => 'vokasi'
         ]);
     }
 }

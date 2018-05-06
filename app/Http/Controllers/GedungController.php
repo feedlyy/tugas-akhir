@@ -70,6 +70,7 @@ class GedungController extends Controller
         $gedung = new Gedung;
         $gedung->id_gedung = $request->id_gedung;
         $gedung->nama_gedung = $request->gedung;
+        $gedung->created_by = Auth::user()->username;
         $gedung->save();
         $request->session()->flash('status', 'Data Berhasil Di Input');
 
@@ -127,7 +128,7 @@ class GedungController extends Controller
         $gedung = Gedung::find($id);
         $gedung->id_gedung = $request->id_gedung;
         $gedung->nama_gedung = $request->gedung;
-
+        $gedung->created_by = Auth::user()->username;
         $gedung->save();
         $request->session()->flash('update', 'Data Berhasil Di Update');
 

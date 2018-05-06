@@ -16,8 +16,9 @@ class CreateGedungsTable extends Migration
         Schema::create('gedungs', function (Blueprint $table) {
             $table->string('id_gedung');
             $table->primary('id_gedung');
-
             $table->string('nama_gedung');
+            $table->string('created_by');
+            $table->foreign('created_by')->references('username')->on('admins')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

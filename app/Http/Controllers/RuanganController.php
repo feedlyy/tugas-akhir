@@ -11,6 +11,7 @@ use App\Rules\Uppercase;
 /*use Illuminate\Contracts\Validation\Rule;*/
 
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
@@ -78,6 +79,7 @@ class RuanganController extends Controller
             $ruangan->id_ruangan = $request->id_ruangan;
             $ruangan->id_gedung = $request->selectgedung;
             $ruangan->nama_ruangan = $request->selectgedung.' - '.$request->id_ruangan;
+            $ruangan->created_by = Auth::user()->username;
             $ruangan->save();
 
             $request->session()->flash('status', 'Data Berhasil Di Input');
@@ -131,7 +133,8 @@ class RuanganController extends Controller
 
             $ruangan = Ruangan::find($id);
             $ruangan->id_ruangan = $request->id_ruangan;
-            $ruangan->nama_ruangan = Ruangan::find($id)->id_gedung.' - '.$request->id_ruangan;
+            $ruangan->nama_ruangan = Ruangan::query()->find($id)->id_gedung.' - '.$request->id_ruangan;
+            $ruangan->created_by = Auth::user()->username;
             $ruangan->save();
             $request->session()->flash('update', 'Data Berhasil Di Update');
 

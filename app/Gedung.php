@@ -24,7 +24,7 @@ class Gedung extends Model
      * @var array
      */
     protected $fillable = [
-        'id_gedung', 'nama_gedung',
+        'id_gedung', 'nama_gedung', 'created_by'
     ];
 
     /*ini adalah contoh function penggunaan Accessor

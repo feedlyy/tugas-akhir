@@ -18,8 +18,9 @@ class CreateRuangansTable extends Migration
             $table->string('id_ruangan');
             $table->string('id_gedung');
             $table->string('nama_ruangan')->index();
-
+            $table->string('created_by');
             $table->foreign('id_gedung')->references('id_gedung')->on('gedungs')->onDelete('CASCADE');
+            $table->foreign('created_by')->references('username')->on('admins')->onDelete('CASCADE');
 
             $table->timestamps();
         });
