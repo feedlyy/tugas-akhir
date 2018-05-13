@@ -746,11 +746,18 @@ class AcaraController extends Controller
         yang isinya adalah event_id tiap acara
         ketika mendapatkan id nya maka di google calendar pun bisa di hapus*/
         session_start();
-        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+        if (isset($_SESSION['access_token']) && $_SESSION['access_token'] && $_SESSION['access_token']['created'] + $_SESSION['access_token']['expires_in'] > Carbon::now()->timestamp) {
             $this->client->setAccessToken($_SESSION['access_token']);
             $service = new Google_Service_Calendar($this->client);
 
-            $service->events->delete('primary', $acara->event_id_google_calendar);
+            /*ini untuk setting send notifikasinya*/
+            $optParams = Array(
+                'sendNotifications' => true,
+            );
+
+            $service->events->delete('primary', $acara->event_id_google_calendar, $optParams);
+        } else {
+            return redirect()->route('oauthCallback');
         }
 
         return redirect('admin/acara')->with(session()->flash('hapus', ''));

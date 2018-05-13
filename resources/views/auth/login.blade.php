@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+    @if($errors->any())
+        @foreach ($errors->all() as $error)
+            {{--<li>{{ $error }}</li>--}}
+            <script>
+                var error = "{{ $error }}";
+                $().ready(function (e) {
+                    swal({
+                        title: "Warning!",
+                        text: error,
+                        icon: "warning",
+                        button: "OK",
+                    });
+                })
+            </script>
+        @endforeach
+    @endif
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
