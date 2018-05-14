@@ -28,7 +28,7 @@ class ImportExcelController extends Controller
                                 ->where('nama_staff', '=', $value->nama_staff)
                                 ->get();
 
-                                $cek2 = Prodi::query()
+                                /*$cek2 = Prodi::query()
                                     ->join('departemens', 'departemens.id_departemen', '=', 'prodis.id_departemen')
                                     ->join('fakultas', 'departemens.id_fakultas', '=', 'fakultas.id_fakultas')
                                     ->where('prodis.id_fakultas', $value->id_fakultas)
@@ -39,21 +39,30 @@ class ImportExcelController extends Controller
                                 $cek3 = Departemen::query()
                                     ->join('fakultas', 'departemens.id_fakultas', '=', 'fakultas.id_fakultas')
                                     ->where('fakultas.id_fakultas', $value->id_fakultas)
-                                    ->get();
+                                    ->get();*/
 
+                                $cek2 = Prodi::query()
+                                    ->where('id_prodi', '=', $value->id_prodi)
+                                    ->where('id_fakultas', '=', $value->id_fakultas)
+                                    ->where('id_departemen', '=', $value->id_departemen)
+                                    ->get();
+                                /*dd($cek2);*/
 
                                 $hitung = count($cek);
-                                if ($hitung == 0) {
-                                    $staff = new Staff;
-                                    $staff->id_fakultas = $value->id_fakultas;
-                                    $staff->id_departemen = $value->id_departemen;
-                                    $staff->id_prodi = $value->id_prodi;
-                                    $staff->nip = $value->nip;
-                                    $staff->nama_staff = $value->nama_staff;
-                                    $staff->email = $value->email;
-                                    $staff->alamat = $value->alamat;
-                                    $staff->no_hp = $value->no_hp;
-                                    $staff->save();
+                                if ($hitung == 0 && count($cek2) > 0 ) {
+                                    if ($value->id_fakultas != null){
+                                        $staff = new Staff;
+                                        $staff->id_fakultas = $value->id_fakultas;
+                                        $staff->id_departemen = $value->id_departemen;
+                                        $staff->id_prodi = $value->id_prodi;
+                                        $staff->nip = $value->nip;
+                                        $staff->nama_staff = $value->nama_staff;
+                                        $staff->email = $value->email;
+                                        $staff->alamat = $value->alamat;
+                                        $staff->no_hp = $value->no_hp;
+                                        $staff->save();
+                                    }
+
                                 }}
                             catch (\Exception $e)
                             {
