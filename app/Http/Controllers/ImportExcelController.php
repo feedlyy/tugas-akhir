@@ -49,7 +49,7 @@ class ImportExcelController extends Controller
                                 /*dd($cek2);*/
 
                                 $hitung = count($cek);
-                                if ($hitung == 0 && count($cek2) > 0 ) {
+                                if ($hitung == 0 && count($cek2) > 0) {
                                     if ($value->id_fakultas != null){
                                         $staff = new Staff;
                                         $staff->id_fakultas = $value->id_fakultas;
