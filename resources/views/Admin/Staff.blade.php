@@ -119,12 +119,12 @@
                                 <td>
                                     {!! Form::open(['route' => ['staff.destroy', $data->id_staff ], 'method' => 'delete', 'class' => 'hapus']) !!}
                                     <a href="{{ route('staff.edit', $data->id_staff ) }}">
-                                        {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
+                                        {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'edit staf','class' => 'btn btn-warning fa fa-pencil']) !!}
                                     </a>
                                     <a href="{{ route('staff.show', $data->id_staff) }}">
-                                        {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
+                                        {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'lihat data staf','class' => 'btn btn-primary fa fa-eye']) !!}
                                     </a>
-                                    {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
+                                    {!! Form::button('', ['type' => 'submit', 'data-toggle' => 'tooltip','data-placement' => 'top','title' => 'hapus staf','class' => 'btn btn-danger fa fa-trash']) !!}
                                     {!! Form::close() !!}
                                 </td>
                             </tr>

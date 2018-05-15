@@ -87,9 +87,9 @@
                             <td>
                                 {!! Form::open(['route' => ['ruangan.destroy', $data->id], 'method' => 'delete', 'class' => 'hapus']) !!}
                                 <a href="{{ route('ruangan.edit', $data->id) }}">
-                                    {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
+                                    {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'edit ruangan','class' => 'btn btn-warning fa fa-pencil']) !!}
                                 </a>
-                                {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
+                                {!! Form::button('', ['type' => 'submit', 'data-toggle' => 'tooltip','data-placement' => 'top','title' => 'hapus ruangan','class' => 'btn btn-danger fa fa-trash']) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>

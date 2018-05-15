@@ -88,9 +88,9 @@
                             <td>
                                 {!! Form::open(['route' => ['gedung.destroy', $data->id_gedung], 'method' => 'delete', 'class' => 'hapus']) !!}
                                 <a href="{{ route('gedung.edit', $data->id_gedung) }}">
-                                    {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
+                                    {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'edit gedung','class' => 'btn btn-warning fa fa-pencil']) !!}
                                 </a>
-                                {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
+                                {!! Form::button('', ['type' => 'submit', 'data-toggle' => 'tooltip','data-placement' => 'top','title' => 'hapus gedung','class' => 'btn btn-danger fa fa-trash']) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>

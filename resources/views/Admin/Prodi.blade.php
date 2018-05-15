@@ -94,9 +94,9 @@
                             <td>
                                 {!! Form::open(['route' => ['prodi.destroy', $data->id_prodi], 'method' => 'delete', 'class' => 'hapus']) !!}
                                 <a href="{{ route('prodi.edit', $data->id_prodi) }}">
-                                    {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
+                                    {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'edit prodi','class' => 'btn btn-warning fa fa-pencil']) !!}
                                 </a>
-                                {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
+                                {!! Form::button('', ['type' => 'submit', 'data-toggle' => 'tooltip','data-placement' => 'top','title' => 'hapus prodi','class' => 'btn btn-danger fa fa-trash']) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>

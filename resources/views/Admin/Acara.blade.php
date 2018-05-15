@@ -90,16 +90,16 @@
                                     @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                         {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                         <a href="{{ route('acara.edit', $data->id_acara) }}">
-                                            {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
+                                            {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'edit acara','class' => 'btn btn-warning fa fa-pencil']) !!}
                                         </a>
                                         <a href="{{ route('acara.show', $data->id_acara) }}">
-                                            {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
+                                            {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'lihat acara','class' => 'btn btn-primary fa fa-eye']) !!}
                                         </a>
-                                        {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
+                                        {!! Form::button('', ['type' => 'submit', 'data-toggle' => 'tooltip','data-placement' => 'top','title' => 'hapus acara','class' => 'btn btn-danger fa fa-trash']) !!}
                                         {!! Form::close() !!}
                                     @else
                                         <a href="{{ route('acara.show', $data->id_acara) }}">
-                                            {!! Form::button('Show', ['class' => 'btn btn-primary']) !!}
+                                            {!! Form::button('Show', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'lihat acara','class' => 'btn btn-primary']) !!}
                                         </a>
                                     @endif
                                 </td>
@@ -117,16 +117,16 @@
                                         @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                             {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                             <a href="{{ route('acara.edit', $data->id_acara) }}">
-                                                {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
+                                                {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'edit acara','class' => 'btn btn-warning fa fa-pencil']) !!}
                                             </a>
                                             <a href="{{ route('acara.show', $data->id_acara) }}">
-                                                {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
+                                                {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'lihat acara','class' => 'btn btn-primary fa fa-eye']) !!}
                                             </a>
-                                            {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
+                                            {!! Form::button('', ['type' => 'submit', 'data-toggle' => 'tooltip','data-placement' => 'top','title' => 'hapus staf','class' => 'btn btn-danger fa fa-trash']) !!}
                                             {!! Form::close() !!}
                                         @else
                                             <a href="{{ route('acara.show', $data->id_acara) }}">
-                                                {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
+                                                {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'lihat acara','class' => 'btn btn-primary fa fa-eye']) !!}
                                             </a>
                                         @endif
                                     </td>
@@ -144,16 +144,16 @@
                                                 @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
                                                     {!! Form::open(['route' => ['acara.destroy', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
                                                     <a href="{{ route('acara.edit', $data->id_acara) }}">
-                                                        {!! Form::button('', ['class' => 'btn btn-warning fa fa-pencil']) !!}
+                                                        {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'edit acara','class' => 'btn btn-warning fa fa-pencil']) !!}
                                                     </a>
                                                     <a href="{{ route('acara.show', $data->id_acara) }}">
-                                                        {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
+                                                        {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'lihat acara','class' => 'btn btn-primary fa fa-eye']) !!}
                                                     </a>
-                                                    {!! Form::button('', ['type' => 'submit', 'class' => 'btn btn-danger fa fa-trash']) !!}
+                                                    {!! Form::button('', ['type' => 'submit', 'data-toggle' => 'tooltip','data-placement' => 'top','title' => 'hapus acara','class' => 'btn btn-danger fa fa-trash']) !!}
                                                     {!! Form::close() !!}
                                                 @else
                                                     <a href="{{ route('acara.show', $data->id_acara) }}">
-                                                        {!! Form::button('', ['class' => 'btn btn-primary fa fa-eye']) !!}
+                                                        {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'lihat acara','class' => 'btn btn-primary fa fa-eye']) !!}
                                                     </a>
                                                 @endif
                                             </td>
