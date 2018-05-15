@@ -46,10 +46,14 @@ class ImportExcelController extends Controller
                                     ->where('id_fakultas', '=', $value->id_fakultas)
                                     ->where('id_departemen', '=', $value->id_departemen)
                                     ->get();
-                                /*dd($cek2);*/
+                                $cek3 = Prodi::query()
+                                    ->where('id_fakultas', '=', $value->id_fakultas)
+                                    ->where('id_departemen', '=', $value->id_departemen)
+                                    ->get();
+
 
                                 $hitung = count($cek);
-                                if ($hitung == 0 && count($cek2) > 0) {
+                                if ($hitung == 0 && (count($cek2) > 0 || count($cek3) > 0 || $value->id_fakultas == 'vokasi')) {
                                     if ($value->id_fakultas != null){
                                         $staff = new Staff;
                                         $staff->id_fakultas = $value->id_fakultas;
