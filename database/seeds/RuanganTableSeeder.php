@@ -15,7 +15,7 @@ class RuanganTableSeeder extends Seeder
         DB::table('ruangans')->insert([
             'id_ruangan' => '126',
             'id_gedung' => 'SV',
-            'nama_ruangan' => 'SV - 123',
+            'nama_ruangan' => 'SV - 126',
             'created_by' => 'vokasi'
         ]);
         DB::table('ruangans')->insert([
