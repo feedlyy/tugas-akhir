@@ -28,19 +28,6 @@ class ImportExcelController extends Controller
                                 ->where('nama_staff', '=', $value->nama_staff)
                                 ->get();
 
-                                /*$cek2 = Prodi::query()
-                                    ->join('departemens', 'departemens.id_departemen', '=', 'prodis.id_departemen')
-                                    ->join('fakultas', 'departemens.id_fakultas', '=', 'fakultas.id_fakultas')
-                                    ->where('prodis.id_fakultas', $value->id_fakultas)
-                                    ->where('prodis.id_departemen', $value->id_departemen)
-                                    ->where('prodis.id_prodi', $value->id_prodi)
-                                    ->get();
-
-                                $cek3 = Departemen::query()
-                                    ->join('fakultas', 'departemens.id_fakultas', '=', 'fakultas.id_fakultas')
-                                    ->where('fakultas.id_fakultas', $value->id_fakultas)
-                                    ->get();*/
-
                                 $cek2 = Prodi::query()
                                     ->where('id_prodi', '=', $value->id_prodi)
                                     ->where('id_fakultas', '=', $value->id_fakultas)

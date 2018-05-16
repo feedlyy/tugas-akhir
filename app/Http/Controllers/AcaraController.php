@@ -740,7 +740,6 @@ class AcaraController extends Controller
 
 
         $acara = Acara::find($id);
-        $acara->delete();
 
         /*ini merujuk ke column event_id_google_calendar
         yang isinya adalah event_id tiap acara
@@ -759,6 +758,10 @@ class AcaraController extends Controller
         } else {
             return redirect()->route('oauthCallback');
         }
+
+        $acara->delete();
+
+
 
         return redirect('admin/acara')->with(session()->flash('hapus', ''));
     }
