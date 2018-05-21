@@ -147,7 +147,6 @@ class AcaraController extends Controller
             }
         }
 
-        dd($request->nama_ruang);
 
         $validasi = $request->validate([
             'nama_acara' => ['required', 'max:50', new Uppercase],
