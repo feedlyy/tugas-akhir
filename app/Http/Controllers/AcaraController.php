@@ -8,6 +8,7 @@ use App\Fakultas;
 use App\Prodi;
 use App\Rules\Uppercase;
 use Carbon\CarbonInterval;
+use function GuzzleHttp\Psr7\str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -146,7 +147,7 @@ class AcaraController extends Controller
             }
         }
 
-
+        dd($request->nama_ruang);
 
         $validasi = $request->validate([
             'nama_acara' => ['required', 'max:50', new Uppercase],
@@ -190,7 +191,7 @@ class AcaraController extends Controller
 
 
         /*ini validasi jika menambahkan jadwal kurang dari hari ini*/
-        if ($start < Carbon::today()){
+        if ($start < Carbon::today() || $start < Carbon::now()){
             $galat = array_add($galat, '1', 'error1');
         } elseif($cek > 0) { /*ini validasi untuk waktu dan ruangan*/
             $galat = array_add($galat, '2', 'error2');
@@ -251,6 +252,7 @@ class AcaraController extends Controller
             } else {
                 return redirect()->route('oauthCallback');
             }
+
         /*ini store ke db*/
         $acara = new Acara;
         /*event_id_google_calendar ini untuk menyimpan event_id tiap acara
@@ -264,6 +266,7 @@ class AcaraController extends Controller
         $acara->nama_ruangan = $request->nama_ruang;
         $acara->penanggung_jawab = Auth::user()->username;
         $acara->save();
+
 
 
 

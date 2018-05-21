@@ -104,6 +104,7 @@
                                     @endif
                                 </td>
                             </tr>
+                                <?php $i++;?>
                             @endforeach
                         @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi == null)
                             @foreach($acara as $data)
@@ -131,6 +132,7 @@
                                         @endif
                                     </td>
                                 </tr>
+                                <?php $i++;?>
                             @endforeach
                                 @elseif(\Illuminate\Support\Facades\Auth::user()->id_fakultas != null && \Illuminate\Support\Facades\Auth::user()->id_departemen != null && \Illuminate\Support\Facades\Auth::user()->id_prodi != null)
                                     @foreach($acara as $data)

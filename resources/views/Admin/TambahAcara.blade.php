@@ -85,7 +85,7 @@
             <h3 class="box-title">Tambah Acara</h3>
         </div>
         <div class="box-header">
-            <a class="fa fa-arrow-left" href="{{ route('acara.index') }}"><span style="font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif; font-size: small;">&nbspKembali ke list acara</span></a>
+            <a class="fa fa-arrow-left" href="{{ route('acara.index') }}"><span style="font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif; font-size: small;">&nbsp;Kembali ke list acara</span></a>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
