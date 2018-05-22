@@ -172,9 +172,16 @@
                             </a>
                         </li>
                         <li class="treeview">
-                            <a href="{{ url('admin/acara') }}">
+                            <a href="#">
                                 <i class="fa fa-calendar-plus-o"></i> <span>Acara</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ url('admin/acara') }}"><i class="fa fa-circle-o"></i> List Acara</a></li>
+                                <li><a href="{{ url('admin/history') }}"><i class="fa fa-circle-o"></i> History Acara</a></li>
+                            </ul>
                         </li>
                         <li class="treeview">
                             <a href="{{ url('admin/gedung') }}">
@@ -315,7 +322,6 @@
         <section class="content">
 
             <!-- Profile Image -->
-
                 <div class="col-md-6" style="margin-top: 2%">
                     <iframe src="https://calendar.google.com/calendar/b/3/embed?title=Jadwal%20Acara%20Sekolah%20Vokasi&amp;height=500&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=muhammad.nur.fadli%40mail.ugm.ac.id&amp;color=%231B887A&amp;src=en.indonesian%23holiday%40group.v.calendar.google.com&amp;color=%23125A12&amp;ctz=Asia%2FJakarta" style="border-width:0" width="900" height="450" frameborder="0" scrolling="no"></iframe>
                 </div>

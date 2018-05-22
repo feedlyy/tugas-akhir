@@ -48,7 +48,8 @@ Route::prefix('admin')->group(function (){
     /*ini untuk post data dari import excel*/
     Route::post('importExcel', 'ImportExcelController@importExcel')->name('import');
 
-
+    /*history acara*/
+       Route::get('history', 'HistoryAcaraController@index');
    });
 });
 
