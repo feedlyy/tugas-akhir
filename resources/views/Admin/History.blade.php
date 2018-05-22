@@ -63,6 +63,9 @@
                             <td>{{ $data->nama_ruangan }}</td>
                             <td>
                                 {!! Form::open(['route' => ['hapushistory', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
+                                <a href="{{ route('acara.show', $data->id_acara) }}">
+                                    {!! Form::button('', ['data-toggle' => 'tooltip','data-placement' => 'top','title' => 'lihat acara','class' => 'btn btn-primary fa fa-eye']) !!}
+                                </a>
                                 {!! Form::button('', ['type' => 'submit', 'data-toggle' => 'tooltip','data-placement' => 'top','title' => 'hapus acara','class' => 'btn btn-danger fa fa-trash']) !!}
                                 {!! Form::close() !!}
                             </td>
