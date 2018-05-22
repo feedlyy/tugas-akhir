@@ -140,6 +140,7 @@
                     </select>
                 </div>
 
+
                 <div class="row">
                     <div class="col-6 col-sm-6">
                         {{--Staff Fakultas--}}
@@ -329,7 +330,7 @@
                         /*ini untuk pengecekan jika ruangan yang saat ini digunakan atau terselect
                         maka ajax nya append value nya jadi selected
                         else nya tidak*/
-                        if ("{{ \App\Acara::query()->find('id_acara') == $ruangan[0]['id_acara']}}"){
+                        if (response[key].nama_ruangan == "{{ $acara->nama_ruangan }}"){
                             $select.append('<option ' + response[key].nama_ruangan + ' selected>' + response[key].nama_ruangan + '</option>');
                         } else {
                             $select.append('<option ' + response[key].nama_ruangan + '>' + response[key].nama_ruangan + '</option>');

@@ -53,7 +53,6 @@ class AcaraController extends Controller
         $acara = Acara::query()
             ->select('*')
             ->orderBy('created_at', 'desc')
-            ->orderBy('updated_at', 'desc')
             ->get();
 
         return view('Admin.Acara')
