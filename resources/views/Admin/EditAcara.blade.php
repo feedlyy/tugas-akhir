@@ -307,7 +307,6 @@
                     $.each(response,function(key, value)
                     {
                         $select.append('<option ' + response[key].nama_ruangan + '>' + response[key].nama_ruangan + '</option>'); // return empty
-
                     });
                 }
             });
@@ -330,7 +329,7 @@
                         /*ini untuk pengecekan jika ruangan yang saat ini digunakan atau terselect
                         maka ajax nya append value nya jadi selected
                         else nya tidak*/
-                        if ("{{ $ruangan[0]['nama_ruangan'] = $acara->nama_ruangan }}"){
+                        if ("{{ \App\Acara::query()->find('id_acara') == $ruangan[0]['id_acara']}}"){
                             $select.append('<option ' + response[key].nama_ruangan + ' selected>' + response[key].nama_ruangan + '</option>');
                         } else {
                             $select.append('<option ' + response[key].nama_ruangan + '>' + response[key].nama_ruangan + '</option>');

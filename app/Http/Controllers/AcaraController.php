@@ -50,8 +50,11 @@ class AcaraController extends Controller
      */
     public function index()
     {
-        $acara = Acara::all();
-
+        $acara = Acara::query()
+            ->select('*')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         return view('Admin.Acara')
             ->with('acara', $acara);
