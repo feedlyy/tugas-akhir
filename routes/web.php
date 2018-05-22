@@ -50,6 +50,7 @@ Route::prefix('admin')->group(function (){
 
     /*history acara*/
        Route::get('history', 'HistoryAcaraController@index');
+       Route::delete('hapushistory/{id}', 'HistoryAcaraController@destroy')->name('hapushistory');
    });
 });
 
