@@ -192,7 +192,7 @@ class AcaraController extends Controller
 
 
         /*ini validasi jika menambahkan jadwal kurang dari hari ini*/
-        if ($start < Carbon::today() || $start < Carbon::now()){
+        if ($start < Carbon::today() || $start < Carbon::now()->timezone('Asia/Jakarta')){
             $galat = array_add($galat, '1', 'error1');
         } elseif($cek > 0) { /*ini validasi untuk waktu dan ruangan*/
             $galat = array_add($galat, '2', 'error2');

@@ -17,6 +17,7 @@
                     </thead>
                     <?php $i = 1?>
                     @foreach($history as $data)
+                        @if(\Carbon\Carbon::now()->timezone('Asia/Jakarta') > $data->end_date)
                         <tr>
                             <td><?php echo $i;?></td>
                             <td>{{ $data->nama_event }}</td>
@@ -24,6 +25,8 @@
                             <td>{{ $data->end_date }}</td>
                             <td>{{ $data->nama_ruangan }}</td>
                         </tr>
+                            <?php $i++;?>
+                        @endif
                     @endforeach
                 </table>
             </div>
