@@ -51,6 +51,7 @@ class ImportExcelController extends Controller
                                         $staff->email = $value->email;
                                         $staff->alamat = $value->alamat;
                                         $staff->no_hp = $value->no_hp;
+                                        $staff->id_status = $value->status;
                                         $staff->save();
                                     }
 
@@ -70,7 +71,7 @@ class ImportExcelController extends Controller
     {
         $export = Staff::query()
             ->select('id_fakultas', 'id_departemen', 'id_prodi', 'nip',
-                'nama_staff', 'email', 'alamat', 'no_hp')
+                'nama_staff', 'email', 'alamat', 'no_hp', 'status')
             ->get();
         return Excel::create('data_staff', function ($excel) use ($export){
             $excel->sheet('Sheet1', function ($sheet) use ($export){
@@ -84,6 +85,11 @@ class ImportExcelController extends Controller
                     ]);
 
                 });
+
+                   $sheet->cell('J2', function ($cell){
+                       $cell->setValue('status: petinggi = 1, standar = 2');
+                   });
+
             });
         })->export('xlsx');
     }

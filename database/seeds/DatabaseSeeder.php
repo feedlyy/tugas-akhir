@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             AdminTableSeeder::class,
             GedungTableSeeder::class,
             RuanganTableSeeder::class,
+            StatusTableSeeder::class,
         ]);
     }
 }

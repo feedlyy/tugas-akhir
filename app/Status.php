@@ -2,28 +2,13 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Status extends Authenticatable
+class Status extends Model
 {
-    use Notifiable;
+    //
     protected $table = 'statuses';
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'nama_status',
-    ];
+    protected $primaryKey = 'id';
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-//    protected $hidden = [
-//        'password', 'remember_token',
-//    ];
+    protected $fillable = ['jabatan'];
 }

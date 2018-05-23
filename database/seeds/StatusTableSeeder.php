@@ -13,16 +13,12 @@ class StatusTableSeeder extends Seeder
     {
         //
         DB::table('statuses')->insert([
-           'id_status' => '1',
-           'nama_status' => 'fakultas',
+           'id' => '1',
+           'jabatan' => 'petinggi',
         ]);
         DB::table('statuses')->insert([
-            'id_status' => '2',
-            'nama_status' => 'departemen',
-        ]);
-        DB::table('statuses')->insert([
-            'id_status' => '3',
-            'nama_status' => 'prodi',
+            'id' => '2',
+            'jabatan' => 'standar',
         ]);
     }
 }

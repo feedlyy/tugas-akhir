@@ -38,7 +38,7 @@
     </script>
 
     <div class="container putih">
-        <h2>History Acara</h2>
+        <h2>Riwayat Acara</h2>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">
                 <table id="example1" class="table table-bordered table-striped">
@@ -82,7 +82,6 @@
         /*javascript untuk table nya*/
         $(function () {
             $('#example1').DataTable({
-
             })
         })
     </script>

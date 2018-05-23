@@ -183,7 +183,7 @@ class AcaraController extends Controller
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
                     ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
             })
-            ->where('tamus.email', '=',$arrayTamu)
+            ->where('tamus.email', '=', $arrayTamu)
             ->get();
         $cek2 = count($pengecekan2);
 
@@ -285,7 +285,7 @@ class AcaraController extends Controller
                     dari table staff. agar setiap email mempunyai identitas nya dan dapat
                     di insertkan ke database Tamu*/
                     $select = Staff::query()
-                        ->select('id_fakultas', 'id_departemen', 'id_prodi')
+                        ->select('id_fakultas', 'id_departemen', 'id_prodi', 'id_status')
                         ->where('email', $key)
                         ->get();
 
@@ -295,6 +295,7 @@ class AcaraController extends Controller
                         $tamu->id_fakultas = $hasil->id_fakultas;
                         $tamu->id_departemen = $hasil->id_departemen;
                         $tamu->id_prodi = $hasil->id_prodi;
+                        $tamu->id_status = $hasil->id_status;
                     }
 
                     $tamu->id_acara = $acara->id_acara;
@@ -718,15 +719,19 @@ class AcaraController extends Controller
             }
             $event->setAttendees($tamunya_arr);
 
+
             /*ini untuk setting send notifikasinya*/
             $optParams = Array(
                 'sendNotifications' => true,
             );
+
             $updatedEvent = $service->events->update('primary', $event->getId(), $event, $optParams);
         } else {
             return redirect()->route('oauthCallback');
         }
-
+        /*foreach ($event->getAttendees() as $data){
+            dd($data->responseStatus);
+        }*/
             return redirect('admin/acara')->with(session()->flash('update', ''));
 
     }
@@ -741,8 +746,6 @@ class AcaraController extends Controller
     public function destroy($id)
     {
         //
-
-
         $acara = Acara::find($id);
 
         /*ini merujuk ke column event_id_google_calendar
@@ -762,10 +765,7 @@ class AcaraController extends Controller
         } else {
             return redirect()->route('oauthCallback');
         }
-
         $acara->delete();
-
-
 
         return redirect('admin/acara')->with(session()->flash('hapus', ''));
     }
