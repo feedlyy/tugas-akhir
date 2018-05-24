@@ -179,7 +179,7 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ url('admin/acara') }}"><i class="fa fa-circle-o"></i> List Acara</a></li>
+                                <li><a href="{{ url('admin/acara') }}"><i class="fa fa-circle-o"></i> Daftar Acara</a></li>
                                 <li><a href="{{ url('admin/history') }}"><i class="fa fa-circle-o"></i> Riwayat Acara</a></li>
                             </ul>
                         </li>
@@ -231,7 +231,7 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ url('admin/acara') }}"><i class="fa fa-circle-o"></i> List Acara</a></li>
+                                <li><a href="{{ url('admin/acara') }}"><i class="fa fa-circle-o"></i> Daftar Acara</a></li>
                                 <li><a href="{{ url('admin/history') }}"><i class="fa fa-circle-o"></i> Riwayat Acara</a></li>
                             </ul>
                         </li>
@@ -278,7 +278,7 @@
                                 </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ url('admin/acara') }}"><i class="fa fa-circle-o"></i> List Acara</a></li>
+                                <li><a href="{{ url('admin/acara') }}"><i class="fa fa-circle-o"></i> Daftar Acara</a></li>
                                 <li><a href="{{ url('admin/history') }}"><i class="fa fa-circle-o"></i> Riwayat Acara</a></li>
                             </ul>
                         </li>

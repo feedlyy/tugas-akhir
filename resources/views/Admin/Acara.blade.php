@@ -62,7 +62,7 @@
     </script>
 
     <div class="container putih">
-        <h2 style="">List acara</h2>
+        <h2 style="">Daftar acara</h2>
         <a href="{{ url('admin/acara/create') }}"><button class="fa fa-plus btn btn-primary">Tambah Acara</button></a>
         <div class="row" style="margin-top: 3%;">
             <div class="col-xs-12" id="table">

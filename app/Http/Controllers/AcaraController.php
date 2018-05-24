@@ -171,28 +171,38 @@ class AcaraController extends Controller
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end]);
             })
+            /*->where('start_date', '-', Carbon::now('Asia/Jakarta')->addSeconds(1))
+            ->where('end_date', '+', Carbon::now('Asia/Jakarta')->addSeconds(1))*/
             ->get();
         $cek = count($pengecekan);
 
+        $cekemailnya = Tamu::query()
+            ->select('*')->where('email', $arrayTamu)->get();
+
         /*validasi untuk pengecekan email pada range waktu tertentu agar tidak bentrok*/
-        $pengecekan2 = Tamu::query()
-            ->join('acaras', 'tamus.id_acara', '=', 'acaras.id_acara')
-            ->where(function ($query) use ($start, $end){
-                $query->whereBetween('acaras.start_date', [$start, $end])
-                    ->orWhereBetween('acaras.end_date', [$start, $end])
-                    ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
-                    ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
-            })
-            ->where('tamus.email', '=', $arrayTamu)
-            ->get();
+            foreach ($arrayTamu as $data){
+                if ($this->getStatus($data) != 1){ //ini masih blm selesai
+                    $pengecekan2 = Tamu::query()
+                        ->join('acaras', 'tamus.id_acara', '=', 'acaras.id_acara')
+                        ->where(function ($query) use ($start, $end){
+                            $query->whereBetween('acaras.start_date', [$start, $end])
+                                ->orWhereBetween('acaras.end_date', [$start, $end])
+                                ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
+                                ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
+                        })
+                        ->where('tamus.email', '=', $arrayTamu)
+                        ->get();
+                }
+            }
+            if (empty($pengecekan2)){
+                $cek2 = 0;
+            } else
         $cek2 = count($pengecekan2);
-
-
         $galat = [];
 
 
         /*ini validasi jika menambahkan jadwal kurang dari hari ini*/
-        if ($start < Carbon::today() || $start < Carbon::now()->timezone('Asia/Jakarta')){
+        if ($start < Carbon::today()){
             $galat = array_add($galat, '1', 'error1');
         } elseif($cek > 0) { /*ini validasi untuk waktu dan ruangan*/
             $galat = array_add($galat, '2', 'error2');
@@ -297,7 +307,6 @@ class AcaraController extends Controller
                         $tamu->id_prodi = $hasil->id_prodi;
                         $tamu->id_status = $hasil->id_status;
                     }
-
                     $tamu->id_acara = $acara->id_acara;
                     $tamu->email = $key;
                     $tamu->save();
@@ -608,17 +617,24 @@ class AcaraController extends Controller
         $simpenanTamu = Tamu::where('id_acara', $id)->select('email')->get()->toArray();
 
         /*validasi untuk pengecekan email pada range waktu tertentu agar tidak bentrok*/
-        $pengecekan2 = Tamu::query()
-            ->join('acaras', 'tamus.id_acara', '=', 'acaras.id_acara')
-            ->where(function ($query) use ($start, $end){
-                $query->whereBetween('acaras.start_date', [$start, $end])
-                    ->orWhereBetween('acaras.end_date', [$start, $end])
-                    ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
-                    ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
-            })
-            ->whereIn('tamus.email', $arrayTamu)
-            ->whereNotIn('tamus.email', $simpenanTamu)
-            ->get();
+        foreach ($arrayTamu as $data){
+            if ($this->getStatus($data) != 1){
+                $pengecekan2 = Tamu::query()
+                    ->join('acaras', 'tamus.id_acara', '=', 'acaras.id_acara')
+                    ->where(function ($query) use ($start, $end){
+                        $query->whereBetween('acaras.start_date', [$start, $end])
+                            ->orWhereBetween('acaras.end_date', [$start, $end])
+                            ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$start, $start])
+                            ->orWhereRaw('acaras.start_date < ? AND acaras.end_date > ?', [$end, $end]);
+                    })
+                    ->whereIn('tamus.email', $arrayTamu)
+                    ->whereNotIn('tamus.email', $simpenanTamu)
+                    ->get();
+            }
+        }
+        if (empty($pengecekan2)){
+            $cek2 = 0;
+        } else
         $cek2 = count($pengecekan2);
 
         /*array sementara untuk menyimpan error*/
@@ -673,7 +689,7 @@ class AcaraController extends Controller
                     dari table staff. agar setiap email mempunyai identitas nya dan dapat
                     di insertkan ke database Tamu*/
                     $select = Staff::query()
-                        ->select('id_fakultas', 'id_departemen', 'id_prodi')
+                        ->select('id_fakultas', 'id_departemen', 'id_prodi', 'id_status')
                         ->where('email', $key)
                         ->get();
 
@@ -683,6 +699,7 @@ class AcaraController extends Controller
                         $tamu->id_fakultas = $hasil->id_fakultas;
                         $tamu->id_departemen = $hasil->id_departemen;
                         $tamu->id_prodi = $hasil->id_prodi;
+                        $tamu->id_status = $hasil->id_status;
                     }
                     $tamu->email = $key;
                     $tamu->save();
@@ -770,4 +787,10 @@ class AcaraController extends Controller
         return redirect('admin/acara')->with(session()->flash('hapus', ''));
     }
 
+    private function getStatus($email){
+        $cekStatus = Staff::query()->select('id_status')
+            ->where('email', $email)->first();
+        if($cekStatus == null) return null;
+        return $cekStatus->id_status;
+    }
 }
