@@ -21,6 +21,8 @@ Route::get('jadwal', 'HomePageController@jadwal');
 Route::get('visi', 'HomePageController@visi');
 
 
+
+
 /*Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home2', 'AdminViewHandleController@tes')->name('home2');*/
 

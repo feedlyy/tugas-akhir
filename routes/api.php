@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Resources\StafResource;
+use App\Staff;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('API', 'ApiController@index');
 
 Route::resource('acara', 'AcaraController');
 Route::get('oauth', 'AcaraController@oauth')->name('oauthCallback');

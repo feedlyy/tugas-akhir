@@ -16,14 +16,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        Validator::extend('namaRuangan', function ($attribute, $value, $parameters, $validator) {
-            /*return $value == 'foo';*/
-            $count = DB::table('ruangans')->where('id_ruangan', $value)
-                ->where('id_gedung', $parameters[0])
-                ->count();
-
-            return $count === 0;
-        });
     }
 
     /**
