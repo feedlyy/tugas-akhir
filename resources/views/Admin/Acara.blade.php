@@ -84,8 +84,8 @@
                             <tr>
                                 <td><?php echo $i;?></td>
                                 <td>{{ $data->nama_event }}</td>
-                                <td>{{ \Illuminate\Support\Carbon::parse($data->start_date)->format('j F Y h:i') }}</td>
-                                <td>{{ \Illuminate\Support\Carbon::parse($data->end_date)->format('j F Y h:i') }}</td>
+                                <td>{{ \Illuminate\Support\Carbon::parse($data->start_date)->format('D j F Y h:i') }}</td>
+                                <td>{{ \Illuminate\Support\Carbon::parse($data->end_date)->format('D j F Y h:i') }}</td>
                                 <td>{{ $data->nama_ruangan }}</td>
                                 <td>
                                     @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
@@ -114,8 +114,8 @@
                                 <tr>
                                     <td><?php echo $i;?></td>
                                     <td>{{ $data->nama_event }}</td>
-                                    <td>{{ \Illuminate\Support\Carbon::parse($data->start_date)->format('j F Y h:i') }}</td>
-                                    <td>{{ \Illuminate\Support\Carbon::parse($data->end_date)->format('j F Y h:i') }}</td>
+                                    <td>{{ \Illuminate\Support\Carbon::parse($data->start_date)->format('D j F Y h:i') }}</td>
+                                    <td>{{ \Illuminate\Support\Carbon::parse($data->end_date)->format('D j F Y h:i') }}</td>
                                     <td>{{ $data->nama_ruangan }}</td>
                                     <td>
                                         @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
@@ -144,8 +144,8 @@
                                         <tr>
                                             <td><?php echo $i;?></td>
                                             <td>{{ $data->nama_event }}</td>
-                                            <td>{{ \Illuminate\Support\Carbon::parse($data->start_date)->format('j F Y h:i') }}</td>
-                                            <td>{{ \Illuminate\Support\Carbon::parse($data->end_date)->format('j F Y h:i') }}</td>
+                                            <td>{{ \Illuminate\Support\Carbon::parse($data->start_date)->format('D j F Y h:i') }}</td>
+                                            <td>{{ \Illuminate\Support\Carbon::parse($data->end_date)->format('D j F Y h:i') }}</td>
                                             <td>{{ $data->nama_ruangan }}</td>
                                             <td>
                                                 @if($data->penanggung_jawab == \Illuminate\Support\Facades\Auth::user()->username)
