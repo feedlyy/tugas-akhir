@@ -106,6 +106,8 @@ class AcaraController extends Controller
         $start = Carbon::parse(($request->start_date), 'Asia/Jakarta');
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
 
+
+
         /*dd($start, Carbon::now('Asia/Jakarta'),
             Carbon::now('Asia/Jakarta')->addSeconds(1), $start->addSeconds(1));*/
         $fakultas = Staff::query()
