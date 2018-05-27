@@ -106,6 +106,8 @@ class AcaraController extends Controller
         $start = Carbon::parse(($request->start_date), 'Asia/Jakarta');
         $end = Carbon::parse(($request->end_date), 'Asia/Jakarta');
 
+        /*dd($start, Carbon::now('Asia/Jakarta'),
+            Carbon::now('Asia/Jakarta')->addSeconds(1), $start->addSeconds(1));*/
         $fakultas = Staff::query()
             ->select('email')
             ->where('id_fakultas', '=', 'vokasi')/*
@@ -166,7 +168,7 @@ class AcaraController extends Controller
         $pengecekan = Acara::query()
             ->where('nama_ruangan', '=', $request->nama_ruang)
             ->where(function ($query) use ($start, $end){
-                $query->whereBetween('start_date', [$start, $end])
+                $query->whereBetween('start_date', [$start->addSeconds(10), $end])
                     ->orWhereBetween('end_date', [$start, $end])
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end]);
@@ -258,6 +260,7 @@ class AcaraController extends Controller
                 $optParams = Array(
                     'sendNotifications' => true,
                 );
+
 
                 $results = $service->events->insert($calendarId, $event, $optParams);
             } else {
@@ -605,7 +608,7 @@ class AcaraController extends Controller
         $pengecekan = Acara::query()
             ->where('nama_ruangan', '=', $request->nama_ruang)
             ->where(function ($query) use ($start, $end){
-                $query->whereBetween('start_date', [$start, $end])
+                $query->whereBetween('start_date', [$start->addSeconds(10), $end])
                     ->orWhereBetween('end_date', [$start, $end])
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$start, $start])
                     ->orWhereRaw('start_date < ? AND end_date > ?', [$end, $end]);

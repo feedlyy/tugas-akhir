@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('API', 'ApiController@index');
+Route::patch('staf/{id}', 'ApiController@index');
 
 Route::resource('acara', 'AcaraController');
 Route::get('oauth', 'AcaraController@oauth')->name('oauthCallback');
