@@ -336,23 +336,9 @@
         <section class="content putih">
             <div class="container putih">
                 <div class="row">
-                    <div class="col-md-6" style="margin-top: 2%">
-                        <iframe src="https://calendar.google.com/calendar/b/3/embed?title=Jadwal%20Acara%20Sekolah%20Vokasi&amp;height=500&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=muhammad.nur.fadli%40mail.ugm.ac.id&amp;color=%231B887A&amp;src=en.indonesian%23holiday%40group.v.calendar.google.com&amp;color=%23125A12&amp;ctz=Asia%2FJakarta" style="border-width:0" width="800" height="400" frameborder="0" scrolling="no"></iframe>
+                    <div class="col-md-6">
+                        <iframe src="https://calendar.google.com/calendar/b/3/embed?title=Jadwal%20Acara%20Sekolah%20Vokasi&amp;height=500&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=muhammad.nur.fadli%40mail.ugm.ac.id&amp;color=%231B887A&amp;src=en.indonesian%23holiday%40group.v.calendar.google.com&amp;color=%23125A12&amp;ctz=Asia%2FJakarta" style="border-width:0" width="900" height="500" frameborder="0" scrolling="no"></iframe>
                     </div>
-                    {{--<div class="col-md-5" id="table" style="margin-top: 2%;">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Response</th>
-                            </tr>
-                            </thead>
-                            <tr>
-                                <td>1</td>
-                                <td>yes</td>
-                            </tr>
-                        </table>
-                    </div>--}}
                 </div>
             </div>
             <!-- Profile Image -->

@@ -178,7 +178,9 @@
         /*javascript untuk table nya*/
         $(function () {
             $('#example1').DataTable({
-
+                'language': {
+                    'search': 'Cari berdasarkan nama, waktu dan tempat'
+                }
             })
         })
     </script>
