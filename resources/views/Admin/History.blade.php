@@ -58,8 +58,8 @@
                         <tr>
                             <td><?php echo $i;?></td>
                             <td>{{ $data->nama_event }}</td>
-                            <td>{{ $data->start_date }}</td>
-                            <td>{{ $data->end_date }}</td>
+                            <td><?php setlocale(LC_TIME, 'Indonesian'); echo \Illuminate\Support\Carbon::parse($data->start_date)->formatLocalized('%A, %d %B %Y %H:%M')?></td>
+                            <td><?php setlocale(LC_TIME, 'Indonesian'); echo \Illuminate\Support\Carbon::parse($data->end_date)->formatLocalized('%A, %d %B %Y %H:%M')?></td>
                             <td>{{ $data->nama_ruangan }}</td>
                             <td>
                                 {!! Form::open(['route' => ['hapushistory', $data->id_acara], 'method' => 'delete', 'class' => 'hapus']) !!}
@@ -82,6 +82,9 @@
         /*javascript untuk table nya*/
         $(function () {
             $('#example1').DataTable({
+                'language': {
+                    'search': 'Cari berdasarkan nama, waktu dan tempat'
+                }
             })
         })
     </script>
