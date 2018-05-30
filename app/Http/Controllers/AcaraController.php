@@ -180,8 +180,6 @@ class AcaraController extends Controller
             ->get();
         $cek = count($pengecekan);
 
-        $cekemailnya = Tamu::query()
-            ->select('*')->where('email', $arrayTamu)->get();
 
         /*validasi untuk pengecekan email pada range waktu tertentu agar tidak bentrok*/
             foreach ($arrayTamu as $data){
@@ -408,6 +406,47 @@ class AcaraController extends Controller
             array_push($tampungEmail4, $hasil4->email);
         }
 
+        session_start();
+        if (isset($_SESSION['access_token']) && $_SESSION['access_token'] && $_SESSION['access_token']['created'] + $_SESSION['access_token']['expires_in'] > Carbon::now()->timestamp) {
+            $this->client->setAccessToken($_SESSION['access_token']);
+            $service = new Google_Service_Calendar($this->client);
+
+            $calendarId = 'primary';
+            $cek = Acara::query()->find($id);
+            $detail = $service->events->get($calendarId, $cek->event_id_google_calendar);
+
+            /*tampung response dari email nya*/
+            $tampungResponse = [];
+            foreach ($detail->getAttendees() as $hasilnya)
+            {
+                if ($hasilnya != null){
+                    array_push($tampungResponse, $hasilnya->getResponseStatus());
+                }
+            }
+
+            /*tampung email*/
+            $tampungEmail = [];
+            foreach ($detail->getAttendees() as $hasilnya)
+            {
+                array_push($tampungEmail, $hasilnya->getEmail());
+            }
+
+            $cek2 = Tamu::query()->select('email')->where('id_acara', $id)
+                ->where('email', $tampungEmail)->get();
+            if ($cek2 == true)
+            {
+                foreach ($tampungResponse as $data)
+                {
+                    $tamu = Tamu::query()->find($id);
+                    $tamu->response = $data;
+                    $tamu->save();
+                }
+            }
+
+        } else {
+            return redirect()->route('oauthCallback');
+        }
+
 
         return view('Admin.ShowAcara')
             ->with('query', $query)
@@ -416,6 +455,8 @@ class AcaraController extends Controller
             ->with('tampungEmail2', $tampungEmail2)
             ->with('tampungEmail3', $tampungEmail3)
             ->with('tampungEmail4', $tampungEmail4)
+            ->with('detail', $detail)
+            ->with('tampungResponse', $tampungResponse)
             ->with('tampung', $tampung);
     }
 

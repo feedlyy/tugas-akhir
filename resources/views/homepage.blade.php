@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="google-site-verification" content="T5zF8AThPQjLyS_xh8OxR9WOK5dMUTPvj0tWh3XHD9o" />
     <title>Sitem Informasi Penjadwalan Kegiatan</title>
 
     <!-- Bootstrap core CSS -->

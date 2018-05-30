@@ -23,3 +23,5 @@ Route::patch('staf/{id}', 'ApiController@index');
 
 Route::resource('acara', 'AcaraController');
 Route::get('oauth', 'AcaraController@oauth')->name('oauthCallback');
+
+Route::get('notifikasi', 'NotificationController@index');
